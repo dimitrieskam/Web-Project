@@ -3,12 +3,14 @@ import {useNavigate} from 'react-router-dom';
 
 const StudentEdit = (props) => {
 
-    const history = useNavigate();
+    const navigate = useNavigate();
+    
+
     const [formData, updateFormData] = React.useState({
-        name: props.student.name || "",
-        surname: props.student.surname || "",
-        index: props.student.index || "",
-        email: props.student.email || ""
+        name: "",
+        surname: "",
+        index:  "",
+        email:  ""
     })
 
     const handleChange = (e) => {
@@ -25,8 +27,8 @@ const StudentEdit = (props) => {
         const index = formData.index !== "" ? formData.index : props.student.index;
         const email = formData.email !== "" ? formData.email : props.student.email;
         
-        props.onEditStudent(props.student.id, name, surname, index, email);
-        history.push("/students");
+        props.onEditStudent(props.student?.id, name, surname, index, email);
+        navigate("/students");
     }
 
     return(
@@ -39,7 +41,7 @@ const StudentEdit = (props) => {
                                className="form-control"
                                id="name"
                                name="name"
-                               placeholder={props.student.name}
+                               placeholder={" "}
                                onChange={handleChange}
                         />
                     </div>
@@ -59,7 +61,7 @@ const StudentEdit = (props) => {
                                className="form-control"
                                id="index"
                                name="index"
-                               placeholder={props.student.index}
+                               placeholder={"props.student.index"}
                                onChange={handleChange}
                         />
                     </div>
@@ -69,7 +71,7 @@ const StudentEdit = (props) => {
                                className="form-control"
                                id="email"
                                name="email"
-                               placeholder={props.student.email}
+                               placeholder={"props.student.email"}
                                onChange={handleChange}
                         />
                     </div>

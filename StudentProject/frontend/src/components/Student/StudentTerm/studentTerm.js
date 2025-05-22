@@ -2,11 +2,6 @@ import React from 'react';
 import {Link} from 'react-router-dom';
 
 const StudentTerm = (props) => {
-    const handleDelete = () => {
-        if (window.confirm('Are you sure you want to delete this student?')) {
-            props.onDelete(props.term.id);
-        }
-    };
     return (
         <tr>
             <td>{props.term.name}</td>

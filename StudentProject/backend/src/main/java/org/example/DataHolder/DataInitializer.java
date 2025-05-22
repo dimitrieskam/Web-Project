@@ -30,7 +30,7 @@ public class DataInitializer {
         this.topicRepository = topicRepository;
     }
 
-    @PostConstruct
+    // @PostConstruct
     public void initializeData() throws Exception {
         Professor professor1 = new Professor("Marija", "Dimitrieska", "marija@d.com");
         Professor professor2 = new Professor("Ivan", "Pupinoski", "ivan@p.com");

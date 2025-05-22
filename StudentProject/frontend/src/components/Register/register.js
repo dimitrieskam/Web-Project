@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import authService from '../../repository/Authentication/auth_service'; // Make sure this path is correct
+import authService from '../../repository/Authentication/auth_service';
+ // Check path carefully
 import { useNavigate } from 'react-router-dom';
 
 const Register = () => {
@@ -8,9 +9,11 @@ const Register = () => {
         surname: '',
         username: '',
         password: '',
-        role: 'ROLE_STUDENT', // Default role
+        repeatedPassword: '',
+        role: 'ROLE_STUDENT',
     });
 
+    const [error, setError] = useState(null);
     const navigate = useNavigate();
 
     const handleChange = (e) => {
@@ -19,25 +22,37 @@ const Register = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        authService.register(
-            formData.name,
-            formData.surname,
-            formData.username,
-            formData.password,
-            formData.role
-        )
-            .then(() => {
-                navigate('/login'); // Navigate to login on successful registration
+
+        const { name, surname, username, password, repeatedPassword, role } = formData;
+
+        if (password !== repeatedPassword) {
+            setError("Passwords do not match");
+            return;
+        }
+
+        setError(null);
+
+        authService.register(name, surname, username, password, role)
+            .then((response) => {
+                console.log("Registration successful", response);
+
+                // Redirect after registration
+                navigate("/login");
             })
             .catch((error) => {
-                console.error('Error registering:', error);
-                alert('Registration failed. Please try again.');
+                console.error("Registration error:", error);
+                if (error.response && error.response.data) {
+                    setError(error.response.data.message || "Registration failed");
+                } else {
+                    setError("Registration failed. Please try again.");
+                }
             });
     };
 
     return (
         <div className="container mt-5">
             <h2>Register</h2>
+            {error && <div className="alert alert-danger">{error}</div>}
             <form onSubmit={handleSubmit}>
                 <div className="form-group">
                     <label>Name</label>
@@ -79,6 +94,17 @@ const Register = () => {
                         name="password"
                         className="form-control"
                         value={formData.password}
+                        onChange={handleChange}
+                        required
+                    />
+                </div>
+                <div className="form-group">
+                    <label>Repeat Password</label>
+                    <input
+                        type="password"
+                        name="repeatedPassword"
+                        className="form-control"
+                        value={formData.repeatedPassword}
                         onChange={handleChange}
                         required
                     />

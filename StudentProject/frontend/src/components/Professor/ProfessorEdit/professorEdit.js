@@ -5,9 +5,9 @@ const ProfessorEdit = (props) => {
 
     const history = useNavigate();
     const [formData, updateFormData] = React.useState({
-        name: props.profesor.name || "",
-        surname: props.profesor.surname || "",
-        email: props.profesor.email || ""
+        "name": "",
+        "surname": "",
+        "email": ""
     })
 
     const handleChange = (e) => {
@@ -24,7 +24,7 @@ const ProfessorEdit = (props) => {
         const email = formData.email !== "" ? formData.email : props.profesor.email;
         
         props.onEditProfessor(props.profesor.id, name, surname, email);
-        history.push("/professors");
+        history("/professors");
     }
 
     return(
