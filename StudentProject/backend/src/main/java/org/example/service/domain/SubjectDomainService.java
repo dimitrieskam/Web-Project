@@ -8,11 +8,11 @@ import java.util.Optional;
 public interface SubjectDomainService {
     List<Subject> findAll();
 
-    Optional<Subject> findByID(Long id);
+    Optional<Subject> findByID(String id);
 
     Optional<Subject> create(Subject subject);
 
-    Optional<Subject> update(Long id, Subject subject);
+    Optional<Subject> update(String id, Subject subject);
 
-    void delete(Long id);
+    void delete(String id);
 }

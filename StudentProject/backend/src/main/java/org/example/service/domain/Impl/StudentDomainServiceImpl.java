@@ -23,13 +23,13 @@ public class StudentDomainServiceImpl implements StudentDomainService {
     }
 
     @Override
-    public Optional<Student> findByID(Long id) {
-        return this.studentRepository.findById(id);
+    public Optional<Student> findByIndex(String index) {
+        return this.studentRepository.findById(index);
     }
 
     @Override
-    public Optional<List<Student>> findAllByIds(List<Long> ids) {
-        return Optional.of(this.studentRepository.findAllById(ids));
+    public Optional<List<Student>> findAllByIndexes(List<String> indexes) {
+        return Optional.of(this.studentRepository.findAllById(indexes));
     }
 
     @Override
@@ -40,14 +40,14 @@ public class StudentDomainServiceImpl implements StudentDomainService {
     }
 
     @Override
-    public Optional<Student> update(Long id, Student student) {
-        Optional<Student> student_obj = this.studentRepository.findById(id);
+    public Optional<Student> update(String index, Student student) {
+        Optional<Student> student_obj = this.studentRepository.findById(index);
 
         if (student_obj.isPresent()) {
             Student existing_student = student_obj.get();
-            existing_student.setName(student.getName());
-            existing_student.setSurname(student.getSurname());
             existing_student.setIndex(student.getIndex());
+            existing_student.setName(student.getName());
+            existing_student.setLastName(student.getLastName());
             existing_student.setEmail(student.getEmail());
 
             this.studentRepository.save(existing_student);
@@ -59,7 +59,7 @@ public class StudentDomainServiceImpl implements StudentDomainService {
     }
 
     @Override
-    public void delete(Long id) {
-        this.studentRepository.deleteById(id);
+    public void delete(String index) {
+        this.studentRepository.deleteById(index);
     }
 }

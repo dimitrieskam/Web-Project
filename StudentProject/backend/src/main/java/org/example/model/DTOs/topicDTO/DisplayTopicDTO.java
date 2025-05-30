@@ -8,13 +8,14 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public record DisplayTopicDTO(
-        Long id,
+        String id,
         String name,
         LocalDate fromDate,
         LocalDate toDate,
+        String description,
         int groupCount,
         int membersPerGroup,
-        Long subjectId
+        String subjectId
 ) {
     public static DisplayTopicDTO from(Topic topic) {
         return new DisplayTopicDTO(
@@ -22,6 +23,7 @@ public record DisplayTopicDTO(
                 topic.getName(),
                 topic.getFromDate(),
                 topic.getToDate(),
+                topic.getDescription(),
                 topic.getGroupCount(),
                 topic.getMembersPerGroup(),
                 topic.getSubject().getId()
@@ -35,6 +37,6 @@ public record DisplayTopicDTO(
     }
 
     public Topic toTopic(Subject subject) {
-        return new Topic(id, name, fromDate, toDate, groupCount, membersPerGroup, subject);
+        return new Topic(id, name, fromDate, toDate, description, groupCount, membersPerGroup, subject);
     }
 }

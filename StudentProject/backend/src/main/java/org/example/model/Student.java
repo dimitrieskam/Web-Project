@@ -2,45 +2,64 @@ package org.example.model;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
-@Table(name = "STUDENTS")
+@Table(name = "student")
 public class Student {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Column(name = "student_index")
+    private String index;
+
+    private String email;
 
     private String name;
 
-    private String surname;
+    private String lastName;
 
-    private Integer index;
-
-    private String email;
+    @ManyToMany(mappedBy = "members")
+    private List<Team> teams;
 
     public Student() {
     }
 
-    public Student(String name, String surname, Integer index, String email) {
-        this.name = name;
-        this.surname = surname;
+    public Student(String index, String email, String name, String lastName) {
         this.index = index;
         this.email = email;
+        this.name = name;
+        this.lastName = lastName;
     }
 
-    public Student(Long id, String name, String surname, Integer index, String email) {
-        this.id = id;
-        this.name = name;
-        this.surname = surname;
+    public Student(String index, String email, String name, String lastName, List<Team> teams) {
         this.index = index;
         this.email = email;
+        this.name = name;
+        this.lastName = lastName;
+        this.teams = teams;
     }
 
-    public Long getId() {
-        return id;
+    public List<Team> getTeams() {
+        return teams;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setTeams(List<Team> teams) {
+        this.teams = teams;
+    }
+
+    public String getIndex() {
+        return index;
+    }
+
+    public void setIndex(String index) {
+        this.index = index;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getName() {
@@ -51,27 +70,11 @@ public class Student {
         this.name = name;
     }
 
-    public String getSurname() {
-        return surname;
+    public String getLastName() {
+        return lastName;
     }
 
-    public void setSurname(String surname) {
-        this.surname = surname;
-    }
-
-    public Integer getIndex() {
-        return index;
-    }
-
-    public void setIndex(Integer index) {
-        this.index = index;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 }

@@ -7,13 +7,11 @@ import java.util.stream.Collectors;
 
 public record CreateProfessorDTO(
         String name,
-        String surname,
         String email
 ) {
     public static CreateProfessorDTO from(Professor professor) {
         return new CreateProfessorDTO(
                 professor.getName(),
-                professor.getSurname(),
                 professor.getEmail()
         );
     }
@@ -25,6 +23,6 @@ public record CreateProfessorDTO(
     }
 
     public Professor toProfessor() {
-        return new Professor(name, surname, email);
+        return new Professor(name, email);
     }
 }

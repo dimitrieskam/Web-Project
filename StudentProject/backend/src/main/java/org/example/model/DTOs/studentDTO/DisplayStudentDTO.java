@@ -6,18 +6,16 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public record DisplayStudentDTO(
-        Long id,
+        String index,
         String name,
-        String surname,
-        Integer index,
+        String lastname,
         String email
 ) {
     public static DisplayStudentDTO from(Student student) {
         return new DisplayStudentDTO(
-                student.getId(),
-                student.getName(),
-                student.getSurname(),
                 student.getIndex(),
+                student.getName(),
+                student.getLastName(),
                 student.getEmail()
         );
     }
@@ -29,6 +27,6 @@ public record DisplayStudentDTO(
     }
 
     public Student toStudent() {
-        return new Student(id, name, surname, index, email);
+        return new Student(index, name, lastname, email);
     }
 }

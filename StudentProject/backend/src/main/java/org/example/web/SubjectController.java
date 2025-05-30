@@ -32,13 +32,13 @@ public class SubjectController {
     }
 
     @PutMapping("/edit-subject/{id}")
-    public ResponseEntity<Optional<DisplaySubjectDTO>> editSubject(@PathVariable Long id,
+    public ResponseEntity<Optional<DisplaySubjectDTO>> editSubject(@PathVariable String id,
                                                                    @RequestBody CreateSubjectDTO createSubjectDTO) {
         return ResponseEntity.ok(this.subjectApplicationService.update(id, createSubjectDTO));
     }
 
     @DeleteMapping("delete-subject/{id}")
-    public ResponseEntity<Void> deleteSubject(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteSubject(@PathVariable String id) {
         this.subjectApplicationService.delete(id);
 
         return ResponseEntity.noContent().build();

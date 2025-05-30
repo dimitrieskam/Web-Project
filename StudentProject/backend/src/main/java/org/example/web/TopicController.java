@@ -32,13 +32,13 @@ public class TopicController {
     }
 
     @PutMapping("/edit-topic/{id}")
-    public ResponseEntity<Optional<DisplayTopicDTO>> editTopic(@PathVariable Long id,
+    public ResponseEntity<Optional<DisplayTopicDTO>> editTopic(@PathVariable String id,
                                                                @RequestBody CreateTopicDTO createTopicDTO) {
         return ResponseEntity.ok(this.topicApplicationService.update(id, createTopicDTO));
     }
 
     @DeleteMapping("delete-topic/{id}")
-    public ResponseEntity<Void> deleteTopic(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteTopic(@PathVariable String id) {
         this.topicApplicationService.delete(id);
 
         return ResponseEntity.noContent().build();

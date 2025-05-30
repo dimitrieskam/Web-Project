@@ -27,8 +27,8 @@ public class StudentApplicationServiceImpl implements StudentApplicationService 
     }
 
     @Override
-    public Optional<DisplayStudentDTO> findByID(Long id) {
-        return this.studentDomainService.findByID(id)
+    public Optional<DisplayStudentDTO> findByIndex(String index) {
+        return this.studentDomainService.findByIndex(index)
                 .map(DisplayStudentDTO::from);
     }
 
@@ -39,13 +39,13 @@ public class StudentApplicationServiceImpl implements StudentApplicationService 
     }
 
     @Override
-    public Optional<DisplayStudentDTO> update(Long id, CreateStudentDTO createStudentDTO) {
-        return this.studentDomainService.update(id, createStudentDTO.toStudent())
+    public Optional<DisplayStudentDTO> update(String index, CreateStudentDTO createStudentDTO) {
+        return this.studentDomainService.update(index, createStudentDTO.toStudent())
                 .map(DisplayStudentDTO::from);
     }
 
     @Override
-    public void delete(Long id) {
-        this.studentDomainService.delete(id);
+    public void delete(String index) {
+        this.studentDomainService.delete(index);
     }
 }

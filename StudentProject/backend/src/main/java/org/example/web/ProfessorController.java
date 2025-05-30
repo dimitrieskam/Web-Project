@@ -30,13 +30,13 @@ public class ProfessorController {
     }
 
     @PutMapping("/edit-professor/{id}")
-    public ResponseEntity<Optional<DisplayProfessorDTO>> editProfessor(@PathVariable Long id,
+    public ResponseEntity<Optional<DisplayProfessorDTO>> editProfessor(@PathVariable String id,
                                                                      @RequestBody CreateProfessorDTO createProfessorDTO) {
         return ResponseEntity.ok(this.professorApplicationService.update(id, createProfessorDTO));
     }
 
     @DeleteMapping("delete-professor/{id}")
-    public ResponseEntity<Void> deleteProfessor(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteProfessor(@PathVariable String id) {
         this.professorApplicationService.delete(id);
 
         return ResponseEntity.noContent().build();

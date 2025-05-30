@@ -2,22 +2,24 @@ package org.example.model;
 
 
 import jakarta.persistence.*;
+import org.example.model.enumerations.SemesterType;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "SUBJECTS")
+@Table(name = "subject")
 public class Subject {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private String id; // code
 
+    @Column(nullable = false)
     private String name;
 
-    private String code;
+    private String abbreviation;
 
+    @Enumerated(EnumType.STRING)
+    private SemesterType semester;
     @ManyToMany
     private List<Student> students;
 
@@ -27,26 +29,28 @@ public class Subject {
     public Subject() {
     }
 
-    public Subject(String name, String code, List<Student> students, List<Professor> professors) {
-        this.name = name;
-        this.code = code;
-        this.students = students;
-        this.professors = professors;
-    }
-
-    public Subject(Long id, String name, String code, List<Student> students, List<Professor> professors) {
+    public Subject(String id, String name, String abbreviation, SemesterType semester, List<Student> students, List<Professor> professors) {
         this.id = id;
         this.name = name;
-        this.code = code;
+        this.abbreviation = abbreviation;
+        this.semester = semester;
         this.students = students;
         this.professors = professors;
     }
 
-    public Long getId() {
+    public Subject(String name, String abbreviation, SemesterType semester, List<Student> students, List<Professor> professors) {
+        this.name = name;
+        this.abbreviation = abbreviation;
+        this.semester = semester;
+        this.students = students;
+        this.professors = professors;
+    }
+
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -58,12 +62,20 @@ public class Subject {
         this.name = name;
     }
 
-    public String getCode() {
-        return code;
+    public String getAbbreviation() {
+        return abbreviation;
     }
 
-    public void setCode(String code) {
-        this.code = code;
+    public void setAbbreviation(String abbreviation) {
+        this.abbreviation = abbreviation;
+    }
+
+    public SemesterType getSemester() {
+        return semester;
+    }
+
+    public void setSemester(SemesterType semester) {
+        this.semester = semester;
     }
 
     public List<Student> getStudents() {

@@ -1,10 +1,10 @@
 package org.example.model;
 
 import jakarta.persistence.*;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Entity
@@ -14,13 +14,16 @@ public class Topic {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 
-    private Long id;
+    private String id;
 
     private String name;
+
 
     private LocalDate fromDate;
 
     private LocalDate toDate;
+
+    private String description;
 
     private int groupCount;
 
@@ -29,10 +32,14 @@ public class Topic {
     @ManyToOne
     private Subject subject;
 
+    @OneToMany(mappedBy = "topic", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Team> teams = new ArrayList<>();
+
+
     public Topic() {
     }
 
-    public Topic(String name, LocalDate fromDate, LocalDate toDate, int groupCount, int membersPerGroup, Subject subject) {
+    public Topic(String name, LocalDate fromDate, LocalDate toDate, String description, int groupCount, int membersPerGroup, Subject subject) {
         this.name = name;
         this.fromDate = fromDate;
         this.toDate = toDate;
@@ -41,7 +48,7 @@ public class Topic {
         this.subject = subject;
     }
 
-    public Topic(Long id, String name, LocalDate fromDate, LocalDate toDate, int groupCount, int membersPerGroup, Subject subject) {
+    public Topic(String id, String name, LocalDate fromDate, LocalDate toDate,String description, int groupCount, int membersPerGroup, Subject subject) {
         this.id = id;
         this.name = name;
         this.fromDate = fromDate;
@@ -51,11 +58,11 @@ public class Topic {
         this.subject = subject;
     }
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -101,6 +108,22 @@ public class Topic {
 
     public Subject getSubject() {
         return subject;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public List<Team> getTeams() {
+        return teams;
+    }
+
+    public void setTeams(List<Team> teams) {
+        this.teams = teams;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public void setSubject(Subject subject) {
