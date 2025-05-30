@@ -23,7 +23,7 @@ public class SubjectDomainServiceImpl implements SubjectDomainService {
     }
 
     @Override
-    public Optional<Subject> findByID(Long id) {
+    public Optional<Subject> findByID(String id) {
         return this.subjectRepository.findById(id);
     }
 
@@ -35,13 +35,14 @@ public class SubjectDomainServiceImpl implements SubjectDomainService {
     }
 
     @Override
-    public Optional<Subject> update(Long id, Subject subject) {
+    public Optional<Subject> update(String id, Subject subject) {
         Optional<Subject> subject_obj = this.subjectRepository.findById(id);
 
         if (subject_obj.isPresent()) {
             Subject existing_subject = subject_obj.get();
             existing_subject.setName(subject.getName());
-            existing_subject.setCode(subject.getCode());
+            existing_subject.setAbbreviation(subject.getAbbreviation());
+            existing_subject.setSemester(subject.getSemester());
             existing_subject.setStudents(subject.getStudents());
             existing_subject.setProfessors(subject.getProfessors());
 
@@ -54,7 +55,7 @@ public class SubjectDomainServiceImpl implements SubjectDomainService {
     }
 
     @Override
-    public void delete(Long id) {
+    public void delete(String id) {
         this.subjectRepository.deleteById(id);
     }
 }

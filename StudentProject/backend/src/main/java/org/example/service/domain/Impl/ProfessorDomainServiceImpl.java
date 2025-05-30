@@ -23,12 +23,12 @@ public class ProfessorDomainServiceImpl implements ProfessorDomainService {
     }
 
     @Override
-    public Optional<Professor> findByID(Long id) {
+    public Optional<Professor> findByID(String id) {
         return this.professorRepository.findById(id);
     }
 
     @Override
-    public Optional<List<Professor>> findAllByIds(List<Long> ids) {
+    public Optional<List<Professor>> findAllByIds(List<String> ids) {
         return Optional.of(this.professorRepository.findAllById(ids));
     }
 
@@ -40,13 +40,12 @@ public class ProfessorDomainServiceImpl implements ProfessorDomainService {
     }
 
     @Override
-    public Optional<Professor> update(Long id, Professor professor) {
+    public Optional<Professor> update(String id, Professor professor) {
         Optional<Professor> professor_obj = this.professorRepository.findById(id);
 
         if (professor_obj.isPresent()) {
             Professor existing_professor = professor_obj.get();
             existing_professor.setName(professor.getName());
-            existing_professor.setSurname(professor.getSurname());
             existing_professor.setEmail(professor.getEmail());
 
             this.professorRepository.save(existing_professor);
@@ -58,7 +57,7 @@ public class ProfessorDomainServiceImpl implements ProfessorDomainService {
     }
 
     @Override
-    public void delete(Long id) {
+    public void delete(String id) {
         this.professorRepository.deleteById(id);
     }
 }

@@ -8,13 +8,13 @@ import java.util.Optional;
 public interface ProfessorDomainService {
     List<Professor> findAll();
 
-    Optional<Professor> findByID(Long id);
+    Optional<Professor> findByID(String id);
 
-    Optional<List<Professor>> findAllByIds(List<Long> ids);
+    Optional<List<Professor>> findAllByIds(List<String> ids);
 
     Optional<Professor> create(Professor professor);
 
-    Optional<Professor> update(Long id, Professor professor);
+    Optional<Professor> update(String id, Professor professor);
 
-    void delete(Long id);
+    void delete(String id);
 }

@@ -9,11 +9,11 @@ import java.util.Optional;
 public interface SubjectApplicationService {
     List<DisplaySubjectDTO> findAll();
 
-    Optional<DisplaySubjectDTO> findByID(Long id);
+    Optional<DisplaySubjectDTO> findByID(String id);
 
     Optional<DisplaySubjectDTO> create(CreateSubjectDTO createSubjectDTO);
 
-    Optional<DisplaySubjectDTO> update(Long id, CreateSubjectDTO createSubjectDTO);
+    Optional<DisplaySubjectDTO> update(String id, CreateSubjectDTO createSubjectDTO);
 
-    void delete(Long id);
+    void delete(String id);
 }

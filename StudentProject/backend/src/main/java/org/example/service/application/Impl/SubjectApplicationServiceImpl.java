@@ -35,7 +35,7 @@ public class SubjectApplicationServiceImpl implements SubjectApplicationService 
     }
 
     @Override
-    public Optional<DisplaySubjectDTO> findByID(Long id) {
+    public Optional<DisplaySubjectDTO> findByID(String id) {
         return this.subjectDomainService.findByID(id)
                 .map(DisplaySubjectDTO::from);
     }
@@ -50,7 +50,7 @@ public class SubjectApplicationServiceImpl implements SubjectApplicationService 
     }
 
     @Override
-    public Optional<DisplaySubjectDTO> update(Long id, CreateSubjectDTO createSubjectDTO) {
+    public Optional<DisplaySubjectDTO> update(String id, CreateSubjectDTO createSubjectDTO) {
         Optional<List<Student>> students = this.studentDomainService.findAllByIds(createSubjectDTO.studentIds());
         Optional<List<Professor>> professors = this.professorDomainService.findAllByIds(createSubjectDTO.professorIds());
 
@@ -59,7 +59,7 @@ public class SubjectApplicationServiceImpl implements SubjectApplicationService 
     }
 
     @Override
-    public void delete(Long id) {
+    public void delete(String id) {
         this.subjectDomainService.delete(id);
     }
 }

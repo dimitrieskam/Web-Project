@@ -9,11 +9,11 @@ import java.util.Optional;
 public interface StudentApplicationService {
     List<DisplayStudentDTO> findAll();
 
-    Optional<DisplayStudentDTO> findByID(Long id);
+    Optional<DisplayStudentDTO> findByIndex(String id);
 
     Optional<DisplayStudentDTO> create(CreateStudentDTO createStudentDTO);
 
-    Optional<DisplayStudentDTO> update(Long id, CreateStudentDTO createStudentDTO);
+    Optional<DisplayStudentDTO> update(String index, CreateStudentDTO createStudentDTO);
 
-    void delete(Long id);
+    void delete(String index);
 }

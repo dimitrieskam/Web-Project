@@ -1,43 +1,58 @@
 package org.example.model;
 
 import jakarta.persistence.*;
+import org.example.model.enumerations.ProfessorTitle;
 
 @Entity
-@Table(name = "PROFESSORS")
+@Table(name = "professor")
 public class Professor {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    private String id;
 
-    private Long id;
-
+    @Column(name = "name", nullable = false)
     private String name;
 
-    private String surname;
-
+    @Column(name = "email", nullable = false, unique = true)
     private String email;
+
+    @Enumerated(EnumType.STRING)
+    private ProfessorTitle title;
+
+    private Short orderingRank;
+
+    @ManyToOne
+    private Room office;
 
     public Professor() {
     }
 
-    public Professor(String name, String surname, String email) {
-        this.name = name;
-        this.surname = surname;
-        this.email = email;
-    }
-
-    public Professor(Long id, String name, String surname, String email) {
+    public Professor(String id, String name, String email) {
         this.id = id;
         this.name = name;
-        this.surname = surname;
         this.email = email;
     }
 
-    public Long getId() {
+    public Professor(String name, String email) {
+        this.name = name;
+        this.email = email;
+    }
+
+    public Professor(String id, String name, String email, ProfessorTitle title, Short orderingRank, Room office) {
+        this.id = id;
+        this.name = name;
+        this.email = email;
+        this.title = title;
+        this.orderingRank = orderingRank;
+        this.office = office;
+    }
+
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -49,19 +64,35 @@ public class Professor {
         this.name = name;
     }
 
-    public String getSurname() {
-        return surname;
-    }
-
-    public void setSurname(String surname) {
-        this.surname = surname;
-    }
-
     public String getEmail() {
         return email;
     }
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public ProfessorTitle getTitle() {
+        return title;
+    }
+
+    public void setTitle(ProfessorTitle title) {
+        this.title = title;
+    }
+
+    public Short getOrderingRank() {
+        return orderingRank;
+    }
+
+    public void setOrderingRank(Short orderingRank) {
+        this.orderingRank = orderingRank;
+    }
+
+    public Room getOffice() {
+        return office;
+    }
+
+    public void setOffice(Room office) {
+        this.office = office;
     }
 }

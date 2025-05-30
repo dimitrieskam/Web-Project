@@ -11,15 +11,17 @@ public record CreateTopicDTO(
         String name,
         LocalDate fromDate,
         LocalDate toDate,
+        String description,
         int groupCount,
         int membersPerGroup,
-        Long subjectId
+        String subjectId
 ) {
     public static CreateTopicDTO from(Topic topic) {
         return new CreateTopicDTO(
                 topic.getName(),
                 topic.getFromDate(),
                 topic.getToDate(),
+                topic.getDescription(),
                 topic.getGroupCount(),
                 topic.getMembersPerGroup(),
                 topic.getSubject().getId()
@@ -33,6 +35,6 @@ public record CreateTopicDTO(
     }
 
     public Topic toTopic(Subject subject) {
-        return new Topic(name, fromDate, toDate, groupCount, membersPerGroup, subject);
+        return new Topic(name, fromDate, toDate, description, groupCount, membersPerGroup, subject);
     }
 }

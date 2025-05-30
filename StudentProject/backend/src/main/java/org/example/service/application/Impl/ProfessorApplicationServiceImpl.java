@@ -28,7 +28,7 @@ public class ProfessorApplicationServiceImpl implements ProfessorApplicationServ
     }
 
     @Override
-    public Optional<DisplayProfessorDTO> findByID(Long id) {
+    public Optional<DisplayProfessorDTO> findByID(String id) {
         return this.professorDomainService.findByID(id)
                 .map(DisplayProfessorDTO::from);
     }
@@ -40,13 +40,13 @@ public class ProfessorApplicationServiceImpl implements ProfessorApplicationServ
     }
 
     @Override
-    public Optional<DisplayProfessorDTO> update(Long id, CreateProfessorDTO createProfessorDTO) {
+    public Optional<DisplayProfessorDTO> update(String id, CreateProfessorDTO createProfessorDTO) {
         return this.professorDomainService.update(id, createProfessorDTO.toProfessor())
                 .map(DisplayProfessorDTO::from);
     }
 
     @Override
-    public void delete(Long id) {
+    public void delete(String id) {
         this.professorDomainService.delete(id);
     }
 }

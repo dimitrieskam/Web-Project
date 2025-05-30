@@ -7,14 +7,14 @@ import java.util.stream.Collectors;
 
 public record CreateStudentDTO(
         String name,
-        String surname,
-        Integer index,
+        String lastName,
+        String index,
         String email
 ) {
     public static CreateStudentDTO from(Student student) {
         return new CreateStudentDTO(
                 student.getName(),
-                student.getSurname(),
+                student.getLastName(),
                 student.getIndex(),
                 student.getEmail()
         );
@@ -27,6 +27,6 @@ public record CreateStudentDTO(
     }
 
     public Student toStudent() {
-        return new Student(name, surname, index, email);
+        return new Student(name, lastName, index, email);
     }
 }

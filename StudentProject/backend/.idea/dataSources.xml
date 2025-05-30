@@ -1,11 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
+<<<<<<< HEAD
     <data-source source="LOCAL" name="aimDb@localhost" uuid="765945d3-b12b-400a-8cf6-fce58eee8e41">
       <driver-ref>postgresql</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>org.postgresql.Driver</jdbc-driver>
       <jdbc-url>jdbc:postgresql://localhost:5432/aimDb</jdbc-url>
+=======
+    <data-source source="LOCAL" name="finki-services-db@localhost" uuid="e1ad54ad-4f1f-480e-af60-75931d4a0c09">
+      <driver-ref>postgresql</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql://localhost:54322/finki-services-db</jdbc-url>
+      <jdbc-additional-properties>
+        <property name="com.intellij.clouds.kubernetes.db.enabled" value="false" />
+      </jdbc-additional-properties>
+>>>>>>> newDb
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
   </component>

@@ -33,14 +33,14 @@ public class StudentController {
     }
 
     @PutMapping("/edit-student/{id}")
-    public ResponseEntity<Optional<DisplayStudentDTO>> editStudent(@PathVariable Long id,
+    public ResponseEntity<Optional<DisplayStudentDTO>> editStudent(@PathVariable String index,
                                                                    @RequestBody CreateStudentDTO createStudentDTO) {
-        return ResponseEntity.ok(this.studentApplicationService.update(id, createStudentDTO));
+        return ResponseEntity.ok(this.studentApplicationService.update(index, createStudentDTO));
     }
 
     @DeleteMapping("delete-student/{id}")
-    public ResponseEntity<Void> deleteStudent(@PathVariable Long id) {
-        this.studentApplicationService.delete(id);
+    public ResponseEntity<Void> deleteStudent(@PathVariable String index) {
+        this.studentApplicationService.delete(index);
 
         return ResponseEntity.noContent().build();
     }
