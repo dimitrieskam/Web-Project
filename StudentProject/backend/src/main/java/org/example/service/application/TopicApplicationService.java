@@ -18,4 +18,5 @@ public interface TopicApplicationService {
 
     void delete(String id);
     Optional<DisplayTopicDTO> chooseTopic(CreateTeamDTO dto);
+    boolean isClosed(String topicId);
 }

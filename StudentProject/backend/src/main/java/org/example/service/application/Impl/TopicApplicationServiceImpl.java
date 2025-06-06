@@ -4,6 +4,7 @@ import org.example.model.DTOs.teamDTO.CreateTeamDTO;
 import org.example.model.DTOs.topicDTO.CreateTopicDTO;
 import org.example.model.DTOs.topicDTO.DisplayTopicDTO;
 import org.example.model.Student;
+import org.example.model.exceptions.TopicIsClosedException;
 import org.example.service.application.TopicApplicationService;
 import org.example.service.domain.StudentDomainService;
 import org.example.service.domain.SubjectDomainService;
@@ -61,6 +62,9 @@ public class TopicApplicationServiceImpl implements TopicApplicationService {
 
     @Override
     public Optional<DisplayTopicDTO> chooseTopic(CreateTeamDTO dto) {
+        if (topicDomainService.isClosed(dto.topicId())){
+            throw new TopicIsClosedException(dto.topicId());
+        }
         List<Student> students = dto.studentIds().stream()
                 .map(index -> studentDomainService.findByIndex(index).orElseThrow())
                 .collect(Collectors.toList());
@@ -68,5 +72,10 @@ public class TopicApplicationServiceImpl implements TopicApplicationService {
 
         return topicDomainService.chooseTopic(dto.topicId(), students)
                 .map(DisplayTopicDTO::from);
+    }
+
+    @Override
+    public boolean isClosed(String topicId) {
+        return topicDomainService.isClosed(topicId);
     }
 }

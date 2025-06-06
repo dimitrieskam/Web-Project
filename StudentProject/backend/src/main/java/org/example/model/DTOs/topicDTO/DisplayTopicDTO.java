@@ -1,5 +1,6 @@
 package org.example.model.DTOs.topicDTO;
 
+import org.example.model.DTOs.teamDTO.DisplayTeamDTO;
 import org.example.model.Subject;
 import org.example.model.Topic;
 
@@ -15,7 +16,8 @@ public record DisplayTopicDTO(
         String description,
         int groupCount,
         int membersPerGroup,
-        String subjectId
+        String subjectId,
+        List<DisplayTeamDTO> teams
 ) {
     public static DisplayTopicDTO from(Topic topic) {
         return new DisplayTopicDTO(
@@ -26,7 +28,10 @@ public record DisplayTopicDTO(
                 topic.getDescription(),
                 topic.getGroupCount(),
                 topic.getMembersPerGroup(),
-                topic.getSubject().getId()
+                topic.getSubject().getId(),
+                topic.getTeams().stream()
+                        .map(DisplayTeamDTO::from)
+                        .collect(Collectors.toList())
         );
     }
 
