@@ -14,7 +14,7 @@ const TopicTerm = (props) => {
             <td>{props.term.toDate}</td>
             <td>{props.term.groupCount}</td>
             <td>{props.term.membersPerGroup}</td>
-            <td>{props.term.subject.name}</td>
+            <td>{props.term.professors.name}</td>
             <td className={"text-right"}>
                 <a title={"Delete"} className={"btn btn-danger"}
                    onClick={() => props.onDelete(props.term.id)}>

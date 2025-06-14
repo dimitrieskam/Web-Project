@@ -10,7 +10,7 @@ const TopicAdd = (props) => {
         toDate: "",
         groupCount: "",
         membersPerGroup: "",
-        subjectId: ""
+        professorId: ""
     })
 
     const handleChange = (e) => {
@@ -27,9 +27,9 @@ const TopicAdd = (props) => {
         const toDate = formData.toDate;
         const groupCount = formData.groupCount;
         const membersPerGroup = formData.membersPerGroup;
-        const subjectId = formData.subjectId;
+        const professorId = formData.professorId;
 
-        props.onAddProfessor(name,fromDate, toDate, parseInt(groupCount), parseInt(membersPerGroup), subjectId);
+        props.onAddProfessor(name,fromDate, toDate, parseInt(groupCount), parseInt(membersPerGroup), professorId);
         navigate("/topics");
     }
 
@@ -93,11 +93,11 @@ const TopicAdd = (props) => {
                         />
                     </div>
                     <div className="form-group">
-                        <label htmlFor="subjectId">Subject</label>
-                        <select className="form-control" id="subjectId" name="subjectId" required onChange={handleChange}>
-                            <option value="">Select Subject</option>
-                            {props.subjects?.map(subject => (
-                                <option key={subject.id} value={subject.id}>{subject.name}</option>
+                        <label htmlFor="professorId">Professor</label>
+                        <select className="form-control" id="professorId" name="professorId" required onChange={handleChange}>
+                            <option value="">Select Professor</option>
+                            {props.professors?.map(professor => (
+                                <option key={professor.id} value={professor.id}>{professor.name}</option>
                             ))}
                         </select>
                     </div>

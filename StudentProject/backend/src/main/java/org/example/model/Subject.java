@@ -1,6 +1,5 @@
 package org.example.model;
 
-
 import jakarta.persistence.*;
 import org.example.model.enumerations.SemesterType;
 
@@ -18,8 +17,10 @@ public class Subject {
 
     private String abbreviation;
 
+    @Column(name = "semester")
     @Enumerated(EnumType.STRING)
-    private SemesterType semester;
+    private SemesterType semesterType;
+
     @ManyToMany
     private List<Student> students;
 
@@ -29,19 +30,17 @@ public class Subject {
     public Subject() {
     }
 
-    public Subject(String id, String name, String abbreviation, SemesterType semester, List<Student> students, List<Professor> professors) {
-        this.id = id;
+    public Subject(String name, SemesterType semesterType, List<Student> students, List<Professor> professors) {
         this.name = name;
-        this.abbreviation = abbreviation;
-        this.semester = semester;
+        this.semesterType = semesterType;
         this.students = students;
         this.professors = professors;
     }
 
-    public Subject(String name, String abbreviation, SemesterType semester, List<Student> students, List<Professor> professors) {
+    public Subject(String id, String name, SemesterType semesterType, List<Student> students, List<Professor> professors) {
+        this.id = id;
         this.name = name;
-        this.abbreviation = abbreviation;
-        this.semester = semester;
+        this.semesterType = semesterType;
         this.students = students;
         this.professors = professors;
     }
@@ -70,12 +69,12 @@ public class Subject {
         this.abbreviation = abbreviation;
     }
 
-    public SemesterType getSemester() {
-        return semester;
+    public SemesterType getSemesterType() {
+        return semesterType;
     }
 
-    public void setSemester(SemesterType semester) {
-        this.semester = semester;
+    public void setSemesterType(SemesterType semesterType) {
+        this.semesterType = semesterType;
     }
 
     public List<Student> getStudents() {

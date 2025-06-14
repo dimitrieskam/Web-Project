@@ -18,7 +18,6 @@ public class Topic {
 
     private String name;
 
-
     private LocalDate fromDate;
 
     private LocalDate toDate;
@@ -32,9 +31,11 @@ public class Topic {
     @ManyToOne
     private Subject subject;
 
+    @ManyToOne
+    private Professor professor;
+
     @OneToMany(mappedBy = "topic", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Team> teams = new ArrayList<>();
-
 
     public Topic() {
     }
@@ -48,7 +49,17 @@ public class Topic {
         this.subject = subject;
     }
 
-    public Topic(String id, String name, LocalDate fromDate, LocalDate toDate,String description, int groupCount, int membersPerGroup, Subject subject) {
+    public Topic(String name, LocalDate fromDate, LocalDate toDate, String description, int groupCount, int membersPerGroup, Professor professor) {
+        this.name = name;
+        this.fromDate = fromDate;
+        this.toDate = toDate;
+        this.description = description;
+        this.groupCount = groupCount;
+        this.membersPerGroup = membersPerGroup;
+        this.professor = professor;
+    }
+
+    public Topic(String id, String name, LocalDate fromDate, LocalDate toDate, String description, int groupCount, int membersPerGroup, Subject subject) {
         this.id = id;
         this.name = name;
         this.fromDate = fromDate;
@@ -56,6 +67,17 @@ public class Topic {
         this.groupCount = groupCount;
         this.membersPerGroup = membersPerGroup;
         this.subject = subject;
+    }
+
+    public Topic(String id, String name, LocalDate fromDate, LocalDate toDate, String description, int groupCount, int membersPerGroup, Professor professor) {
+        this.id = id;
+        this.name = name;
+        this.fromDate = fromDate;
+        this.toDate = toDate;
+        this.description = description;
+        this.groupCount = groupCount;
+        this.membersPerGroup = membersPerGroup;
+        this.professor = professor;
     }
 
     public String getId() {
@@ -90,6 +112,14 @@ public class Topic {
         this.toDate = toDate;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     public int getGroupCount() {
         return groupCount;
     }
@@ -110,8 +140,16 @@ public class Topic {
         return subject;
     }
 
-    public String getDescription() {
-        return description;
+    public void setSubject(Subject subject) {
+        this.subject = subject;
+    }
+
+    public Professor getProfessor() {
+        return professor;
+    }
+
+    public void setProfessor(Professor professor) {
+        this.professor = professor;
     }
 
     public List<Team> getTeams() {
@@ -120,13 +158,5 @@ public class Topic {
 
     public void setTeams(List<Team> teams) {
         this.teams = teams;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public void setSubject(Subject subject) {
-        this.subject = subject;
     }
 }

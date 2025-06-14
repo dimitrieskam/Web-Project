@@ -1,6 +1,7 @@
 package org.example.model.DTOs.subjectDTO;
 
 import org.example.model.Professor;
+import org.example.model.Semester;
 import org.example.model.Student;
 import org.example.model.Subject;
 import org.example.model.enumerations.SemesterType;
@@ -11,8 +12,7 @@ import java.util.stream.Collectors;
 
 public record CreateSubjectDTO(
         String name,
-        String abbreviation,
-        SemesterType semester,
+        SemesterType semesterType,
         List<String> studentIds,
         List<String> professorIds
 ) {
@@ -29,8 +29,7 @@ public record CreateSubjectDTO(
 
         return new CreateSubjectDTO(
                 subject.getName(),
-                subject.getAbbreviation(),
-                subject.getSemester(),
+                subject.getSemesterType(),
                 studentIds,
                 professorIds
         );
@@ -42,7 +41,7 @@ public record CreateSubjectDTO(
                 .collect(Collectors.toList());
     }
 
-    public Subject toSubject(Optional<List<Student>> students, Optional<List<Professor>> professors) {
-        return new Subject(name, abbreviation, semester, students.orElse(List.of()), professors.orElse(List.of()));
+    public Subject toSubject(List<Student> students, List<Professor> professors) {
+        return new Subject(name, semesterType, students, professors);
     }
 }

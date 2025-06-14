@@ -1,10 +1,8 @@
 import axios from '../custom-axios/axios';
-import authHeader from './Authentication/header/auth_header';
-
 
 const AppRepository = {
 
-    // ====== Professors ======
+    // ====== PROFESSORS ======
     fetchProfessors: () => {
         return axios.get("/professors");
     },
@@ -27,7 +25,7 @@ const AppRepository = {
     },
 
 
-    // ====== Students ======
+    // ====== STUDENTS ======
     fetchStudents: () => {
         return axios.get("/students");
     },
@@ -52,54 +50,35 @@ const AppRepository = {
     },
 
 
-    // ====== Subjects ======
+    // ====== SUBJECTS ======
     fetchSubjects: () => {
         return axios.get("/subjects");
     },
-    addSubject: (name, code, studentIds, professorIds) => {
-        return axios.post("/subjects/add-subject", {
-            "name": name,
-            "code": code,
-            "studentIds": studentIds,
-            "professorIds": professorIds
-        });
-    },
-    updateSubject: (id, name, code, studentIds, professorIds) => {
-        return axios.put(`/subjects/edit-subject/${id}`, {
-           "name": name,
-            "code": code,
-            "studentIds": studentIds,
-            "professorIds": professorIds
-        });
-    },
-    deleteSubject: (id) => {
-        return axios.delete(`/subjects/delete-subject/${id}`);
-    },
 
-    // ====== Topics ======
+    // ====== TOPICS ======
     fetchTopics: () => {
       return axios.get("/topics");
     },
   
-    addTopic: (name, fromDate, toDate, groupCount, membersPerGroup, subjectId) => {
+    addTopic: (name, fromDate, toDate, groupCount, membersPerGroup, professorId) => {
       return axios.post("/topics/add-topic", {
         "name": name,
         "fromDate": fromDate,
         "toDate": toDate,
         "groupCount": groupCount,
         "membersPerGroup": membersPerGroup,
-        "subjectId": subjectId
+        "professorId": professorId
       });
     },
   
-    updateTopic: (id, name, fromDate, toDate, groupCount, membersPerGroup, subjectId) => {
+    updateTopic: (id, name, fromDate, toDate, groupCount, membersPerGroup, professorId) => {
       return axios.put(`/topics/edit-topic/${id}`, {
         "name": name,
         "fromDate": fromDate,
         "toDate": toDate,
         "groupCount": groupCount,
         "membersPerGroup": membersPerGroup,
-        "subjectId": subjectId
+        "professorId": professorId
       });
     },
   
@@ -107,6 +86,5 @@ const AppRepository = {
       return axios.delete(`/topics/delete-topic/${id}`);
     }
   };
-  
 
 export default AppRepository;

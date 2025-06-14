@@ -1,31 +1,29 @@
 import React from 'react';
-import {Link} from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
-const SubjectTerm = (props) => {
-    const handleDelete = () => {
-        if (window.confirm('Are you sure you want to delete this subject?')) {
-            props.onDelete(props.term.id);
-        }
+const SubjectTerm = ({ term }) => {
+    const navigate = useNavigate();
+
+    const handleDetailsClick = () => {
+        // TODO topics by subject
+        navigate(`/subjects/${term.id}`);
     };
+
     return (
-        <tr>
-            <td>{props.term.name}</td>
-            <td>{props.term.code}</td>
-            <td>{props.term.student.name}</td>
-            <td>{props.term.professor.name}</td>
-            <td className={"text-right"}>
-                <a title={"Delete"} className={"btn btn-danger"}
-                   onClick={() => props.onDelete(props.term.id)}>
-                    Delete
-                </a>
-                <Link className={"btn btn-info ml-2"}
-                      onClick={() => props.onEdit(props.term.id)}
-                      to={`/subjects/edit-subject/${props.term.id}`}>
-                    Edit
-                </Link>
-            </td>
-        </tr>
-    )
-}
+        <div className="col-sm-6 col-md-4 col-lg-3 mb-4">
+            <div className="card shadow-sm rounded-3 h-100">
+                <div className="card-body d-flex flex-column">
+                    <h5 className="card-title">{term.name}</h5>
+                    <p className="card-text"><strong>Semester Type:</strong> {term.semesterType || "-"}</p>
+                    <p className="card-text"><strong>Students:</strong> {term.studentIds?.join(', ') || "-"}</p>
+                    <p className="card-text"><strong>Professors:</strong> {term.professorIds?.join(', ') || "-"}</p>
+                    <button onClick={handleDetailsClick} className="btn btn-primary mt-auto">
+                        View Topics!
+                    </button>
+                </div>
+            </div>
+        </div>
+    );
+};
 
 export default SubjectTerm;

@@ -1,7 +1,5 @@
 package org.example.web;
 
-import org.example.model.DTOs.subjectDTO.CreateSubjectDTO;
-import org.example.model.DTOs.subjectDTO.DisplaySubjectDTO;
 import org.example.model.DTOs.topicDTO.CreateTopicDTO;
 import org.example.model.DTOs.topicDTO.DisplayTopicDTO;
 import org.example.service.application.TopicApplicationService;

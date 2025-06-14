@@ -1,7 +1,7 @@
-// src/components/Auth/Login.js
 import React, { useState } from 'react';
-import authService from '../../repository/Authentication/auth_service'; // Adjust the path based on your folder structure
+import authService from '../../repository/Authentication/auth_service';
 import { useNavigate } from 'react-router-dom';
+import './login.css';
 
 const Login = () => {
     const [formData, setFormData] = useState({
@@ -19,7 +19,7 @@ const Login = () => {
         e.preventDefault();
         authService.login(formData.username, formData.password)
             .then(() => {
-                navigate('/professors'); // Navigate to professors on successful login
+                navigate('/subjects');
             })
             .catch((error) => {
                 console.error('Error logging in:', error);
@@ -29,7 +29,7 @@ const Login = () => {
 
     return (
         <div className="container mt-5">
-            <h2>Login</h2>
+            <h2 className={"login-title"}>Login</h2>
             <form onSubmit={handleSubmit}>
                 <div className="form-group">
                     <label>Username</label>
@@ -39,7 +39,7 @@ const Login = () => {
                     <label>Password</label>
                     <input type="password" name="password" className="form-control" value={formData.password} onChange={handleChange} required />
                 </div>
-                <button type="submit" className="btn btn-primary">Login</button>
+                <button type="submit" className="btn btn-primary login-btn">Login!</button>
             </form>
         </div>
     );

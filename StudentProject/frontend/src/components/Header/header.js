@@ -1,6 +1,8 @@
-import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, {useEffect, useState} from 'react';
+import {Link} from 'react-router-dom';
 import authService from '../../repository/Authentication/auth_service';
+import './header.css'
+import finkilogo from '../../images/finki-logo.png';
 
 const Header = () => {
     const [currentUser, setCurrentUser] = useState(null);
@@ -15,34 +17,43 @@ const Header = () => {
     const logout = () => {
         authService.logout();
         setCurrentUser(null);
-        window.location.href = "/login"; 
+        window.location.href = "/login";
     };
 
     return (
         <header>
             <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
                 <div className="container-fluid">
-                    <a className="navbar-brand" href="/">Projects Management System</a>
-                    <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                        <span className="navbar-toggler-icon" />
+                    <a className="navbar-brand" href="/">
+                        <img
+                            src={finkilogo}
+                            alt="Finki Logo!"
+                            style={{width: '40px', height: '40px', marginRight: '10px'}}
+                        />
+                        Projects Management System
+                    </a>
+                    <button className="navbar-toggler" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#navbarNav"
+                            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                        <span className="navbar-toggler-icon"/>
                     </button>
                     <div className="collapse navbar-collapse" id="navbarNav">
-                        <ul className="navbar-nav me-auto mb-2 mb-lg-0">
+
+                        {/*NAV LINKS*/}
+                        <ul className="navbar-nav me-auto mb-2 mb-lg-0 nav-tabs">
                             <li className="nav-item">
-                                <Link className="nav-link" to="/students">Students</Link>
+                                <Link className="nav-link" to="/subjects">Subjects</Link>
                             </li>
                             <li className="nav-item">
                                 <Link className="nav-link" to="/professors">Professors</Link>
                             </li>
                             <li className="nav-item">
-                                <Link className="nav-link" to="/subjects">Subjects</Link>
-                            </li>
-                            <li className="nav-item">
                                 <Link className="nav-link" to="/topics">Topics</Link>
                             </li>
                         </ul>
-                        <ul className="navbar-nav ms-auto me-3">
+
+                        {/*LOGIN & REGISTER NAV LINKS*/}
+                        <ul className="navbar-nav ms-auto me-3 nav-tabs">
                             {!currentUser && (
                                 <>
                                     <li className="nav-item">

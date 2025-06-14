@@ -5,11 +5,11 @@ import org.example.model.DTOs.topicDTO.CreateTopicDTO;
 import org.example.model.DTOs.topicDTO.DisplayTopicDTO;
 import org.example.model.Student;
 import org.example.service.application.TopicApplicationService;
+import org.example.service.domain.ProfessorDomainService;
 import org.example.service.domain.StudentDomainService;
 import org.example.service.domain.SubjectDomainService;
 import org.example.service.domain.TopicDomainService;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -19,13 +19,16 @@ public class TopicApplicationServiceImpl implements TopicApplicationService {
 
     private final TopicDomainService topicDomainService;
     private final SubjectDomainService subjectDomainService;
+    private final ProfessorDomainService professorDomainService;
     private final StudentDomainService studentDomainService;
 
-    public TopicApplicationServiceImpl(TopicDomainService topicDomainService, SubjectDomainService subjectDomainService, StudentDomainService studentDomainService) {
+    public TopicApplicationServiceImpl(TopicDomainService topicDomainService, SubjectDomainService subjectDomainService, ProfessorDomainService professorDomainService, StudentDomainService studentDomainService) {
         this.topicDomainService = topicDomainService;
         this.subjectDomainService = subjectDomainService;
+        this.professorDomainService = professorDomainService;
         this.studentDomainService = studentDomainService;
     }
+
 
     @Override
     public List<DisplayTopicDTO> findAll() {
@@ -42,14 +45,14 @@ public class TopicApplicationServiceImpl implements TopicApplicationService {
 
     @Override
     public Optional<DisplayTopicDTO> create(CreateTopicDTO createTopicDTO) {
-        return subjectDomainService.findByID(createTopicDTO.subjectId())
+        return this.professorDomainService.findByID(createTopicDTO.professorId())
                 .flatMap(subject -> topicDomainService.create(createTopicDTO.toTopic(subject)))
                 .map(DisplayTopicDTO::from);
     }
 
     @Override
     public Optional<DisplayTopicDTO> update(String id, CreateTopicDTO createTopicDTO) {
-        return subjectDomainService.findByID(createTopicDTO.subjectId())
+        return this.professorDomainService.findByID(createTopicDTO.professorId())
                 .flatMap(subject -> topicDomainService.update(id, createTopicDTO.toTopic(subject)))
                 .map(DisplayTopicDTO::from);
     }

@@ -11,7 +11,7 @@ public class SubjectAllocationDTO {
         this.subjectId = allocation.getSubject().getId();
         this.subjectName = allocation.getSubject().getName();
         this.abbreviation = allocation.getSubject().getAbbreviation();
-        this.semester = allocation.getSubject().getSemester().name();
+        this.semester = allocation.getSubject().getSemesterType().name();
         this.semesterCode = allocation.getSemesterCode();
     }
 

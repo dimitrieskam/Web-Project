@@ -1,6 +1,6 @@
 package org.example.model.DTOs.topicDTO;
 
-import org.example.model.Subject;
+import org.example.model.Professor;
 import org.example.model.Topic;
 
 import java.time.LocalDate;
@@ -15,7 +15,7 @@ public record DisplayTopicDTO(
         String description,
         int groupCount,
         int membersPerGroup,
-        String subjectId
+        String professorId
 ) {
     public static DisplayTopicDTO from(Topic topic) {
         return new DisplayTopicDTO(
@@ -26,7 +26,7 @@ public record DisplayTopicDTO(
                 topic.getDescription(),
                 topic.getGroupCount(),
                 topic.getMembersPerGroup(),
-                topic.getSubject().getId()
+                topic.getProfessor().getId()
         );
     }
 
@@ -36,7 +36,7 @@ public record DisplayTopicDTO(
                 .collect(Collectors.toList());
     }
 
-    public Topic toTopic(Subject subject) {
-        return new Topic(id, name, fromDate, toDate, description, groupCount, membersPerGroup, subject);
+    public Topic toTopic(Professor professor) {
+        return new Topic(id, name, fromDate, toDate, description, groupCount, membersPerGroup, professor);
     }
 }
