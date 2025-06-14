@@ -79,7 +79,7 @@ import java.util.List;
 //        this.topicRepository.save(topic3);
 //    }
 
-<<<<<<< HEAD
+/*<<<<<<< HEAD
     private final ProfessorRepository professorRepository;
     private final StudentRepository studentRepository;
     private final SubjectRepository subjectRepository;
@@ -144,4 +144,4 @@ import java.util.List;
 }
 =======
 //}
->>>>>>> newDb
+>>>>>>> newDb */

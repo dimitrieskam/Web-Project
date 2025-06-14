@@ -42,7 +42,7 @@ public class SubjectApplicationServiceImpl implements SubjectApplicationService 
 
     @Override
     public Optional<DisplaySubjectDTO> create(CreateSubjectDTO createSubjectDTO) {
-        Optional<List<Student>> students = this.studentDomainService.findAllByIds(createSubjectDTO.studentIds());
+        Optional<List<Student>> students = this.studentDomainService.findAllByIndexes(createSubjectDTO.studentIds());
         Optional<List<Professor>> professors = this.professorDomainService.findAllByIds(createSubjectDTO.professorIds());
 
         return this.subjectDomainService.create(createSubjectDTO.toSubject(students, professors))
@@ -51,7 +51,7 @@ public class SubjectApplicationServiceImpl implements SubjectApplicationService 
 
     @Override
     public Optional<DisplaySubjectDTO> update(String id, CreateSubjectDTO createSubjectDTO) {
-        Optional<List<Student>> students = this.studentDomainService.findAllByIds(createSubjectDTO.studentIds());
+        Optional<List<Student>> students = this.studentDomainService.findAllByIndexes(createSubjectDTO.studentIds());
         Optional<List<Professor>> professors = this.professorDomainService.findAllByIds(createSubjectDTO.professorIds());
 
         return this.subjectDomainService.update(id, createSubjectDTO.toSubject(students, professors))

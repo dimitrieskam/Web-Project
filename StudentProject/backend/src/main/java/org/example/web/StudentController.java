@@ -32,13 +32,13 @@ public class StudentController {
         return ResponseEntity.ok(this.studentApplicationService.create(createStudentDTO));
     }
 
-    @PutMapping("/edit-student/{id}")
+    @PutMapping("/edit-student/{index}")
     public ResponseEntity<Optional<DisplayStudentDTO>> editStudent(@PathVariable String index,
                                                                    @RequestBody CreateStudentDTO createStudentDTO) {
         return ResponseEntity.ok(this.studentApplicationService.update(index, createStudentDTO));
     }
 
-    @DeleteMapping("delete-student/{id}")
+    @DeleteMapping("delete-student/{index}")
     public ResponseEntity<Void> deleteStudent(@PathVariable String index) {
         this.studentApplicationService.delete(index);
 

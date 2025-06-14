@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+/*import React, { Component } from "react";
 import { BrowserRouter as Router, Route, Routes, Navigate } from "react-router-dom";
 import Header from "../Header/header";
 import AppService from "../../repository/appRepository";
@@ -318,6 +318,21 @@ class App extends Component {
             </Router>
         );
     }
+}
+
+export default App;*/
+import React from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import ProfessorSubjectsPage from "../ProfessorSubjects/ProfessorSubjectsPage";
+
+function App() {
+  return (
+    <Router>
+      <Routes>
+        <Route path="/professors/:professorId/subjects" element={<ProfessorSubjectsPage />} />
+      </Routes>
+    </Router>
+  );
 }
 
 export default App;
