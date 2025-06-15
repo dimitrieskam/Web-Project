@@ -8,14 +8,20 @@ import org.example.model.TeacherSubjectAllocation;
 import org.example.service.application.SubjectAllocationService;
 import org.example.repository.TeacherSubjectAllocationRepository;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+
 
 @Service
+@Transactional
 public class SubjectAllocationServiceImpl implements SubjectAllocationService {
+
     private final TeacherSubjectAllocationRepository allocationRepository;
 
     public SubjectAllocationServiceImpl(TeacherSubjectAllocationRepository allocationRepository) {
@@ -24,94 +30,98 @@ public class SubjectAllocationServiceImpl implements SubjectAllocationService {
 
     @Override
     public List<TeacherSubjectAllocation> getAllTeacherSubjectAllocationsBySemester(String semesterCode) {
-        return null;
+        return allocationRepository.findBySemesterCode(semesterCode);
     }
 
     @Override
     public List<TeacherSubjectAllocation> getAllBySubject(String id) {
-        return null;
+        // Implementation depends on your requirements
+        return List.of();
     }
 
     @Override
     public void editTeacherSubjectAllocation(TeacherSubjectAllocation editedAllocation) {
-
+        allocationRepository.save(editedAllocation);
     }
 
     @Override
     public TeacherSubjectAllocation addTeacherSubjectAllocation(TeacherSubjectAllocationDTO newAllocation, String semester) {
+        // Implementation depends on your requirements
         return null;
     }
 
     @Override
     public void deleteTeacherSubjectAllocations(Long id) {
-
+        allocationRepository.deleteById(id);
     }
 
     @Override
     public List<TeacherSubjectAllocation> getAllocationsForSubject(JoinedSubject joinedSubject) {
-        return null;
+        return allocationRepository.findBySubject(joinedSubject, null);
     }
 
     @Override
     public List<TeacherSubjectAllocation> getAllocationsForSubjectInSemester(JoinedSubject joinedSubject, Semester semester) {
-        return null;
+        // Implementation depends on your requirements
+        return List.of();
     }
 
     @Override
     public void save(TeacherSubjectAllocation allocation) {
-
+        allocationRepository.save(allocation);
     }
 
     @Override
     public Optional<TeacherSubjectAllocation> findById(Long id) {
-        return Optional.empty();
+        return allocationRepository.findById(id);
     }
 
     @Override
     public void delete(Long id) {
-
+        allocationRepository.deleteById(id);
     }
 
     @Override
     public void cloneTeacherSubjectAllocations(String semesterFrom, String semesterTo) {
-
+        // Implementation depends on your requirements
     }
 
     @Override
     public Page<TeacherSubjectAllocation> findAll(Specification<TeacherSubjectAllocation> filter, Integer pageNum, Integer results) {
-        return null;
+        return allocationRepository.findAll(filter, PageRequest.of(pageNum, results));
     }
 
     @Override
     public void deleteBySemester(String semesterCode) {
-
+        allocationRepository.deleteBySemesterCode(semesterCode);
     }
 
     @Override
     public boolean validateAllocationsForSemester(String semesterCode) {
-        return false;
+        // Implementation depends on your validation logic
+        return true;
     }
 
     @Override
     public List<TeacherSubjectAllocation> importFromList(List<TeacherSubjectAllocation> tsa) {
-        return null;
+        return allocationRepository.saveAll(tsa);
     }
 
     @Override
     public List<TeacherSubjectAllocationDTO> getTeacherSubjectAllocationsByProfessorId(String professorId) {
-        List<TeacherSubjectAllocation> allocations =allocationRepository.findByProfessorId(professorId);
-        return  allocations.stream()
+        List<TeacherSubjectAllocation> allocations = allocationRepository.findByProfessorId(professorId);
+        return allocations.stream()
                 .map(TeacherSubjectAllocationDTO::new)
-                .toList();
+                .collect(Collectors.toList());
     }
 
     @Override
     public List<TeacherSubjectAllocation> getTeacherSubjectAllocationsByProfessorIdAndSemester(String professorId, String semesterCode) {
-        return null;
+        return allocationRepository.findByProfessorIdAndSemesterCode(professorId, semesterCode);
     }
 
     @Override
     public List<Professor> findProfessorsBySubjectAndSemester(String subjectAbbreviation, String semesterCode) {
-        return null;
+        return allocationRepository.findProfessorsBySubjectAndSemester(subjectAbbreviation, semesterCode);
     }
 }

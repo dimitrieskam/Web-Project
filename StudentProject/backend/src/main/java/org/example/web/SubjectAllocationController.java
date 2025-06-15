@@ -11,7 +11,7 @@ import java.util.List;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:3000")
-@RequestMapping("/api/professors")
+@RequestMapping("/api/allocations")
 public class SubjectAllocationController {
 
     private final SubjectAllocationServiceImpl subjectAllocationService;
@@ -22,9 +22,15 @@ public class SubjectAllocationController {
 
     // GET /api/professors/{professorId}/subjects
     @GetMapping("/{professorId}/subjects")
-    public ResponseEntity<List<TeacherSubjectAllocationDTO>> getSubjectsForProfessor(@PathVariable String professorId) {
+    public ResponseEntity<List<TeacherSubjectAllocationDTO>> getSubjectsForProfessor(@PathVariable("professorId") String professorId) {
         System.out.println("Looking for allocations for professorId: " + professorId);
-        List<TeacherSubjectAllocationDTO> subjects = subjectAllocationService.getTeacherSubjectAllocationsByProfessorId(professorId);
-        return ResponseEntity.ok(subjects);
+        try {
+            List<TeacherSubjectAllocationDTO> subjects = subjectAllocationService.getTeacherSubjectAllocationsByProfessorId(professorId);
+            return ResponseEntity.ok(subjects);
+        } catch (Exception e) {
+            e.printStackTrace();  // Logs stacktrace to console
+            return ResponseEntity.status(500).body(null);
+        }
     }
 }
+

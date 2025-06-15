@@ -15,11 +15,18 @@ public class TeacherSubjectAllocationDTO {
     private String semesterCode;
 
     public TeacherSubjectAllocationDTO(TeacherSubjectAllocation allocation) {
-        this.professor = allocation.getProfessor().getId(); // Or .getName() if needed
-        this.subject = allocation.getSubject().getName();
-        this.abbreviation = allocation.getSubject().getAbbreviation();
-        this.semester = allocation.getSubject().getSemesterType().name(); // Or allocation.getSemester().getType().name()
-        this.semesterCode = allocation.getSubject().getMainSubject().getId();
+        if (allocation.getProfessor() != null) {
+            this.professor = allocation.getProfessor().getId();
+        }
+        if (allocation.getSubject() != null) {
+            this.subject = allocation.getSubject().getName();
+            this.abbreviation = allocation.getSubject().getAbbreviation();
+            if (allocation.getSubject().getSemesterType() != null) {
+                this.semester = allocation.getSubject().getSemesterType().name();
+            }
+            if (allocation.getSubject().getMainSubject() != null) {
+                this.semesterCode = allocation.getSubject().getMainSubject().getId();
+            }
+        }
     }
-
 }

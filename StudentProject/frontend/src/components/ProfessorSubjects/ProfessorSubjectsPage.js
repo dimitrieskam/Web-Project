@@ -5,7 +5,7 @@ import ProfessorSubjects from "../ProfessorSubjects/ProfessorSubjects";
 function ProfessorSubjectsPage() {
   const { professorId } = useParams();
 
-  return <ProfessorSubjects professorId={professorId} />;
+  return <ProfessorSubjects />;
 }
 
 export default ProfessorSubjectsPage;

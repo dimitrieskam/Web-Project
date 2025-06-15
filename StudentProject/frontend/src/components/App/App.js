@@ -13,6 +13,8 @@ import Student from "../Student/StudentList/student"
 
 import TopicAdd from "../Topic/TopicAdd/topicAdd";
 import TopicEdit from "../Topic/TopicEdit/topicEdit";
+import ProfessorSubjects from "../ProfessorSubjects/ProfessorSubjects";
+import ProfessorSubjectsPage from "../ProfessorSubjects/ProfessorSubjectsPage";
 
 class App extends Component {
     constructor(props) {
@@ -176,6 +178,9 @@ class App extends Component {
                                     />
                                 }
                             />
+                            <Route
+                                path="/allocations/:professorId/subjects"
+                                element={<ProfessorSubjectsPage />}/>
 
                             {/*PATHS*/}
                             <Route path="/" element={<Navigate to="/subjects"/>}/>

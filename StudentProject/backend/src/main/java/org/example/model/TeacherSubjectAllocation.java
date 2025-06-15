@@ -46,9 +46,9 @@ import java.util.Objects;
 @ToString
 @NoArgsConstructor
 @Entity
-@JsonPropertyOrder({"semesterCode", "subjectId", "professorId",
-        "englishGroup", "numberOfLectureGroups", "numberOfExerciseGroups", "numberOfLabGroups"})
+@JsonPropertyOrder({"semesterCode", "subjectId", "professorId", "englishGroup", "numberOfLectureGroups", "numberOfExerciseGroups", "numberOfLabGroups"})
 @Table(name = "teacher_subject_allocations")
+
 public class TeacherSubjectAllocation {
 
     @Id
@@ -56,15 +56,17 @@ public class TeacherSubjectAllocation {
     private Long id;
 
     @JsonIgnore
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "professor_id")
     private Professor professor;
 
     @Column(name = "professor_id", insertable = false, updatable = false)
     private String professorId;
 
 
+
     @JsonIgnore
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "subject_id")
     private JoinedSubject subject;
 
@@ -72,11 +74,14 @@ public class TeacherSubjectAllocation {
     private String subjectId;
 
     @JsonIgnore
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "semester_code")
     private Semester semester;
 
-    @Column(name = "semester_code", updatable = false, insertable = false)
+    @Column(name = "semester_code", insertable = false, updatable = false)
     private String semesterCode;
+
+
 
     private Boolean englishGroup;
 

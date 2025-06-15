@@ -29,18 +29,19 @@ public class JoinedSubject {
     private SemesterType semesterType;
 
     @ManyToOne
+    @JoinColumn(name = "main_subject_id")
     private Subject mainSubject;
 
 
-    public JoinedSubject(String id, String name, String codes, SemesterType semesterType,
-                         Subject mainSubject) {
-        this.abbreviation = id;
+    public JoinedSubject(String abbreviation, String name, String codes, SemesterType semesterType, Subject mainSubject) {
+        this.abbreviation = abbreviation;
         this.name = name;
         this.codes = codes;
         this.semesterType = semesterType;
         this.mainSubject = mainSubject;
-
     }
+
+
 
     @Transient
     public List<String> codesList() {
@@ -49,8 +50,9 @@ public class JoinedSubject {
 
     @Transient
     public String displayName() {
-        return String.format("%s [%s] (%d+%d+%d)", name, abbreviation);
+        return String.format("%s [%s]", name, abbreviation);
     }
+
 
 
     @Override

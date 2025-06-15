@@ -11,7 +11,7 @@ import lombok.*;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-@JsonPropertyOrder({"abbreviation", "name", "codes", "semesterType", "mainSubject"})
+@JsonPropertyOrder({"abbreviation", "name", "codes", "semesterType", "mainSubjectCode"})
 public class JoinedSubjectDTO {
     private String abbreviation;
     private String name;
