@@ -22,9 +22,9 @@ public class SubjectAllocationController {
 
     // GET /api/professors/{professorId}/subjects
     @GetMapping("/{professorId}/subjects")
-    public ResponseEntity<List<TeacherSubjectAllocation>> getSubjectsForProfessor(@PathVariable String professorId) {
+    public ResponseEntity<List<TeacherSubjectAllocationDTO>> getSubjectsForProfessor(@PathVariable String professorId) {
         System.out.println("Looking for allocations for professorId: " + professorId);
-        List<TeacherSubjectAllocation> subjects = subjectAllocationService.getTeacherSubjectAllocationsByProfessorId(professorId);
+        List<TeacherSubjectAllocationDTO> subjects = subjectAllocationService.getTeacherSubjectAllocationsByProfessorId(professorId);
         return ResponseEntity.ok(subjects);
     }
 }

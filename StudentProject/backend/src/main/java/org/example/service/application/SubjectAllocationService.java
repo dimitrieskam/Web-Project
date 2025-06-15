@@ -43,7 +43,7 @@ public interface SubjectAllocationService {
 
     List<TeacherSubjectAllocation> importFromList(List<TeacherSubjectAllocation> tsa);
 
-    List<TeacherSubjectAllocation> getTeacherSubjectAllocationsByProfessorId(String professorId);
+    List<TeacherSubjectAllocationDTO> getTeacherSubjectAllocationsByProfessorId(String professorId);
 
     List<TeacherSubjectAllocation> getTeacherSubjectAllocationsByProfessorIdAndSemester(String professorId, String semesterCode);
 

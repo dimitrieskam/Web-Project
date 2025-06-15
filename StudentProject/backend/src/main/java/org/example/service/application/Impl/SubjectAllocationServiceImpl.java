@@ -98,8 +98,11 @@ public class SubjectAllocationServiceImpl implements SubjectAllocationService {
     }
 
     @Override
-    public List<TeacherSubjectAllocation> getTeacherSubjectAllocationsByProfessorId(String professorId) {
-        return allocationRepository.findByProfessorId(professorId);
+    public List<TeacherSubjectAllocationDTO> getTeacherSubjectAllocationsByProfessorId(String professorId) {
+        List<TeacherSubjectAllocation> allocations =allocationRepository.findByProfessorId(professorId);
+        return  allocations.stream()
+                .map(TeacherSubjectAllocationDTO::new)
+                .toList();
     }
 
     @Override
