@@ -13,6 +13,7 @@ function ProfessorSubjects({ professorId }) {
     api
       .get(`/professors/${professorId}/subjects`)
       .then((res) => {
+        console.log("Subjects data:", res.data);
         setSubjects(res.data);
         setLoading(false);
       })
@@ -29,16 +30,14 @@ function ProfessorSubjects({ professorId }) {
   return (
     <div className="container mt-4">
       <div className="row">
-        {subjects.map(({ subject }) => (
-          <div key={subject.id} className="col-md-4 mb-4">
+        {subjects.map(({ subject, abbreviation, semester, semesterCode }, index) => (
+          <div key={index} className="col-md-4 mb-4">
             <div className="card h-100 shadow-sm">
               <div className="card-body d-flex flex-column">
-                <h5 className="card-title">{subject.name}</h5>
-                <h6 className="card-subtitle mb-2 text-muted">{subject.abbreviation}</h6>
-                <p className="card-text mb-1"><strong>Code:</strong> {subject.id}</p>
-                <p className="card-text"><strong>Semester:</strong> {subject.semester}</p>
-                {/* Add a button or link if needed */}
-                {/* <a href="#" className="btn btn-primary mt-auto">Details</a> */}
+                <h5 className="card-title">{subject}</h5>
+                <h6 className="card-subtitle mb-2 text-muted">{abbreviation}</h6>
+                <p className="card-text mb-1"><strong>Semester:</strong> {semester}</p>
+                <p className="card-text"><strong>Semester Code:</strong> {semesterCode}</p>
               </div>
             </div>
           </div>
