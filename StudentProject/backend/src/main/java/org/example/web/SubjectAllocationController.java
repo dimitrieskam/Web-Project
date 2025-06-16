@@ -32,7 +32,7 @@ public class SubjectAllocationController {
     }
 
     @GetMapping("/topics/{topicId}")
-    public ResponseEntity<DisplayTopicDTO> getTopicById(@PathVariable String topicId) {
+    public ResponseEntity<DisplayTopicDTO> getTopicById(@PathVariable("topicId") String topicId) {
         return subjectAllocationService.getTopicById(topicId)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
@@ -63,8 +63,8 @@ public class SubjectAllocationController {
 
     @GetMapping("/{professorId}/subjects/{subjectId}/topics")
     public ResponseEntity<List<DisplayTopicDTO>> getTopicsForProfessorAndSubject(
-            @PathVariable String professorId,
-            @PathVariable String subjectId
+            @PathVariable("professorId") String professorId,
+            @PathVariable("subjectId") String subjectId
     ) {
         List<DisplayTopicDTO> topics = subjectAllocationService.getTopicsByProfessorAndSubject(professorId, subjectId);
         return ResponseEntity.ok(topics);
@@ -95,7 +95,7 @@ public class SubjectAllocationController {
     }
 
     @GetMapping("/topics/{topicId}/choose")
-    public ResponseEntity<DisplayTopicDTO> chooseTopic(@PathVariable String topicId) throws AccessDeniedException {
+    public ResponseEntity<DisplayTopicDTO> chooseTopic(@PathVariable("topicId") String topicId) throws AccessDeniedException {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String username = auth.getName();
 

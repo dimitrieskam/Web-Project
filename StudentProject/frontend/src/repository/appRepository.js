@@ -29,19 +29,21 @@ const AppRepository = {
     fetchStudents: () => {
         return axios.get("/students");
     },
-    addStudent: (name, surname, index, email) => {
+    addStudent: (index, name, lastname, username, email) => {
         return axios.post("/students/add-student", {
-            "name": name,
-            "surname": surname,
             "index": index,
+            "name": name,
+            "lastname": lastname,
+            "username": username,
             "email": email
         });
     },
-    updateStudent: (id, name, surname, index, email) => {
+    updateStudent: (id, index, name, lastname, username, email) => {
         return axios.put(`/students/edit-student/${id}`, {
+            "index":index,
             "name": name,
-            "surname": surname,
-            "index": index,
+            "lastname": lastname,
+            "username": username,
             "email": email
         });
     },

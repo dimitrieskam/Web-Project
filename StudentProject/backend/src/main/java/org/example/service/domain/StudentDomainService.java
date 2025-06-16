@@ -15,6 +15,6 @@ public interface StudentDomainService {
     Optional<Student> create(Student student);
 
     Optional<Student> update(String index, Student student);
-
+    List<Student> searchStudentsByIndex(String query);
     void delete(String index);
 }

@@ -13,7 +13,8 @@ public class Student {
 
     private String name;
 
-    private String lastName;
+    @Column(name = "last_name")
+    private String lastname;
 
     private String username;
 
@@ -25,18 +26,18 @@ public class Student {
     public Student() {
     }
 
-    public Student(String index, String name, String lastName, String username, String email) {
+    public Student(String index, String name, String lastname, String username, String email) {
         this.index = index;
         this.name = name;
-        this.lastName = lastName;
+        this.lastname = lastname;
         this.username = username;
         this.email = email;
     }
 
-    public Student(String index, String name, String lastName, String username, String email, List<Team> teams) {
+    public Student(String index, String name, String lastname, String username, String email, List<Team> teams) {
         this.index = index;
         this.name = name;
-        this.lastName = lastName;
+        this.lastname = lastname;
         this.username = username;
         this.email = email;
         this.teams = teams;
@@ -59,11 +60,11 @@ public class Student {
     }
 
     public String getLastName() {
-        return lastName;
+        return lastname;
     }
 
     public void setLastName(String lastName) {
-        this.lastName = lastName;
+        this.lastname = lastName;
     }
 
     public String getUsername() {
@@ -85,6 +86,8 @@ public class Student {
     public List<Team> getTeams() {
         return teams;
     }
+
+
 
     public void setTeams(List<Team> teams) {
         this.teams = teams;

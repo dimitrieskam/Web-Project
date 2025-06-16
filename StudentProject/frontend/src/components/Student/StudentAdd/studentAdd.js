@@ -5,9 +5,10 @@ const StudentAdd = (props) => {
 
     const navigate = useNavigate();
     const [formData, updateFormData] = React.useState({
-        name: "",
-        surname: "",
         index: "",
+        name: "",
+        lastname: "",
+        username: "",
         email: ""
     })
 
@@ -20,12 +21,13 @@ const StudentAdd = (props) => {
 
     const onFormSubmit = (e) => {
         e.preventDefault();
-        const name = formData.name;
-        const surname = formData.surname;
         const index = formData.index;
+        const name = formData.name;
+        const lastname = formData.lastname;
+        const username = formData.username;
         const email = formData.email;
 
-        props.onAddStudent(name, surname, index, email);
+        props.onAddStudent(index,name, lastname, username, email);
         navigate("/students");
     }
 
@@ -33,6 +35,17 @@ const StudentAdd = (props) => {
         <div className="row mt-5">
             <div className="col-md-5">
                 <form onSubmit={onFormSubmit}>
+                    <div className="form-group">
+                        <label htmlFor="index">Index</label>
+                        <input type="text"
+                               className="form-control"
+                               id="index"
+                               name="index"
+                               required
+                               placeholder="Enter index"
+                               onChange={handleChange}
+                        />
+                    </div>
                     <div className="form-group">
                         <label htmlFor="name">Student name</label>
                         <input type="text"
@@ -45,29 +58,29 @@ const StudentAdd = (props) => {
                         />
                     </div>
                     <div className="form-group">
-                        <label htmlFor="price">Surname</label>
+                        <label htmlFor="lastname">Lastname</label>
                         <input type="text"
                                className="form-control"
-                               id="surname"
-                               name="surname"
-                               placeholder="Surname"
+                               id="lastname"
+                               name="lastname"
+                               placeholder="Lastname"
                                required
                                onChange={handleChange}
                         />
                     </div>
                     <div className="form-group">
-                        <label htmlFor="price">Index</label>
-                        <input type="number"
+                        <label htmlFor="username">Username</label>
+                        <input type="text"
                                className="form-control"
-                               id="index"
-                               name="index"
-                               placeholder="Index"
+                               id="username"
+                               name="username"
+                               placeholder="Username"
                                required
                                onChange={handleChange}
                         />
                     </div>
                     <div className="form-group">
-                        <label htmlFor="quantity">Email</label>
+                        <label htmlFor="email">Email</label>
                         <input type="text"
                                className="form-control"
                                id="email"

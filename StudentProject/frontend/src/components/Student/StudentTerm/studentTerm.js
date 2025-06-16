@@ -4,9 +4,10 @@ import {Link} from 'react-router-dom';
 const StudentTerm = (props) => {
     return (
         <tr>
-            <td>{props.term.name}</td>
-            <td>{props.term.lastName}</td>
             <td>{props.term.index}</td>
+            <td>{props.term.name}</td>
+            <td>{props.term.lastname}</td>
+            <td>{props.term.username}</td>
             <td>{props.term.email}</td>
             <td className={"text-right"}>
                 <a title={"Delete"} className={"btn btn-danger"}

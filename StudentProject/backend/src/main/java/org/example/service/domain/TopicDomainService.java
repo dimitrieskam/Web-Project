@@ -21,7 +21,8 @@ public interface TopicDomainService {
     void delete(String id);
 
     boolean isClosed(String topicId);
-    Optional<Topic> chooseTopic(String topicId, String username) throws AccessDeniedException;
 
-    Team createTeam(String creatorUsername, CreateTeamDTO createTeamDTO);
+    Optional<Topic> chooseTopic(String topicId, String index);
+
+    Team createTeam(String topicId, CreateTeamDTO createTeamDTO);
 }

@@ -28,9 +28,10 @@ class Student extends React.Component {
                         <table className={"table table-striped"}>
                             <thead>
                             <tr>
+                                <th scope={"col"}>Index</th>
                                 <th scope={"col"}>Name</th>
-                                <th scope={"col"}>Surname</th>
-                                <th scope={"col"}>Index</th> 
+                                <th scope={"col"}>Lastname</th>
+                                <th scope={"col"}>Username</th>
                                 <th scope={"col"}>Email</th>
                             </tr>
                             </thead>

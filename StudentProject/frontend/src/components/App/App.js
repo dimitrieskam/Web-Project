@@ -17,6 +17,8 @@ import ProfessorSubjectsPage from "../ProfessorSubjects/ProfessorSubjectsPage";
 import ProfessorTopics from "../ProfessorTopic/ProfessorTopic";
 import SubjectTopicPage from "../SubjectTopic/SubjectTopicPage";
 import CreateTeam from "../Team/CreateTeam";
+import StudentAdd from "../Student/StudentAdd/studentAdd";
+import TeamsByTopic from "../Team/TeamsByTopic";
 
 class App extends Component {
     constructor(props) {
@@ -61,6 +63,13 @@ class App extends Component {
                 this.setState({students: data.data});
             })
             .catch((error) => console.error("Error fetching students:", error));
+    };
+    addStudent = (index, name, lastname, username, email) => {
+        AppService.addStudent(index, name, lastname, username, email)
+            .then(() => {
+                this.loadStudents();
+            })
+            .catch((error) => console.error("Error adding student:", error));
     };
 
     // ====== SUBJECTS ======
@@ -142,6 +151,14 @@ class App extends Component {
                                     />
                                 }
                             />
+                            <Route
+                                path="/students/add-student"
+                                element={
+                                    <StudentAdd
+                                        onAddStudent={this.addStudent}
+                                    />
+                                }
+                            />
 
                             {/*SUBJECTS*/}
                             <Route
@@ -202,6 +219,9 @@ class App extends Component {
                             <Route
                                 path="/teams/create-team/:topicId"
                                 element={<CreateTeam/>}/>
+
+                            <Route path="/teams/topic/:topicId" element={<TeamsByTopic />} />
+
 
                             {/*PATHS*/}
                             <Route path="/" element={<Navigate to="/subjects"/>}/>

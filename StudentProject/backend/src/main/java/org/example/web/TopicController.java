@@ -5,6 +5,8 @@ import org.example.model.DTOs.topicDTO.DisplayTopicDTO;
 import org.example.service.application.SubjectAllocationService;
 import org.example.service.application.TopicApplicationService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.nio.file.AccessDeniedException;
@@ -51,9 +53,19 @@ public class TopicController {
         return ResponseEntity.ok(subjectAllocationService.isClosed(topicId));
     }
 
-    @PostMapping("/{topicId}/choose")
-    public ResponseEntity<DisplayTopicDTO> chooseTopic(@PathVariable String topicId,
-                                                       @RequestParam String username) throws AccessDeniedException {
+
+    @GetMapping("/{topicId}")
+    public ResponseEntity<DisplayTopicDTO> getTopicById(@PathVariable("topicId") String topicId) {
+        return subjectAllocationService.getTopicById(topicId)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    }
+
+    @GetMapping("/{topicId}/choose")
+    public ResponseEntity<DisplayTopicDTO> chooseTopic(@PathVariable("topicId") String topicId) throws AccessDeniedException {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String username = auth.getName();
+
         return subjectAllocationService.chooseTopic(topicId, username)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());

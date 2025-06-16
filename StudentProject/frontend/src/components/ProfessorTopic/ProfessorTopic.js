@@ -97,11 +97,12 @@ function ProfessorTopics({professorId: propProfessorId}) {
                                 </Link>
                                 <Link
                                     className="btn btn-primary"
-                                    onClick={() => handleChooseTopic(topic.id)}
-
+                                    to={`/teams/create-team/${topic.id}`}
                                 >
                                     Choose Topic
                                 </Link>
+
+
                             </div>
                         </div>
                     </div>

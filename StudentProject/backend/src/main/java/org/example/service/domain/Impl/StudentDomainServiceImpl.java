@@ -59,6 +59,12 @@ public class StudentDomainServiceImpl implements StudentDomainService {
     }
 
     @Override
+    public List<Student> searchStudentsByIndex(String query) {
+        return studentRepository.findByIndexContainingIgnoreCase(query);
+
+    }
+
+    @Override
     public void delete(String index) {
         this.studentRepository.deleteById(index);
     }

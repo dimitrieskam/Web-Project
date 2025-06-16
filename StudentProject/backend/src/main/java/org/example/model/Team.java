@@ -10,8 +10,8 @@ import java.util.List;
 public class Team {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String id;
+    @Column(name = "id", updatable = false, nullable = false)
+    private String id = java.util.UUID.randomUUID().toString();
 
     @Column(name = "team_name")
     private String name;
@@ -20,7 +20,12 @@ public class Team {
     @JoinColumn(name = "topic_id")
     private Topic topic;
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "teams_members",
+            joinColumns = @JoinColumn(name = "teams_id"),
+            inverseJoinColumns = @JoinColumn(name = "members_id") // ✅ must match Student PK
+    )
     private List<Student> members = new ArrayList<>();
 
     public Team() {

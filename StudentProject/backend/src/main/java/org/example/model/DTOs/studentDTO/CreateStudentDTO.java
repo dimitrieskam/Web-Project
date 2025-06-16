@@ -7,7 +7,7 @@ import java.util.stream.Collectors;
 public record CreateStudentDTO(
         String index,
         String name,
-        String lastName,
+        String lastname,
         String username,
         String email
 ) {
@@ -28,6 +28,6 @@ public record CreateStudentDTO(
     }
 
     public Student toStudent() {
-        return new Student(index, name, lastName, username, email);
+        return new Student(index, name, lastname, username, email);
     }
 }

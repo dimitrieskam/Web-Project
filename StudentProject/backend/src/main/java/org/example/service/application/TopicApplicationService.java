@@ -24,5 +24,8 @@ public interface TopicApplicationService {
 
     boolean isClosed(String topicId);
 
-    DisplayTeamDTO createTeam(String creatorUsername, CreateTeamDTO createTeamDTO);
+    DisplayTeamDTO createTeam(String topicId, CreateTeamDTO createTeamDTO, String username);
+    List<DisplayTeamDTO> getTeamsByTopic(String topicId);
+    DisplayTeamDTO getTeamById(String teamId);
+    void deleteTeam(String teamId, String username);
 }
