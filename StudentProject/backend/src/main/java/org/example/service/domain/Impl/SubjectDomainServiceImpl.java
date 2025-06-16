@@ -42,7 +42,7 @@ public class SubjectDomainServiceImpl implements SubjectDomainService {
             Subject existing_subject = subject_obj.get();
             existing_subject.setName(subject.getName());
             existing_subject.setAbbreviation(subject.getAbbreviation());
-            existing_subject.setSemester(subject.getSemester());
+            existing_subject.setSemesterType(subject.getSemesterType());
             existing_subject.setStudents(subject.getStudents());
             existing_subject.setProfessors(subject.getProfessors());
 

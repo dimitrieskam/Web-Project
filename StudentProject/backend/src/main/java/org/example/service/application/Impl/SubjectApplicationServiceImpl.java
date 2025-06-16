@@ -3,7 +3,9 @@ package org.example.service.application.Impl;
 import org.example.model.DTOs.subjectDTO.CreateSubjectDTO;
 import org.example.model.DTOs.subjectDTO.DisplaySubjectDTO;
 import org.example.model.Professor;
+import org.example.model.Semester;
 import org.example.model.Student;
+import org.example.model.Subject;
 import org.example.service.application.SubjectApplicationService;
 import org.example.service.domain.ProfessorDomainService;
 import org.example.service.domain.StudentDomainService;
@@ -42,20 +44,39 @@ public class SubjectApplicationServiceImpl implements SubjectApplicationService 
 
     @Override
     public Optional<DisplaySubjectDTO> create(CreateSubjectDTO createSubjectDTO) {
-        Optional<List<Student>> students = this.studentDomainService.findAllByIds(createSubjectDTO.studentIds());
-        Optional<List<Professor>> professors = this.professorDomainService.findAllByIds(createSubjectDTO.professorIds());
+        Optional<List<Student>> studentsOpt = studentDomainService.findAllByIndexes(createSubjectDTO.studentIds());
+        Optional<List<Professor>> professorsOpt = professorDomainService.findAllByIds(createSubjectDTO.professorIds());
 
-        return this.subjectDomainService.create(createSubjectDTO.toSubject(students, professors))
-                .map(DisplaySubjectDTO::from);
+        if (studentsOpt.isPresent() && professorsOpt.isPresent()) {
+            Subject subject = createSubjectDTO.toSubject(
+                    studentsOpt.get(),
+                    professorsOpt.get()
+            );
+
+            return subjectDomainService.create(subject)
+                    .map(DisplaySubjectDTO::from);
+        }
+
+        return Optional.empty();
     }
+
 
     @Override
     public Optional<DisplaySubjectDTO> update(String id, CreateSubjectDTO createSubjectDTO) {
-        Optional<List<Student>> students = this.studentDomainService.findAllByIds(createSubjectDTO.studentIds());
-        Optional<List<Professor>> professors = this.professorDomainService.findAllByIds(createSubjectDTO.professorIds());
+        Optional<List<Student>> studentsOpt = studentDomainService.findAllByIndexes(createSubjectDTO.studentIds());
+        Optional<List<Professor>> professorsOpt = professorDomainService.findAllByIds(createSubjectDTO.professorIds());
 
-        return this.subjectDomainService.update(id, createSubjectDTO.toSubject(students, professors))
-                .map(DisplaySubjectDTO::from);
+        if (studentsOpt.isPresent() && professorsOpt.isPresent()) {
+            Subject subject = createSubjectDTO.toSubject(
+                    studentsOpt.get(),
+                    professorsOpt.get()
+            );
+
+            return subjectDomainService.create(subject)
+                    .map(DisplaySubjectDTO::from);
+        }
+
+        return Optional.empty();
     }
 
     @Override

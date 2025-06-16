@@ -16,7 +16,8 @@ public interface TopicDomainService {
     Optional<Topic> update(String id, Topic topic);
 
     void delete(String id);
-    boolean isClosed(String topicId);
-    Optional<Topic> chooseTopic(String topicId, List<Student> students);
 
+    boolean isClosed(String topicId);
+
+    Optional<Topic> chooseTopic(String topicId, List<Student> students);
 }

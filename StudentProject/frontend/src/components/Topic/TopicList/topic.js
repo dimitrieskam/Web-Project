@@ -15,11 +15,12 @@ class Topic extends React.Component {
     }
 
     render() {
+        const topics = this.props.topics || [];  // default to empty array
+        const pageCount = Math.ceil(topics.length / this.state.size);
         const offset = this.state.size * this.state.page;
         const nextPageOffset = offset + this.state.size;
-        const pageCount = Math.ceil(this.props.topics.length / this.state.size);
-        const topics = this.getTopicPage(offset, nextPageOffset);
-        console.log(topics, pageCount)
+        const topicsPage = this.getTopicPage(offset, nextPageOffset, topics);
+
 
         return (
             <div className={"container mm-4 mt-5"}>
@@ -29,15 +30,18 @@ class Topic extends React.Component {
                             <thead>
                             <tr>
                                 <th scope={"col"}>Name</th>
+                                <th scope={"col"}>Description</th>
                                 <th scope={"col"}>From Date</th>
                                 <th scope={"col"}>To Date</th>
                                 <th scope={"col"}>Group Count</th>
                                 <th scope={"col"}>Members per Group</th>
+                                <th scope={"col"}>Professor</th>
                                 <th scope={"col"}>Subject</th>
+                                <th scope={"col"}>Actions</th>
                             </tr>
                             </thead>
                             <tbody>
-                            {topics}
+                            {topicsPage}
                             </tbody>
                         </table>
                     </div>
@@ -72,16 +76,14 @@ class Topic extends React.Component {
         })
     }
 
-    getTopicPage = (offset, nextPageOffset) => {
-        console.log(offset, nextPageOffset)
-        return this.props.topics.map((term, index) => {
-            return (
-                <TopicTerm term={term} onDelete={this.props.onDelete} onEdit={this.props.onEdit}/>
-            );
-        }).filter((topic, index) => {
-            return index >= offset && index < nextPageOffset;
-        })
-    }
+    getTopicPage = (offset, nextPageOffset, topics) => {
+    return topics
+      .map((term, index) => (
+          <TopicTerm key={term.id} term={term} onDelete={this.props.onDelete} onEdit={this.props.onEdit} />
+      ))
+      .filter((topic, index) => index >= offset && index < nextPageOffset);
+}
+
 }
 
 export default Topic;

@@ -1,30 +1,27 @@
 import React from 'react';
-import {Link} from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
-const ProfessorTerm = (props) => {
-    const handleDelete = () => {
-        if (window.confirm('Are you sure you want to delete this professor?')) {
-            props.onDelete(props.term.id);
-        }
+const ProfessorTerm = ({ term }) => {
+    const navigate = useNavigate();
+
+    const handleDetailsClick = () => {
+        // TODO subjects by professor
+        navigate(`/allocations/${term.id}/subjects`);
     };
+
     return (
-        <tr>
-            <td>{props.term.name}</td>
-            <td>{props.term.surname}</td>
-            <td>{props.term.email}</td>
-            <td className={"text-right"}>
-                <a title={"Delete"} className={"btn btn-danger"}
-                   onClick={() => props.onDelete(props.term.id)}>
-                    Delete
-                </a>
-                <Link className={"btn btn-info ml-2"}
-                      onClick={() => props.onEdit(props.term.id)}
-                      to={`/professors/edit-professor/${props.term.id}`}>
-                    Edit
-                </Link>
-            </td>
-        </tr>
-    )
-}
+        <div className="col-sm-6 col-md-4 col-lg-3 mb-4">
+            <div className="card shadow-sm rounded-3 h-100">
+                <div className="card-body d-flex flex-column">
+                    <h5 className="card-title">{term.name}</h5>
+                    <p className="card-text text-muted">{term.email}</p>
+                    <button onClick={handleDetailsClick} className="btn btn-primary mt-auto">
+                        View Subjects!
+                    </button>
+                </div>
+            </div>
+        </div>
+    );
+};
 
 export default ProfessorTerm;

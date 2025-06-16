@@ -5,17 +5,17 @@ const StudentTerm = (props) => {
     return (
         <tr>
             <td>{props.term.name}</td>
-            <td>{props.term.surname}</td>
+            <td>{props.term.lastName}</td>
             <td>{props.term.index}</td>
             <td>{props.term.email}</td>
             <td className={"text-right"}>
                 <a title={"Delete"} className={"btn btn-danger"}
-                   onClick={() => props.onDelete(props.term.id)}>
+                   onClick={() => props.onDelete(props.term.index)}>
                     Delete
                 </a>
                 <Link className={"btn btn-info ml-2"}
-                      onClick={() => props.onEdit(props.term.id)}
-                      to={`/students/edit-student/${props.term.id}`}>
+                      onClick={() => props.onEdit(props.term.index)}
+                      to={`/students/edit-student/${props.term.index}`}>
                     Edit
                 </Link>
             </td>

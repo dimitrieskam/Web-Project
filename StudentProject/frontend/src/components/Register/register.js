@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import authService from '../../repository/Authentication/auth_service';
- // Check path carefully
-import { useNavigate } from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
+import './register.css'
 
 const Register = () => {
     const [formData, setFormData] = useState({
@@ -10,20 +10,20 @@ const Register = () => {
         username: '',
         password: '',
         repeatedPassword: '',
-        role: 'ROLE_STUDENT',
+        role: '',
     });
 
     const [error, setError] = useState(null);
     const navigate = useNavigate();
 
     const handleChange = (e) => {
-        setFormData({ ...formData, [e.target.name]: e.target.value });
+        setFormData({...formData, [e.target.name]: e.target.value});
     };
 
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        const { name, surname, username, password, repeatedPassword, role } = formData;
+        const {name, surname, username, password, repeatedPassword, role} = formData;
 
         if (password !== repeatedPassword) {
             setError("Passwords do not match");
@@ -36,7 +36,6 @@ const Register = () => {
             .then((response) => {
                 console.log("Registration successful", response);
 
-                // Redirect after registration
                 navigate("/login");
             })
             .catch((error) => {
@@ -51,7 +50,7 @@ const Register = () => {
 
     return (
         <div className="container mt-5">
-            <h2>Register</h2>
+            <h2 className={"register-title"}>Register</h2>
             {error && <div className="alert alert-danger">{error}</div>}
             <form onSubmit={handleSubmit}>
                 <div className="form-group">
@@ -117,14 +116,15 @@ const Register = () => {
                         value={formData.role}
                         onChange={handleChange}
                     >
+                        <option value="" disabled hidden>
+                            -- Select Role --
+                        </option>
                         <option value="ROLE_STUDENT">Student</option>
                         <option value="ROLE_ADMIN">Admin</option>
                         <option value="ROLE_PROFESSOR">Professor</option>
                     </select>
                 </div>
-                <button type="submit" className="btn btn-primary mt-3">
-                    Register
-                </button>
+                <button type="submit" className="btn btn-primary mt-3 register-btn">Register!</button>
             </form>
         </div>
     );

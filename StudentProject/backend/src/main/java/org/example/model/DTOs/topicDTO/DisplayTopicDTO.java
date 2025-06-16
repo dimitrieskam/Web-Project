@@ -1,7 +1,6 @@
 package org.example.model.DTOs.topicDTO;
 
-import org.example.model.DTOs.teamDTO.DisplayTeamDTO;
-import org.example.model.Subject;
+import org.example.model.Professor;
 import org.example.model.Topic;
 
 import java.time.LocalDate;
@@ -11,27 +10,33 @@ import java.util.stream.Collectors;
 public record DisplayTopicDTO(
         String id,
         String name,
+        String description,
         LocalDate fromDate,
         LocalDate toDate,
-        String description,
         int groupCount,
         int membersPerGroup,
-        String subjectId,
-        List<DisplayTeamDTO> teams
+        String professorId,
+        String subjectId
 ) {
     public static DisplayTopicDTO from(Topic topic) {
+        String subjectId = null;
+
+        if (topic.getJoinedSubject() != null && topic.getJoinedSubject().getMainSubject() != null) {
+            subjectId = topic.getJoinedSubject().getMainSubject().getId();
+        } else {
+            System.err.println("[WARNING] Topic with ID " + topic.getId() + " has null JoinedSubject or MainSubject.");
+        }
+
         return new DisplayTopicDTO(
                 topic.getId(),
                 topic.getName(),
+                topic.getDescription(),
                 topic.getFromDate(),
                 topic.getToDate(),
-                topic.getDescription(),
                 topic.getGroupCount(),
                 topic.getMembersPerGroup(),
-                topic.getSubject().getId(),
-                topic.getTeams().stream()
-                        .map(DisplayTeamDTO::from)
-                        .collect(Collectors.toList())
+                topic.getProfessor() != null ? topic.getProfessor().getId() : null,
+                subjectId
         );
     }
 
@@ -41,7 +46,7 @@ public record DisplayTopicDTO(
                 .collect(Collectors.toList());
     }
 
-    public Topic toTopic(Subject subject) {
-        return new Topic(id, name, fromDate, toDate, description, groupCount, membersPerGroup, subject);
+    public Topic toTopic(Professor professor) {
+        return new Topic(id, name, description, fromDate, toDate, groupCount, membersPerGroup, professor);
     }
 }

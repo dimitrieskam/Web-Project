@@ -1,0 +1,23 @@
+body {
+    margin: 0;
+    height: 100vh;
+    background: linear-gradient(135deg, #0f2027, #203a43, #2c5364, #6dd5fa);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    font-family: "Cascadia Code", serif;
+}
+
+.navbar {
+    background: linear-gradient(to right, #000000, #434343);
+}
+
+.navbar-brand {
+    color: #6dd5fa;
+}
+
+#nav-tabs {
+    font-size: 18px;
+    letter-spacing: 5px;
+    word-spacing: 20px;
+}

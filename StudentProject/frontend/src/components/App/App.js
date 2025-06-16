@@ -1,23 +1,21 @@
-import React, { Component } from "react";
-import { BrowserRouter as Router, Route, Routes, Navigate } from "react-router-dom";
+import React, {Component} from "react";
+import {BrowserRouter as Router, Route, Routes, Navigate} from "react-router-dom";
 import Header from "../Header/header";
 import AppService from "../../repository/appRepository";
+
 import Login from "../Login/login";
 import Register from "../Register/register"
-import Professors from "../Professor/ProfessorList/professor"
-import ProfessorAdd from "../Professor/ProfessorAdd/professorAdd";
-import ProfessorEdit from "../Professor/ProfessorEdit/professorEdit";
-import Student from "../Student/StudentList/student"
-import StudentAdd from "../Student/StudentAdd/studentAdd";
-import StudentEdit from "../Student/StudentEdit/studentEdit";
+
 import Subject from "../Subject/SubjectList/subject"
-import SubjectAdd from "../Subject/SubjectAdd/subjectAdd";
-import SubjectEdit from "../Subject/SubjectEdit/subjectEdit";
+import Professors from "../Professor/ProfessorList/professor"
 import Topic from "../Topic/TopicList/topic"
+import Student from "../Student/StudentList/student"
+
 import TopicAdd from "../Topic/TopicAdd/topicAdd";
 import TopicEdit from "../Topic/TopicEdit/topicEdit";
-
-
+import ProfessorSubjects from "../ProfessorSubjects/ProfessorSubjects";
+import ProfessorSubjectsPage from "../ProfessorSubjects/ProfessorSubjectsPage";
+import ProfessorTopics from "../ProfessorTopic/ProfessorTopic";
 
 class App extends Component {
     constructor(props) {
@@ -45,166 +43,41 @@ class App extends Component {
         this.loadTopics();
     };
 
-  
-    //Professors
+    // ====== PROFESSORS ======//
     loadProfessors = () => {
         AppService.fetchProfessors()
             .then((data) => {
-                this.setState({ professors: data.data });
+                this.setState({professors: data.data});
             })
             .catch((error) => console.error("Error fetching professors:", error));
     };
-    deleteProfessor = (id) => {
-      AppService.deleteProfessor(id)
-          .then(() => {
-              this.loadProfessors();
-          })
-          .catch((error) => console.error("Error deleting professor:", error));
-  };
 
-  addProfessor = (name, surname, email) => {
-      AppService.addProfessor(name, surname, email)
-          .then(() => {
-              this.loadProfessors();
-          })
-          .catch((error) => console.error("Error adding professor:", error));
-  };
-
-  updateProfessor = (id, name, surname, email) => {
-      AppService.updateProfessor(id, name, surname, email)
-          .then(() => {
-              this.loadProfessors();
-          })
-          .catch((error) => console.error("Error updating professor:", error));
-  };
-
-  getProfessor = (id) => {
-      AppService.getProfessor(id)
-          .then((data) => {
-              this.setState({
-                  selectedProfessor: data.data,
-              });
-          })
-          .catch((error) => console.error("Error fetching professor:", error));
-  };
-
-  //Students
+    // ====== STUDENTS ======
     loadStudents = () => {
-       
+
         AppService.fetchStudents()
             .then((data) => {
-                this.setState({ students: data.data });
+                this.setState({students: data.data});
             })
             .catch((error) => console.error("Error fetching students:", error));
     };
 
-    deleteStudet = (id) => {
-        AppService.deleteStudent(id)
-            .then(() => {
-                this.loadStudents();
-            })
-            .catch((error) => console.error("Error deleting student:", error));
-    };
-
-    addStudent = (name, surname, index, email) => {
-        AppService.addStudent(name, surname, index, email)
-            .then(() => {
-                this.loadStudents();
-            })
-            .catch((error) => console.error("Error adding student:", error));
-    };
-
-    updateStudent = (id, name, surname, index, email) => {
-        AppService.updateStudent(id, name, surname, index, email)
-            .then(() => {
-                this.loadStudents();
-            })
-            .catch((error) => console.error("Error updating student:", error));
-    };
-
-    getStudent = (id) => {
-        AppService.getStudent(id)
-            .then((data) => {
-                this.setState({
-                    selectedStudent: data.data,
-                });
-            })
-            .catch((error) => console.error("Error fetching student:", error));
-    };
-
-    //Subjects
+    // ====== SUBJECTS ======
     loadSubjects = () => {
         AppService.fetchSubjects()
             .then((data) => {
-                this.setState({ subjects: data.data });
+                this.setState({subjects: data.data});
             })
             .catch((error) => console.error("Error fetching subjects:", error));
     };
-    deleteSubject = (id) => {
-        AppService.deleteSubject(id)
-            .then(() => {
-                this.loadSubjects();
-            })
-            .catch((error) => console.error("Error deleting subject:", error));
-    };
 
-    addSubject = (name, code, students, professors) => {
-        AppService.addSubject(name, code, students, professors)
-            .then(() => {
-                this.loadSubjects();
-            })
-            .catch((error) => console.error("Error adding subject:", error));
-    };
-
-    updateSubject = (id, name, code, students, professors) => {
-        AppService.updateSubject(id, name, code, students, professors)
-            .then(() => {
-                this.loadSubjects();
-            })
-            .catch((error) => console.error("Error updating subject:", error));
-    };
-
-    getSubject = (id) => {
-        AppService.getSubject(id)
-            .then((data) => {
-                this.setState({
-                    selectedSubject: data.data,
-                });
-            })
-            .catch((error) => console.error("Error fetching subject:", error));
-    };
-
-    //Topics
+    // ====== TOPICS ======
     loadTopics = () => {
-      AppService.fetchTopics()
-          .then((data) => {
-              this.setState({ topics: data.data });
-          })
-          .catch((error) => console.error("Error fetching topics:", error));
-  };
-    
-    deleteTopic = (id) => {
-        AppService.deleteTopic(id)
-            .then(() => {
-                this.loadTopics();
+        AppService.fetchTopics()
+            .then((data) => {
+                this.setState({topics: data.data});
             })
-            .catch((error) => console.error("Error deleting topic:", error));
-    };
-
-    addTopic = (name, fromDate, toDate, groupCount, membersPerGroup, subjectId) => {
-        AppService.addTopic(name, fromDate, toDate, groupCount, membersPerGroup, subjectId)
-            .then(() => {
-                this.loadTopics();
-            })
-            .catch((error) => console.error("Error adding topic:", error));
-    };
-
-    updateTopic = (id,name, fromDate, toDate, groupCount, membersPerGroup, subjectId) => {
-        AppService.updateTopic(id, name, fromDate, toDate, groupCount, membersPerGroup, subjectId)
-            .then(() => {
-                this.loadTopics();
-            })
-            .catch((error) => console.error("Error updating topic:", error));
+            .catch((error) => console.error("Error fetching topics:", error));
     };
 
     getTopic = (id) => {
@@ -217,84 +90,86 @@ class App extends Component {
             .catch((error) => console.error("Error fetching topic:", error));
     };
 
-    
+    addTopic = (name, description, fromDate, toDate, groupCount, membersPerGroup, professorId, subjectId) => {
+  AppService.addTopic(name, description, fromDate, toDate, groupCount, membersPerGroup, professorId, subjectId)
+    .then(() => {
+      this.loadTopics();
+    })
+    .catch((error) => console.error("Error adding topic:", error));
+};
+
+
+    updateTopic = (id, name, fromDate, toDate, groupCount, membersPerGroup, professorId) => {
+        AppService.updateTopic(id, name, fromDate, toDate, groupCount, membersPerGroup, professorId)
+            .then(() => {
+                this.loadTopics();
+            })
+            .catch((error) => console.error("Error updating topic:", error));
+    };
+
+    deleteTopic = (id) => {
+        AppService.deleteTopic(id)
+            .then(() => {
+                this.loadTopics();
+            })
+            .catch((error) => console.error("Error deleting topic:", error));
+    };
+
     render() {
         return (
-
             <Router>
-
-
-                <Header />
+                <Header/>
                 <main>
-                    <div >
+                    <div>
                         <Routes>
+                            {/*PROFESSORS*/}
                             <Route
                                 path="/professors"
-                                element={<Professors
-                                    professors={this.state.professors}
-                                    onDelete={this.deleteProfessor}
-                                    onEdit={this.getProfessor}/>}
-                            />
-                            <Route
-                                path="/professors/add-professor"
-                                element={<ProfessorAdd onAddProfessor={this.addProfessor} />}
-                            />
-                            <Route
-                                path="/professors/edit-professor/:id"
                                 element={
-                                    <ProfessorEdit
-                                        onEditProfessor={this.updateProfessor}
-                                        professor={this.state.selectedProfessor}
+                                    <Professors
+                                        professors={this.state.professors}
                                     />
                                 }
                             />
 
-                            <Route path="/students" element={<Student
-                                students={this.state.students}
-                                onDelete={this.deleteStudet} 
-                                onEdit={this.getStudent}   
-                            />} />
+                            {/*STUDENTS*/}
                             <Route
-                                path="/students/add-student"
-                                element={<StudentAdd onAddStudent={this.addStudent} />}
-                            />
-                            <Route
-                                path="/students/edit-student/:id"
+                                path="/students"
                                 element={
-                                    <StudentEdit
-                                        onEditStudent={this.updateStudent}
-                                        student={this.state.selectedStudent}
+                                    <Student
+                                        students={this.state.students}
                                     />
                                 }
                             />
 
-                            <Route path="/subjects" element={<Subject
-                                subjects={this.state.subjects}
-                                onEdit={this.getSubject}
-                                onDelete={this.deleteSubject}
-                                />}
-                                />
+                            {/*SUBJECTS*/}
                             <Route
-                                path="/subjects/add-subject"
-                                element={<SubjectAdd subjects={this.state.subjects} onAddSubject={this.addSubject} />}
-                            />
-                            <Route
-                                path="/subjects/edit-subject/:id"
+                                path="/subjects"
                                 element={
-                                    <SubjectEdit
+                                    <Subject
                                         subjects={this.state.subjects}
-                                        onEditSubject={this.updateSubject} 
                                     />
                                 }
                             />
-                            <Route path="/topics" element={<Topic
-                                topics={this.state.topics}
-                                onEdit={this.getTopic}
-                                onDelete={this.deleteTopic}
-                            />} />
+
+                            {/*TOPICS*/}
+                            <Route
+                                path="/topics"
+                                element={
+                                    <Topic
+                                        topics={this.state.topics}
+                                        onEdit={this.getTopic}
+                                        onDelete={this.deleteTopic}
+                                    />
+                                }
+                            />
                             <Route
                                 path="/topics/add-topic"
-                                element={<TopicAdd onAddTopic={this.addTopic} />}
+                                element={
+                                    <TopicAdd
+                                        onAddTopic={this.addTopic}
+                                    />
+                                }
                             />
                             <Route
                                 path="/topics/edit-topic/:id"
@@ -305,19 +180,44 @@ class App extends Component {
                                     />
                                 }
                             />
+                            <Route
+                                path="/allocations/:professorId/subjects"
+                                element={<ProfessorSubjectsPage />}/>
+                            <Route
+                                path="/allocations/professors/:professorId/topics"
+                                element={<ProfessorTopics />}/>
+                            <Route
+                                path="/allocations/:professorId/subjects/:subjectId/topics/add-topic"
+                                element={<TopicAdd onAddTopic={this.addTopic} />}/>
 
-                            <Route path="/" element={<Navigate to="/professors" />} />
-                            <Route path="/login" element={<Login />} />
-                            <Route path="/register" element={<Register />} />
-
-
+                            {/*PATHS*/}
+                            <Route path="/" element={<Navigate to="/subjects"/>}/>
+                            <Route path="/login" element={<Login/>}/>
+                            <Route path="/register" element={<Register/>}/>
                         </Routes>
                     </div>
                 </main>
-
             </Router>
         );
     }
 }
 
 export default App;
+
+// TODO ako ti treba, ako ne izbrishi go Angela,
+//  kaj kartichkata za profesor ima kopche, pa tamu da se listaat predmetite po profesor
+// import React from "react";
+// import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+// import ProfessorSubjectsPage from "../ProfessorSubjects/ProfessorSubjectsPage";
+//
+// function App() {
+//   return (
+//     <Router>
+//       <Routes>
+//         <Route path="/professors/:professorId/subjects" element={<ProfessorSubjectsPage />} />
+//       </Routes>
+//     </Router>
+//   );
+// }
+//
+// export default App;

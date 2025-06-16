@@ -60,6 +60,11 @@ public class User implements UserDetails {
     public List<Token> getTokens() {
         return tokens;
     }
+    @Override
+    public String getUsername() {
+        return username;
+    }
+
 
     public void setTokens(List<Token> tokens) {
         this.tokens = tokens;

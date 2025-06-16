@@ -10,16 +10,20 @@ const TopicTerm = (props) => {
     return (
         <tr>
             <td>{props.term.name}</td>
+            <td>{props.term.description}</td>
             <td>{props.term.fromDate}</td>
             <td>{props.term.toDate}</td>
             <td>{props.term.groupCount}</td>
             <td>{props.term.membersPerGroup}</td>
-            <td>{props.term.subject.name}</td>
+            <td>{props.term.professors?.name || props.term.professorId}</td>
+            <td>{props.term.subject?.name || props.term.subjectId}</td>
+            
             <td className={"text-right"}>
                 <a title={"Delete"} className={"btn btn-danger"}
                    onClick={() => props.onDelete(props.term.id)}>
                     Delete
                 </a>
+
                 <Link className={"btn btn-info ml-2"}
                       onClick={() => props.onEdit(props.term.id)}
                       to={`/topics/edit-topic/${props.term.id}`}>
