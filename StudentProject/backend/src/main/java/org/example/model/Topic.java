@@ -12,11 +12,10 @@ import java.util.List;
 public class Topic {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-
     private String id;
 
     private String name;
+
     private String description;
 
     private LocalDate fromDate;
@@ -34,14 +33,6 @@ public class Topic {
     @ManyToOne
     private Subject subject;
 
-    public JoinedSubject getJoinedSubject() {
-        return joinedSubject;
-    }
-
-    public void setJoinedSubject(JoinedSubject joinedSubject) {
-        this.joinedSubject = joinedSubject;
-    }
-
     @ManyToOne
     private Professor professor;
 
@@ -50,7 +41,6 @@ public class Topic {
 
     public Topic() {
     }
-
 
     public Topic(String name, String description, LocalDate fromDate, LocalDate toDate,int groupCount, int membersPerGroup, Professor professor) {
         this.name = name;
@@ -115,6 +105,14 @@ public class Topic {
         this.name = name;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     public LocalDate getFromDate() {
         return fromDate;
     }
@@ -131,14 +129,6 @@ public class Topic {
         this.toDate = toDate;
     }
 
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
     public int getGroupCount() {
         return groupCount;
     }
@@ -153,6 +143,14 @@ public class Topic {
 
     public void setMembersPerGroup(int membersPerGroup) {
         this.membersPerGroup = membersPerGroup;
+    }
+
+    public JoinedSubject getJoinedSubject() {
+        return joinedSubject;
+    }
+
+    public void setJoinedSubject(JoinedSubject joinedSubject) {
+        this.joinedSubject = joinedSubject;
     }
 
     public Subject getSubject() {

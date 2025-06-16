@@ -8,8 +8,11 @@ import org.example.model.TeacherSubjectAllocation;
 import org.example.service.application.Impl.SubjectAllocationServiceImpl;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+import java.nio.file.AccessDeniedException;
 import java.util.List;
 
 @RestController
@@ -36,10 +39,14 @@ public class SubjectAllocationController {
     }
 
     @GetMapping("/professors/{professorId}/topics")
-    public List<DisplayTopicDTO> getTopicsByProfessor(@PathVariable String professorId) {
+    public List<DisplayTopicDTO> getTopicsByProfessor(@PathVariable("professorId") String professorId) {
         return subjectAllocationService.getTopicsByProfessor(professorId);
     }
 
+    @GetMapping("/subjects/{subjectId}/topics")
+    public List<DisplayTopicDTO> getTopicsBySubject(@PathVariable("subjectId") String subjectId) {
+        return subjectAllocationService.getTopicsBySubject(subjectId);
+    }
 
     // GET /api/professors/{professorId}/subjects
     @GetMapping("/{professorId}/subjects")
@@ -65,28 +72,35 @@ public class SubjectAllocationController {
 
     @PostMapping("/{professorId}/subjects/{subjectId}/topics/add-topic")
     public ResponseEntity<DisplayTopicDTO> addTopicForProfessorAndSubject(
-            @PathVariable String professorId,
-            @PathVariable String subjectId,
+            @PathVariable("professorId") String professorId,
+            @PathVariable("subjectId") String subjectId,
             @RequestBody CreateTopicDTO topicDTO) {
-
-
-            DisplayTopicDTO createdTopic = subjectAllocationService.addTopic(professorId, subjectId, topicDTO);
-            return ResponseEntity.ok(createdTopic);
+        DisplayTopicDTO createdTopic = subjectAllocationService.addTopic(professorId, subjectId, topicDTO);
+        return ResponseEntity.ok(createdTopic);
     }
-    @PutMapping("/topics/{topicId}/professors/{professorId}/subjects/{subjectId}")
-    public ResponseEntity<DisplayTopicDTO> updateTopic(@PathVariable String topicId,
-                                                       @PathVariable String professorId,
-                                                       @PathVariable String subjectId,
+
+    @PutMapping("/topics/{id}/professors/{professorId}/subjects/{subjectId}/edit-topic")
+    public ResponseEntity<DisplayTopicDTO> updateTopic(@PathVariable("id") String id,
+                                                       @PathVariable("professorId") String professorId,
+                                                       @PathVariable("subjectId") String subjectId,
                                                        @RequestBody CreateTopicDTO topicDTO) {
-        DisplayTopicDTO updated = subjectAllocationService.updateTopic(topicId, professorId, subjectId, topicDTO);
+        DisplayTopicDTO updated = subjectAllocationService.updateTopic(id, professorId, subjectId, topicDTO);
         return ResponseEntity.ok(updated);
     }
 
-    @DeleteMapping("/topics/{topicId}")
-    public ResponseEntity<Void> deleteTopic(@PathVariable String topicId) {
-        subjectAllocationService.deleteTopic(topicId);
+    @DeleteMapping("/topics/delete-topic/{id}")
+    public ResponseEntity<Void> deleteTopic(@PathVariable("id") String id) {
+        subjectAllocationService.deleteTopic(id);
         return ResponseEntity.noContent().build();
     }
 
-}
+    @GetMapping("/topics/{topicId}/choose")
+    public ResponseEntity<DisplayTopicDTO> chooseTopic(@PathVariable String topicId) throws AccessDeniedException {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String username = auth.getName();
 
+        return subjectAllocationService.chooseTopic(topicId, username)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    }
+}

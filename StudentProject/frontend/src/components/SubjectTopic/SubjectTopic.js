@@ -1,21 +1,18 @@
 import React, {useEffect, useState} from "react";
-import {useParams, Link, useNavigate} from "react-router-dom";
+import {useParams, Link} from "react-router-dom";
 import api from "../../custom-axios/axios";
-import subject from "../Subject/SubjectList/subject";
 
-function ProfessorTopics({professorId: propProfessorId}) {
-    const {professorId: urlProfessorId} = useParams();
-    const professorId = propProfessorId || urlProfessorId;
+function SubjectTopics({subjectId: propSubjectId}) {
+    const {subjectId: urlSubjectId} = useParams();
+    const subjectId = propSubjectId || urlSubjectId;
 
     const [topics, setTopics] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
-    const navigate = useNavigate();
-
     useEffect(() => {
-        if (!professorId) {
-            setError("No professor ID provided");
+        if (!subjectId) {
+            setError("No subject ID provided");
             setLoading(false);
             return;
         }
@@ -24,7 +21,7 @@ function ProfessorTopics({professorId: propProfessorId}) {
         setError(null);
 
         api
-            .get(`/allocations/professors/${professorId}/topics`)
+            .get(`/allocations/subjects/${subjectId}/topics`)
             .then((res) => {
                 setTopics(res.data || []);
                 setLoading(false);
@@ -33,37 +30,20 @@ function ProfessorTopics({professorId: propProfessorId}) {
                 setError(`Failed to load topics: ${err.message || "Unknown error"}`);
                 setLoading(false);
             });
-    }, [professorId]);
-
-    const handleDelete = (topicId) => {
-        if (window.confirm("Are you sure you want to delete this topic?")) {
-            api
-                .delete(`/allocations/topics/${topicId}`)
-                .then(() => {
-                    setTopics((prev) => prev.filter((t) => t.id !== topicId));
-                })
-                .catch((err) => {
-                    alert(`Failed to delete topic: ${err.message || "Unknown error"}`);
-                });
-        }
-    };
-
-    const handleChooseTopic = (topicId) => {
-        navigate(`/teams/create-team/${topicId}`);
-    };
+    }, [subjectId]);
 
     if (loading) return <div className="text-center mt-4">Loading topics...</div>;
     if (error) return <div className="alert alert-danger mt-4">{error}</div>;
     if (!topics.length)
         return (
             <div className="container mt-4">
-                <div className="alert alert-info">No topics found for this professor.</div>
+                <div className="alert alert-info">No topics found for this subject.</div>
             </div>
         );
 
     return (
         <div className="container mt-4">
-            <h2 className="mb-4">Professor's Topics</h2>
+            <h2 className="mb-4">Subject Topics</h2>
             <div className="row">
                 {topics.map((topic) => (
                     <div key={topic.id} className="col-md-4 mb-4">
@@ -84,23 +64,10 @@ function ProfessorTopics({professorId: propProfessorId}) {
                                     <strong>Members per Group:</strong> {topic.membersPerGroup}
                                 </p>
                                 <Link
-                                    to={`/allocations/topics/${topic.id}/professors/${professorId}/subjects/${topic.subjectId}/edit-topic`}
+                                    to={`/allocations/topics/${topic.id}/professors/${topic.professorId}/subjects/${subjectId}/edit-topic`}
                                     className="btn btn-info mt-auto"
                                 >
                                     Edit Topic
-                                </Link>
-                                <Link
-                                    className="btn btn-info mt-auto"
-                                    onClick={() => handleDelete(topic.id)}
-                                >
-                                    Delete Topic
-                                </Link>
-                                <Link
-                                    className="btn btn-primary"
-                                    onClick={() => handleChooseTopic(topic.id)}
-
-                                >
-                                    Choose Topic
                                 </Link>
                             </div>
                         </div>
@@ -111,4 +78,4 @@ function ProfessorTopics({professorId: propProfessorId}) {
     );
 }
 
-export default ProfessorTopics;
+export default SubjectTopics;

@@ -57,36 +57,46 @@ const AppRepository = {
 
     // ====== TOPICS ======
     fetchTopics: () => {
-      return axios.get("/allocations/topics");
+        return axios.get("/allocations/topics");
     },
-  
+
     addTopic: (name, description, fromDate, toDate, groupCount, membersPerGroup, professorId, subjectId) => {
-      return axios.post(`/allocations/${professorId}/subjects/${subjectId}/topics/add-topic`, {
-        "name": name,
-        "description": description,
-        "fromDate": fromDate,
-        "toDate": toDate,
-        "groupCount": groupCount,
-        "membersPerGroup": membersPerGroup,
-        "professorId": professorId,
-        "subjectId": subjectId
-      });
+        return axios.post(`/allocations/${professorId}/subjects/${subjectId}/topics/add-topic`, {
+            "name": name,
+            "description": description,
+            "fromDate": fromDate,
+            "toDate": toDate,
+            "groupCount": groupCount,
+            "membersPerGroup": membersPerGroup,
+            "professorId": professorId,
+            "subjectId": subjectId
+        });
     },
-  
-    updateTopic: (id, name, fromDate, toDate, groupCount, membersPerGroup, professorId) => {
-      return axios.put(`/topics/edit-topic/${id}`, {
-        "name": name,
-        "fromDate": fromDate,
-        "toDate": toDate,
-        "groupCount": groupCount,
-        "membersPerGroup": membersPerGroup,
-        "professorId": professorId
-      });
+
+    updateTopic: (id, name, description, fromDate, toDate, groupCount, membersPerGroup, professorId, subjectId) => {
+        return axios.put(`allocations/topics/${id}/professors/${professorId}/subjects/${subjectId}/edit-topic`, {
+            "name": name,
+            "description": description,
+            "fromDate": fromDate,
+            "toDate": toDate,
+            "groupCount": groupCount,
+            "membersPerGroup": membersPerGroup,
+            "professorId": professorId,
+            "subjectId": subjectId
+        });
     },
-  
+
     deleteTopic: (id) => {
-      return axios.delete(`/topics/delete-topic/${id}`);
-    }
-  };
+        return axios.delete(`allocations/topics/delete-topic/${id}`);
+    },
+
+    // ====== TEAMS ======
+    createTeam: (topicId, name, studentIds) => {
+        return axios.post(`/teams/create-team/${topicId}`, {
+            name,
+            studentIds
+        });
+    },
+};
 
 export default AppRepository;

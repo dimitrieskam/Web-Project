@@ -1,6 +1,7 @@
 package org.example.service.application.Impl;
 
 import org.example.model.DTOs.teamDTO.CreateTeamDTO;
+import org.example.model.DTOs.teamDTO.DisplayTeamDTO;
 import org.example.model.DTOs.topicDTO.CreateTopicDTO;
 import org.example.model.DTOs.topicDTO.DisplayTopicDTO;
 import org.example.model.Student;
@@ -11,6 +12,8 @@ import org.example.service.domain.StudentDomainService;
 import org.example.service.domain.SubjectDomainService;
 import org.example.service.domain.TopicDomainService;
 import org.springframework.stereotype.Service;
+
+import java.nio.file.AccessDeniedException;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -64,21 +67,18 @@ public class TopicApplicationServiceImpl implements TopicApplicationService {
     }
 
     @Override
-    public Optional<DisplayTopicDTO> chooseTopic(CreateTeamDTO dto) {
-        if (topicDomainService.isClosed(dto.topicId())){
-            throw new TopicIsClosedException(dto.topicId());
-        }
-        List<Student> students = dto.studentIds().stream()
-                .map(index -> studentDomainService.findByIndex(index).orElseThrow())
-                .collect(Collectors.toList());
+    public boolean isClosed(String topicId) {
+        return topicDomainService.isClosed(topicId);
+    }
 
-
-        return topicDomainService.chooseTopic(dto.topicId(), students)
+    @Override
+    public Optional<DisplayTopicDTO> chooseTopic(String topicId, String username) throws AccessDeniedException {
+        return topicDomainService.chooseTopic(topicId, username)
                 .map(DisplayTopicDTO::from);
     }
 
     @Override
-    public boolean isClosed(String topicId) {
-        return topicDomainService.isClosed(topicId);
+    public DisplayTeamDTO createTeam(String creatorUsername, CreateTeamDTO createTeamDTO) {
+        return DisplayTeamDTO.from(topicDomainService.createTeam(creatorUsername, createTeamDTO));
     }
 }

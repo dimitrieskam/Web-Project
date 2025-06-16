@@ -11,11 +11,13 @@ public class Student {
     @Column(name = "student_index")
     private String index;
 
-    private String email;
-
     private String name;
 
     private String lastName;
+
+    private String username;
+
+    private String email;
 
     @ManyToMany(mappedBy = "members")
     private List<Team> teams;
@@ -23,26 +25,20 @@ public class Student {
     public Student() {
     }
 
-    public Student(String index, String email, String name, String lastName) {
+    public Student(String index, String name, String lastName, String username, String email) {
         this.index = index;
-        this.email = email;
         this.name = name;
         this.lastName = lastName;
+        this.username = username;
+        this.email = email;
     }
 
-    public Student(String index, String email, String name, String lastName, List<Team> teams) {
+    public Student(String index, String name, String lastName, String username, String email, List<Team> teams) {
         this.index = index;
-        this.email = email;
         this.name = name;
         this.lastName = lastName;
-        this.teams = teams;
-    }
-
-    public List<Team> getTeams() {
-        return teams;
-    }
-
-    public void setTeams(List<Team> teams) {
+        this.username = username;
+        this.email = email;
         this.teams = teams;
     }
 
@@ -52,14 +48,6 @@ public class Student {
 
     public void setIndex(String index) {
         this.index = index;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
     }
 
     public String getName() {
@@ -76,5 +64,29 @@ public class Student {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public List<Team> getTeams() {
+        return teams;
+    }
+
+    public void setTeams(List<Team> teams) {
+        this.teams = teams;
     }
 }

@@ -1,21 +1,22 @@
 package org.example.model.DTOs.studentDTO;
 
 import org.example.model.Student;
-
 import java.util.List;
 import java.util.stream.Collectors;
 
 public record CreateStudentDTO(
+        String index,
         String name,
         String lastName,
-        String index,
+        String username,
         String email
 ) {
     public static CreateStudentDTO from(Student student) {
         return new CreateStudentDTO(
+                student.getIndex(),
                 student.getName(),
                 student.getLastName(),
-                student.getIndex(),
+                student.getUsername(),
                 student.getEmail()
         );
     }
@@ -27,6 +28,6 @@ public record CreateStudentDTO(
     }
 
     public Student toStudent() {
-        return new Student(name, lastName, index, email);
+        return new Student(index, name, lastName, username, email);
     }
 }

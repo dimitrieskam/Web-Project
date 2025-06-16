@@ -6,7 +6,7 @@ const SubjectTerm = ({ term }) => {
 
     const handleDetailsClick = () => {
         // TODO topics by subject
-        navigate(`/subjects/${term.id}`);
+        navigate(`/allocations/subjects/${term.id}/topics`);
     };
 
     return (
@@ -15,8 +15,6 @@ const SubjectTerm = ({ term }) => {
                 <div className="card-body d-flex flex-column">
                     <h5 className="card-title">{term.name}</h5>
                     <p className="card-text"><strong>Semester Type:</strong> {term.semesterType || "-"}</p>
-                    <p className="card-text"><strong>Students:</strong> {term.studentIds?.join(', ') || "-"}</p>
-                    <p className="card-text"><strong>Professors:</strong> {term.professorIds?.join(', ') || "-"}</p>
                     <button onClick={handleDetailsClick} className="btn btn-primary mt-auto">
                         View Topics!
                     </button>

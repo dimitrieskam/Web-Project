@@ -2,10 +2,12 @@ package org.example.web;
 
 import org.example.model.DTOs.topicDTO.CreateTopicDTO;
 import org.example.model.DTOs.topicDTO.DisplayTopicDTO;
+import org.example.service.application.SubjectAllocationService;
 import org.example.service.application.TopicApplicationService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.nio.file.AccessDeniedException;
 import java.util.List;
 import java.util.Optional;
 
@@ -15,9 +17,11 @@ import java.util.Optional;
 public class TopicController {
 
     private final TopicApplicationService topicApplicationService;
+    private final SubjectAllocationService subjectAllocationService;
 
-    public TopicController(TopicApplicationService topicApplicationService) {
+    public TopicController(TopicApplicationService topicApplicationService, SubjectAllocationService subjectAllocationService) {
         this.topicApplicationService = topicApplicationService;
+        this.subjectAllocationService = subjectAllocationService;
     }
 
     @GetMapping
@@ -42,21 +46,16 @@ public class TopicController {
         return ResponseEntity.noContent().build();
     }
 
-    // Remove or comment out methods related to teams if not used in this branch
-    // @PostMapping("/choose")
-    // public ResponseEntity<Optional<DisplayTopicDTO>> chooseTopic(@RequestBody CreateTeamDTO dto){
-    //     return ResponseEntity.ok(topicApplicationService.chooseTopic(dto));
-    // }
+    @GetMapping("/{topicId}/is-closed")
+    public ResponseEntity<Boolean> isClosed(@PathVariable String topicId) {
+        return ResponseEntity.ok(subjectAllocationService.isClosed(topicId));
+    }
 
-    // @GetMapping("/{id}/teams")
-    // public ResponseEntity<List<DisplayTeamDTO>> getTeamsForTopic(@PathVariable String id){
-    //     return topicApplicationService.findByID(id)
-    //             .map(dto->ResponseEntity.ok(dto.teams()))
-    //             .orElse(ResponseEntity.notFound().build());
-    // }
-
-    @GetMapping("/{id}/is-closed")
-    public ResponseEntity<Boolean> isTopicClosed(@PathVariable String id){
-        return ResponseEntity.ok(topicApplicationService.isClosed(id));
+    @PostMapping("/{topicId}/choose")
+    public ResponseEntity<DisplayTopicDTO> chooseTopic(@PathVariable String topicId,
+                                                       @RequestParam String username) throws AccessDeniedException {
+        return subjectAllocationService.chooseTopic(topicId, username)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
     }
 }

@@ -1,114 +1,206 @@
-import React from 'react';
-import {useNavigate} from 'react-router-dom';
+import React, {useEffect, useState} from 'react';
+import {useNavigate, useParams} from 'react-router-dom';
 
 const TopicEdit = (props) => {
+    const navigate = useNavigate();
+    const {id: topicId, professorId: professorIdFromUrl, subjectId: subjectIdFromUrl} = useParams();
 
-    const history = useNavigate();
-    const [formData, updateFormData] = React.useState({
-        name: props.topic.name || "",
-        formDate: props.topic.formDate || "",
-        toDate: props.topic.toDate || "",
-        groupCount: props.topic.groupCount || "",
-        membersPerGroup: props.topic.membersPerGroup || "",
-        subjectId: props.topic.subject?.id || ""
-    })
+    const [formData, updateFormData] = useState({
+        name: "",
+        description: "",
+        fromDate: "",
+        toDate: "",
+        groupCount: "",
+        membersPerGroup: "",
+        professorId: professorIdFromUrl || "",
+        subjectId: subjectIdFromUrl || ""
+    });
+
+    const [submitting, setSubmitting] = useState(false);
+
+    useEffect(() => {
+        if (props.topics && topicId) {
+            const topic = props.topics.find(t => t.id.toString() === topicId);
+            if (topic) {
+                updateFormData({
+                    name: topic.name || "",
+                    description: topic.description || "",
+                    fromDate: topic.fromDate || "",
+                    toDate: topic.toDate || "",
+                    groupCount: topic.groupCount?.toString() || "",
+                    membersPerGroup: topic.membersPerGroup?.toString() || "",
+                    professorId: professorIdFromUrl || topic.professorId || "",
+                    subjectId: subjectIdFromUrl || topic.subjectId || ""
+                });
+            }
+        }
+    }, [props.topics, topicId, professorIdFromUrl, subjectIdFromUrl]);
 
     const handleChange = (e) => {
+        const {name, value} = e.target;
         updateFormData({
             ...formData,
-            [e.target.name]: e.target.value.trim()
-        })
+            [name]: value
+        });
+    };
+
+    const onFormSubmit = async (e) => {
+        e.preventDefault();
+
+        if (formData.toDate < formData.fromDate) {
+            alert("The 'To Date' cannot be earlier than 'From Date'.");
+            return;
+        }
+
+        const groupCount = parseInt(formData.groupCount, 10);
+        const membersPerGroup = parseInt(formData.membersPerGroup, 10);
+
+        if (isNaN(groupCount) || isNaN(membersPerGroup)) {
+            alert("Group Count and Members per Group must be valid numbers.");
+            return;
+        }
+
+        setSubmitting(true);
+        try {
+            await props.onEditTopic(
+                topicId,
+                formData.name.trim(),
+                formData.description.trim(),
+                formData.fromDate,
+                formData.toDate,
+                groupCount,
+                membersPerGroup,
+                formData.professorId,
+                formData.subjectId
+            );
+            navigate(`/allocations/professors/${formData.professorId}/topics`);
+        } catch (error) {
+            console.error("Error updating topic:", error);
+            alert("Failed to update topic. Please try again.");
+        } finally {
+            setSubmitting(false);
+        }
+    };
+
+    if (!props.topics) {
+        return <p>Loading topics data...</p>;
     }
 
-    const onFormSubmit = (e) => {
-        e.preventDefault();
-    
-        const name = formData.name !== "" ? formData.name : props.topic.name;
-        const fromDate = formData.fromDate !== "" ? formData.fromDate : props.topic.fromDate;
-        const toDate = formData.toDate !== "" ? formData.toDate : props.topic.toDate;
-        const groupCount = formData.groupCount !== "" ? formData.groupCount : props.topic.groupCount;
-        const membersPerGroup = formData.membersPerGroup !== "" ? formData.membersPerGroup : props.topic.membersPerGroup;
-        const subjectId = formData.subjectId !== "" ? formData.subjectId : props.topic.subject.id;
-    
-        props.onEditTopic(props.topic.id, name, fromDate, toDate, groupCount, membersPerGroup, subjectId);
-        history("/topics");
-    };
-    
-
-    return(
+    return (
         <div className="row mt-5">
             <div className="col-md-5">
                 <form onSubmit={onFormSubmit}>
-                    <div className="form-group">
+                    <div className="form-group mb-3">
                         <label htmlFor="name">Topic name</label>
-                        <input type="text"
-                               className="form-control"
-                               id="name"
-                               name="name"
-                               placeholder={props.topic.name}
-                               onChange={handleChange}
+                        <input
+                            type="text"
+                            className="form-control"
+                            id="name"
+                            name="name"
+                            required
+                            value={formData.name}
+                            onChange={handleChange}
                         />
                     </div>
-                    <div className="form-group">
-                        <label htmlFor="price">From Date</label>
-                        <input type="date"
-                               className="form-control"
-                               id="fromDate"
-                               name="fromDate"
-                               placeholder={props.topic.fromDate}
-                               onChange={handleChange}
+
+                    <div className="form-group mb-3">
+                        <label htmlFor="description">Description</label>
+                        <textarea
+                            className="form-control"
+                            id="description"
+                            name="description"
+                            rows={3}
+                            required
+                            value={formData.description}
+                            onChange={handleChange}
                         />
                     </div>
-                    <div className="form-group">
+
+                    <div className="form-group mb-3">
+                        <label htmlFor="fromDate">From Date</label>
+                        <input
+                            type="date"
+                            className="form-control"
+                            id="fromDate"
+                            name="fromDate"
+                            required
+                            value={formData.fromDate}
+                            onChange={handleChange}
+                        />
+                    </div>
+
+                    <div className="form-group mb-3">
                         <label htmlFor="toDate">To Date</label>
                         <input
                             type="date"
                             className="form-control"
                             id="toDate"
                             name="toDate"
-                            defaultValue={props.topic.toDate}
+                            required
+                            value={formData.toDate}
                             onChange={handleChange}
                         />
                     </div>
-                    <div className="form-group">
+
+                    <div className="form-group mb-3">
                         <label htmlFor="groupCount">Group Count</label>
                         <input
                             type="number"
                             className="form-control"
                             id="groupCount"
                             name="groupCount"
-                            defaultValue={props.topic.groupCount}
+                            required
+                            value={formData.groupCount}
                             onChange={handleChange}
+                            min="1"
                         />
                     </div>
-                    <div className="form-group">
-                        <label htmlFor="membersPerGroup">Members Per Group</label>
+
+                    <div className="form-group mb-3">
+                        <label htmlFor="membersPerGroup">Members per Group</label>
                         <input
                             type="number"
                             className="form-control"
                             id="membersPerGroup"
                             name="membersPerGroup"
-                            defaultValue={props.topic.membersPerGroup}
+                            required
+                            value={formData.membersPerGroup}
                             onChange={handleChange}
+                            min="1"
                         />
                     </div>
-                    <div className="form-group">
+
+                    <div className="form-group mb-3">
+                        <label htmlFor="professorId">Professor ID</label>
+                        <input
+                            type="text"
+                            className="form-control"
+                            id="professorId"
+                            name="professorId"
+                            value={formData.professorId}
+                            readOnly
+                        />
+                    </div>
+
+                    <div className="form-group mb-3">
                         <label htmlFor="subjectId">Subject ID</label>
                         <input
                             type="text"
                             className="form-control"
                             id="subjectId"
                             name="subjectId"
-                            defaultValue={props.topic.subject?.id}
-                            onChange={handleChange}
+                            value={formData.subjectId}
+                            readOnly
                         />
                     </div>
-                    
-                    <button id="submit" type="submit" className="btn btn-primary">Submit</button>
+
+                    <button id="submit" type="submit" className="btn btn-primary" disabled={submitting}>
+                        {submitting ? "Saving..." : "Submit"}
+                    </button>
                 </form>
             </div>
         </div>
-    )
-}
+    );
+};
 
 export default TopicEdit;

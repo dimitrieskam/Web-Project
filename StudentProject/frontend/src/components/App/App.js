@@ -13,9 +13,10 @@ import Student from "../Student/StudentList/student"
 
 import TopicAdd from "../Topic/TopicAdd/topicAdd";
 import TopicEdit from "../Topic/TopicEdit/topicEdit";
-import ProfessorSubjects from "../ProfessorSubjects/ProfessorSubjects";
 import ProfessorSubjectsPage from "../ProfessorSubjects/ProfessorSubjectsPage";
 import ProfessorTopics from "../ProfessorTopic/ProfessorTopic";
+import SubjectTopicPage from "../SubjectTopic/SubjectTopicPage";
+import CreateTeam from "../Team/CreateTeam";
 
 class App extends Component {
     constructor(props) {
@@ -91,16 +92,16 @@ class App extends Component {
     };
 
     addTopic = (name, description, fromDate, toDate, groupCount, membersPerGroup, professorId, subjectId) => {
-  AppService.addTopic(name, description, fromDate, toDate, groupCount, membersPerGroup, professorId, subjectId)
-    .then(() => {
-      this.loadTopics();
-    })
-    .catch((error) => console.error("Error adding topic:", error));
-};
+        AppService.addTopic(name, description, fromDate, toDate, groupCount, membersPerGroup, professorId, subjectId)
+            .then(() => {
+                this.loadTopics();
+            })
+            .catch((error) => console.error("Error adding topic:", error));
+    };
 
 
-    updateTopic = (id, name, fromDate, toDate, groupCount, membersPerGroup, professorId) => {
-        AppService.updateTopic(id, name, fromDate, toDate, groupCount, membersPerGroup, professorId)
+    updateTopic = (id, name, description, fromDate, toDate, groupCount, membersPerGroup, professorId, subjectId) => {
+        AppService.updateTopic(id, name, description, fromDate, toDate, groupCount, membersPerGroup, professorId, subjectId)
             .then(() => {
                 this.loadTopics();
             })
@@ -163,32 +164,44 @@ class App extends Component {
                                     />
                                 }
                             />
-                            <Route
-                                path="/topics/add-topic"
-                                element={
-                                    <TopicAdd
-                                        onAddTopic={this.addTopic}
-                                    />
-                                }
-                            />
-                            <Route
-                                path="/topics/edit-topic/:id"
-                                element={
-                                    <TopicEdit
-                                        topics={this.state.topics}
-                                        onEditTopic={this.updateTopic}
-                                    />
-                                }
-                            />
+                            {/*<Route*/}
+                            {/*    path="/topics/add-topic"*/}
+                            {/*    element={*/}
+                            {/*        <TopicAdd*/}
+                            {/*            onAddTopic={this.addTopic}*/}
+                            {/*        />*/}
+                            {/*    }*/}
+                            {/*/>*/}
+                            {/*<Route*/}
+                            {/*    path="/topics/edit-topic/:id"*/}
+                            {/*    element={*/}
+                            {/*        <TopicEdit*/}
+                            {/*            topics={this.state.topics}*/}
+                            {/*            onEditTopic={this.updateTopic}*/}
+                            {/*        />*/}
+                            {/*    }*/}
+                            {/*/>*/}
                             <Route
                                 path="/allocations/:professorId/subjects"
-                                element={<ProfessorSubjectsPage />}/>
+                                element={<ProfessorSubjectsPage/>}/>
                             <Route
                                 path="/allocations/professors/:professorId/topics"
-                                element={<ProfessorTopics />}/>
+                                element={<ProfessorTopics/>}/>
+
+                            <Route path="/allocations/subjects/:subjectId/topics"
+                                   element={<SubjectTopicPage/>}/>
+
                             <Route
                                 path="/allocations/:professorId/subjects/:subjectId/topics/add-topic"
-                                element={<TopicAdd onAddTopic={this.addTopic} />}/>
+                                element={<TopicAdd onAddTopic={this.addTopic}/>}/>
+
+                            <Route
+                                path="allocations/topics/:id/professors/:professorId/subjects/:subjectId/edit-topic"
+                                element={<TopicEdit topics={this.state.topics} onEditTopic={this.updateTopic}/>}/>
+
+                            <Route
+                                path="/teams/create-team/:topicId"
+                                element={<CreateTeam/>}/>
 
                             {/*PATHS*/}
                             <Route path="/" element={<Navigate to="/subjects"/>}/>
