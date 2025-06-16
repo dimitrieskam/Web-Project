@@ -57,17 +57,19 @@ const AppRepository = {
 
     // ====== TOPICS ======
     fetchTopics: () => {
-      return axios.get("/topics");
+      return axios.get("/allocations/topics");
     },
   
-    addTopic: (name, fromDate, toDate, groupCount, membersPerGroup, professorId) => {
-      return axios.post("/topics/add-topic", {
+    addTopic: (name, description, fromDate, toDate, groupCount, membersPerGroup, professorId, subjectId) => {
+      return axios.post(`/allocations/${professorId}/subjects/${subjectId}/topics/add-topic`, {
         "name": name,
+        "description": description,
         "fromDate": fromDate,
         "toDate": toDate,
         "groupCount": groupCount,
         "membersPerGroup": membersPerGroup,
-        "professorId": professorId
+        "professorId": professorId,
+        "subjectId": subjectId
       });
     },
   

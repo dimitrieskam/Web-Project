@@ -10,23 +10,33 @@ import java.util.stream.Collectors;
 public record DisplayTopicDTO(
         String id,
         String name,
+        String description,
         LocalDate fromDate,
         LocalDate toDate,
-        String description,
         int groupCount,
         int membersPerGroup,
-        String professorId
+        String professorId,
+        String subjectId
 ) {
     public static DisplayTopicDTO from(Topic topic) {
+        String subjectId = null;
+
+        if (topic.getJoinedSubject() != null && topic.getJoinedSubject().getMainSubject() != null) {
+            subjectId = topic.getJoinedSubject().getMainSubject().getId();
+        } else {
+            System.err.println("[WARNING] Topic with ID " + topic.getId() + " has null JoinedSubject or MainSubject.");
+        }
+
         return new DisplayTopicDTO(
                 topic.getId(),
                 topic.getName(),
+                topic.getDescription(),
                 topic.getFromDate(),
                 topic.getToDate(),
-                topic.getDescription(),
                 topic.getGroupCount(),
                 topic.getMembersPerGroup(),
-                topic.getProfessor().getId()
+                topic.getProfessor() != null ? topic.getProfessor().getId() : null,
+                subjectId
         );
     }
 
@@ -37,6 +47,6 @@ public record DisplayTopicDTO(
     }
 
     public Topic toTopic(Professor professor) {
-        return new Topic(id, name, fromDate, toDate, description, groupCount, membersPerGroup, professor);
+        return new Topic(id, name, description, fromDate, toDate, groupCount, membersPerGroup, professor);
     }
 }

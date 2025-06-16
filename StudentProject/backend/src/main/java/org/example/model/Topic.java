@@ -17,19 +17,30 @@ public class Topic {
     private String id;
 
     private String name;
+    private String description;
 
     private LocalDate fromDate;
 
     private LocalDate toDate;
-
-    private String description;
 
     private int groupCount;
 
     private int membersPerGroup;
 
     @ManyToOne
+    @JoinColumn(name = "joined_subject_abbreviation", nullable = false)
+    private JoinedSubject joinedSubject;
+
+    @ManyToOne
     private Subject subject;
+
+    public JoinedSubject getJoinedSubject() {
+        return joinedSubject;
+    }
+
+    public void setJoinedSubject(JoinedSubject joinedSubject) {
+        this.joinedSubject = joinedSubject;
+    }
 
     @ManyToOne
     private Professor professor;
@@ -40,44 +51,52 @@ public class Topic {
     public Topic() {
     }
 
-    public Topic(String name, LocalDate fromDate, LocalDate toDate, String description, int groupCount, int membersPerGroup, Subject subject) {
-        this.name = name;
-        this.fromDate = fromDate;
-        this.toDate = toDate;
-        this.groupCount = groupCount;
-        this.membersPerGroup = membersPerGroup;
-        this.subject = subject;
-    }
 
-    public Topic(String name, LocalDate fromDate, LocalDate toDate, String description, int groupCount, int membersPerGroup, Professor professor) {
+    public Topic(String name, String description, LocalDate fromDate, LocalDate toDate,int groupCount, int membersPerGroup, Professor professor) {
         this.name = name;
+        this.description = description;
         this.fromDate = fromDate;
         this.toDate = toDate;
-        this.description = description;
         this.groupCount = groupCount;
         this.membersPerGroup = membersPerGroup;
         this.professor = professor;
     }
 
-    public Topic(String id, String name, LocalDate fromDate, LocalDate toDate, String description, int groupCount, int membersPerGroup, Subject subject) {
-        this.id = id;
-        this.name = name;
-        this.fromDate = fromDate;
-        this.toDate = toDate;
-        this.groupCount = groupCount;
-        this.membersPerGroup = membersPerGroup;
-        this.subject = subject;
-    }
 
-    public Topic(String id, String name, LocalDate fromDate, LocalDate toDate, String description, int groupCount, int membersPerGroup, Professor professor) {
+    public Topic(String id, String name, String description, LocalDate fromDate, LocalDate toDate, int groupCount, int membersPerGroup, Professor professor) {
         this.id = id;
         this.name = name;
+        this.description = description;
         this.fromDate = fromDate;
         this.toDate = toDate;
-        this.description = description;
         this.groupCount = groupCount;
         this.membersPerGroup = membersPerGroup;
         this.professor = professor;
+    }
+
+    public Topic(String name, String description, LocalDate fromDate, LocalDate toDate, int groupCount, int membersPerGroup, Professor professor, JoinedSubject joinedSubject) {
+        this.name = name;
+        this.description = description;
+        this.fromDate = fromDate;
+        this.toDate = toDate;
+        this.groupCount = groupCount;
+        this.membersPerGroup = membersPerGroup;
+        this.professor = professor;
+        this.joinedSubject = joinedSubject;
+
+    }
+
+    public Topic(String id, String name, String description, LocalDate fromDate, LocalDate toDate, int groupCount, int membersPerGroup, Professor professor, JoinedSubject joinedSubject ) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.fromDate = fromDate;
+        this.toDate = toDate;
+        this.groupCount = groupCount;
+        this.membersPerGroup = membersPerGroup;
+        this.professor = professor;
+        this.joinedSubject = joinedSubject;
+
     }
 
     public String getId() {

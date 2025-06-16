@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import api from "../../custom-axios/axios";
-import {useParams} from "react-router-dom";
+import {useParams, Link} from "react-router-dom";
 
 function ProfessorSubjects({ professorId: propProfessorId }) {
     const { professorId: urlProfessorId } = useParams();
@@ -75,6 +75,18 @@ function ProfessorSubjects({ professorId: propProfessorId }) {
                                     <p className="card-text">
                                         <strong>Semester Code:</strong> {semesterCode}
                                     </p>
+                                    <Link
+                                        to={`/allocations/professors/${professorId}/topics`}
+                                        className="btn btn-primary mt-auto"
+                                    >
+                                       Topics
+                                    </Link>
+                                    <Link
+                                        to={`/allocations/${professorId}/subjects/${semesterCode}/topics/add-topic`}
+                                        className="btn btn-primary mt-auto"
+                                    >
+                                       Add
+                                    </Link>
                                 </div>
                             </div>
                         </div>

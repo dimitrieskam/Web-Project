@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 public interface JoinedSubjectRepository extends JpaSpecificationRepository<JoinedSubject, String> {
+        JoinedSubject findByMainSubject_Id (String mainSubject);
         Page<JoinedSubject> findByNameContainingIgnoreCase(String name, Pageable pageable);
         JoinedSubject findByName(String name);
         JoinedSubject findByAbbreviation(String abbreviation);

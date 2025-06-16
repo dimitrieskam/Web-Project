@@ -1,5 +1,7 @@
 package org.example.service.application;
 import org.example.model.DTOs.TeacherSubjectAllocationDTO;
+import org.example.model.DTOs.topicDTO.CreateTopicDTO;
+import org.example.model.DTOs.topicDTO.DisplayTopicDTO;
 import org.example.model.JoinedSubject;
 import org.example.model.Professor;
 import org.example.model.Semester;
@@ -17,6 +19,12 @@ public interface SubjectAllocationService {
 
     List<TeacherSubjectAllocation> getAllBySubject(String id);
 
+    DisplayTopicDTO addTopic(String professorId, String subjectId, CreateTopicDTO topicDTO);
+    List<DisplayTopicDTO> getAllTopics();
+    List<DisplayTopicDTO> getTopicsByProfessor(String professorId);
+    Optional<DisplayTopicDTO> getTopicById(String topicId);
+    DisplayTopicDTO updateTopic(String topicId, String professorId, String subjectId, CreateTopicDTO topicDTO);
+    void deleteTopic(String topicId);
     void editTeacherSubjectAllocation(TeacherSubjectAllocation editedAllocation);
 
     TeacherSubjectAllocation addTeacherSubjectAllocation(TeacherSubjectAllocationDTO newAllocation, String semester);

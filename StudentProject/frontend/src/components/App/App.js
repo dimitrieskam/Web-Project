@@ -15,6 +15,7 @@ import TopicAdd from "../Topic/TopicAdd/topicAdd";
 import TopicEdit from "../Topic/TopicEdit/topicEdit";
 import ProfessorSubjects from "../ProfessorSubjects/ProfessorSubjects";
 import ProfessorSubjectsPage from "../ProfessorSubjects/ProfessorSubjectsPage";
+import ProfessorTopics from "../ProfessorTopic/ProfessorTopic";
 
 class App extends Component {
     constructor(props) {
@@ -89,13 +90,14 @@ class App extends Component {
             .catch((error) => console.error("Error fetching topic:", error));
     };
 
-    addTopic = (name, fromDate, toDate, groupCount, membersPerGroup, professorId) => {
-        AppService.addTopic(name, fromDate, toDate, groupCount, membersPerGroup, professorId)
-            .then(() => {
-                this.loadTopics();
-            })
-            .catch((error) => console.error("Error adding topic:", error));
-    };
+    addTopic = (name, description, fromDate, toDate, groupCount, membersPerGroup, professorId, subjectId) => {
+  AppService.addTopic(name, description, fromDate, toDate, groupCount, membersPerGroup, professorId, subjectId)
+    .then(() => {
+      this.loadTopics();
+    })
+    .catch((error) => console.error("Error adding topic:", error));
+};
+
 
     updateTopic = (id, name, fromDate, toDate, groupCount, membersPerGroup, professorId) => {
         AppService.updateTopic(id, name, fromDate, toDate, groupCount, membersPerGroup, professorId)
@@ -181,6 +183,12 @@ class App extends Component {
                             <Route
                                 path="/allocations/:professorId/subjects"
                                 element={<ProfessorSubjectsPage />}/>
+                            <Route
+                                path="/allocations/professors/:professorId/topics"
+                                element={<ProfessorTopics />}/>
+                            <Route
+                                path="/allocations/:professorId/subjects/:subjectId/topics/add-topic"
+                                element={<TopicAdd onAddTopic={this.addTopic} />}/>
 
                             {/*PATHS*/}
                             <Route path="/" element={<Navigate to="/subjects"/>}/>

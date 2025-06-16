@@ -1,10 +1,11 @@
 package org.example.service.application.Impl;
 
+import org.example.model.*;
 import org.example.model.DTOs.TeacherSubjectAllocationDTO;
-import org.example.model.JoinedSubject;
-import org.example.model.Professor;
-import org.example.model.Semester;
-import org.example.model.TeacherSubjectAllocation;
+import org.example.model.DTOs.topicDTO.CreateTopicDTO;
+import org.example.model.DTOs.topicDTO.DisplayTopicDTO;
+import org.example.repository.JoinedSubjectRepository;
+import org.example.repository.TopicRepository;
 import org.example.service.application.SubjectAllocationService;
 import org.example.repository.TeacherSubjectAllocationRepository;
 import org.springframework.data.domain.Page;
@@ -23,9 +24,16 @@ import java.util.stream.Collectors;
 public class SubjectAllocationServiceImpl implements SubjectAllocationService {
 
     private final TeacherSubjectAllocationRepository allocationRepository;
-
-    public SubjectAllocationServiceImpl(TeacherSubjectAllocationRepository allocationRepository) {
+    private final TopicRepository topicRepository;
+    private final JoinedSubjectRepository joinedSubjectRepository;
+    public SubjectAllocationServiceImpl(TeacherSubjectAllocationRepository allocationRepository, TopicRepository topicRepository, JoinedSubjectRepository joinedSubjectRepository) {
         this.allocationRepository = allocationRepository;
+        this.topicRepository = topicRepository;
+        this.joinedSubjectRepository = joinedSubjectRepository;
+    }
+    public List<DisplayTopicDTO> getTopicsByProfessorAndSubject(String professorId, String subjectId) {
+        List<Topic> topics = topicRepository.findByProfessor_IdAndSubject_Id(professorId, subjectId);
+        return DisplayTopicDTO.from(topics);
     }
 
     @Override
@@ -37,6 +45,78 @@ public class SubjectAllocationServiceImpl implements SubjectAllocationService {
     public List<TeacherSubjectAllocation> getAllBySubject(String id) {
         // Implementation depends on your requirements
         return List.of();
+    }
+
+    @Override
+    public DisplayTopicDTO addTopic(String professorId, String subjectId, CreateTopicDTO topicDTO) {
+        Topic topic = new Topic();
+        topic.setName(topicDTO.name());
+        topic.setDescription(topicDTO.description());
+        topic.setFromDate(topicDTO.fromDate());
+        topic.setToDate(topicDTO.toDate());
+        topic.setGroupCount(topicDTO.groupCount());
+        topic.setMembersPerGroup(topicDTO.membersPerGroup());
+
+        // Set professor - assuming only ID needed here
+        Professor professor = new Professor();
+        professor.setId(professorId);
+        topic.setProfessor(professor);
+
+        // Fetch JoinedSubject from DB by abbreviation (subjectId)
+        JoinedSubject subject = joinedSubjectRepository.findByMainSubject_Id(subjectId);
+        topic.setJoinedSubject(subject);
+
+        topicRepository.save(topic);
+        return DisplayTopicDTO.from(topic);
+    }
+
+    @Override
+    public List<DisplayTopicDTO> getAllTopics() {
+        List<Topic> topics = topicRepository.findAll();
+        return DisplayTopicDTO.from(topics);
+    }
+
+    @Override
+    public List<DisplayTopicDTO> getTopicsByProfessor(String professorId) {
+        List<Topic> topics = topicRepository.findByProfessorId(professorId);
+        return DisplayTopicDTO.from(topics);
+    }
+
+    @Override
+    public Optional<DisplayTopicDTO> getTopicById(String topicId) {
+        return topicRepository.findById(topicId)
+                .map(DisplayTopicDTO::from);
+    }
+
+    @Override
+    public DisplayTopicDTO updateTopic(String topicId, String professorId, String subjectId, CreateTopicDTO topicDTO) {
+        Topic topic = topicRepository.findById(topicId)
+                .orElseThrow(() -> new RuntimeException("Topic not found with id " + topicId));
+
+        topic.setName(topicDTO.name());
+        topic.setFromDate(topicDTO.fromDate());
+        topic.setToDate(topicDTO.toDate());
+        topic.setGroupCount(topicDTO.groupCount());
+        topic.setMembersPerGroup(topicDTO.membersPerGroup());
+
+        Professor professor = new Professor();
+        professor.setId(professorId);
+        topic.setProfessor(professor);
+
+        JoinedSubject subject = joinedSubjectRepository.findById(subjectId)
+                .orElseThrow(() -> new RuntimeException("Subject not found: " + subjectId));
+        topic.setJoinedSubject(subject);
+
+        topicRepository.save(topic);
+        return DisplayTopicDTO.from(topic);
+    }
+
+    @Override
+    public void deleteTopic(String topicId) {
+        if (!topicRepository.existsById(topicId)) {
+            throw new RuntimeException("Topic not found with id " + topicId);
+        }
+        topicRepository.deleteById(topicId);
     }
 
     @Override
