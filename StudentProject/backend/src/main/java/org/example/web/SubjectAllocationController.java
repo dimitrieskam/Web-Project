@@ -56,7 +56,7 @@ public class SubjectAllocationController {
         }
     }
 
-    @GetMapping("/{professorId}/subjects/{subjectId}/topics")
+    @GetMapping("/professors/{professorId}/subjects/{subjectId}/topics")
     public ResponseEntity<List<DisplayTopicDTO>> getTopicsForProfessorAndSubject(
             @PathVariable("professorId") String professorId,
             @PathVariable("subjectId") String subjectId
@@ -67,7 +67,7 @@ public class SubjectAllocationController {
 
     //    ========== CRUD FOR TOPIC ==========
 
-    @PostMapping("/{professorId}/subjects/{subjectId}/topics/add-topic")
+    @PostMapping("/professors/{professorId}/subjects/{subjectId}/topics/add-topic")
     public ResponseEntity<DisplayTopicDTO> addTopicForProfessorAndSubject(
             @PathVariable("professorId") String professorId,
             @PathVariable("subjectId") String subjectId,

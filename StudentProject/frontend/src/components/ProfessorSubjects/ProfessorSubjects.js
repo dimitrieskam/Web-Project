@@ -75,17 +75,12 @@ function ProfessorSubjects({ professorId: propProfessorId }) {
                                         <strong>Semester Code:</strong> {semesterCode}
                                     </p>
                                     <Link
-                                        to={`/subject-allocations/professors/${professorId}/topics`}
+                                         to={`/subject-allocations/professors/${professorId}/subjects/${semesterCode}/topics`}
                                         className="btn btn-primary mt-auto"
                                     >
                                        Topics
                                     </Link>
-                                    <Link
-                                        to={`/subject-allocations/${professorId}/subjects/${semesterCode}/topics/add-topic`}
-                                        className="btn btn-primary mt-auto"
-                                    >
-                                       Add
-                                    </Link>
+                                    
                                 </div>
                             </div>
                         </div>

@@ -25,4 +25,9 @@ public class ProfessorDomainServiceImpl implements ProfessorDomainService {
     public Optional<Professor> findByID(String id) {
         return this.professorRepository.findById(id);
     }
+
+    @Override
+    public List<Professor> findByNameContainingIgnoreCase(String name) {
+        return professorRepository.findByNameContainingIgnoreCase(name);
+    }
 }

@@ -1,9 +1,11 @@
 package org.example.service.application;
 
 import org.example.model.DTOs.TeacherSubjectAllocationDTO.TeacherSubjectAllocationDTO;
+import org.example.model.DTOs.subjectDTO.DisplaySubjectDTO;
 import org.example.model.DTOs.topicDTO.CreateTopicDTO;
 import org.example.model.DTOs.topicDTO.DisplayTopicDTO;
 import org.example.model.TeacherSubjectAllocation;
+import org.example.model.enumerations.SemesterType;
 import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.domain.Specification;
 import java.nio.file.AccessDeniedException;
@@ -35,4 +37,6 @@ public interface SubjectAllocationService {
     boolean isClosed(String topicId);
 
     Optional<DisplayTopicDTO> chooseTopic(String topicId, String username) throws AccessDeniedException;
+
+
 }

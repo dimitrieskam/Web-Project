@@ -2,9 +2,11 @@ import React, {useEffect, useState} from "react";
 import {useParams, Link, useNavigate} from "react-router-dom";
 import api from "../../custom-axios/axios";
 
-function ProfessorTopics({professorId: propProfessorId}) {
+function ProfessorTopics({professorId: propProfessorId, subjectId: propSubjectId}) {
     const {professorId: urlProfessorId} = useParams();
     const professorId = propProfessorId || urlProfessorId;
+    const {subjectId: urlSubjectId} = useParams();
+    const subjectId = propSubjectId || urlSubjectId;
 
     const [topics, setTopics] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -23,7 +25,7 @@ function ProfessorTopics({professorId: propProfessorId}) {
         setError(null);
 
         api
-            .get(`/subject-allocations/professors/${professorId}/topics`)
+            .get(`/subject-allocations/professors/${professorId}/subjects/${subjectId}/topics`)
             .then((res) => {
                 setTopics(res.data || []);
                 setLoading(false);
@@ -32,7 +34,7 @@ function ProfessorTopics({professorId: propProfessorId}) {
                 setError(`Failed to load topics: ${err.message || "Unknown error"}`);
                 setLoading(false);
             });
-    }, [professorId]);
+    }, [professorId, subjectId]);
 
     const handleDelete = (topicId) => {
         if (window.confirm("Are you sure you want to delete this topic?")) {

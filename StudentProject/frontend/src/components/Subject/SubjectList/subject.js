@@ -8,6 +8,8 @@ class Subject extends React.Component {
         this.state = {
             page: 0,
             size: 12,
+            name: "",
+            semesterType: ""
         };
     }
 
@@ -20,6 +22,15 @@ class Subject extends React.Component {
             .slice(offset, nextPageOffset)
             .map((term, index) => <SubjectTerm key={term.id || index} term={term} />);
     };
+    handleInputChange = (e) => {
+        this.setState({ [e.target.name]: e.target.value });
+    };
+
+    handleSearchSubmit = (e) => {
+        e.preventDefault();
+        this.props.onSearchSubjects(this.state.name, this.state.semesterType);
+        this.setState({ page: 0 });
+    };
 
     render() {
         const offset = this.state.size * this.state.page;
@@ -29,6 +40,41 @@ class Subject extends React.Component {
 
         return (
             <div className="container mt-5">
+                <form className="mb-4" onSubmit={this.handleSearchSubmit}>
+                    <div className="row g-2 align-items-end">
+                        <div className="col-md-5">
+                            <label className="form-label">Subject Name</label>
+                            <input
+                                type="text"
+                                className="form-control"
+                                name="name"
+                                value={this.state.name}
+                                onChange={this.handleInputChange}
+                            />
+                        </div>
+
+                        <div className="col-md-4">
+                            <label className="form-label">Semester Type</label>
+                            <select
+                                className="form-select"
+                                name="semesterType"
+                                value={this.state.semesterType}
+                                onChange={this.handleInputChange}
+                            >
+                                <option value="">All</option>
+                                <option value="SUMMER">SUMMER</option>
+                                <option value="WINTER">WINTER</option>
+                            </select>
+                        </div>
+
+                        <div className="col-md-3">
+                            <button type="submit" className="btn btn-primary w-100">
+                                Search
+                            </button>
+                        </div>
+                    </div>
+                </form>
+
                 <div className="row">
                     {subjects}
                 </div>

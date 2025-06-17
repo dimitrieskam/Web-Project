@@ -115,7 +115,7 @@ public class SubjectAllocationServiceImpl implements SubjectAllocationService {
     }
 
     public List<DisplayTopicDTO> getTopicsByProfessorAndSubject(String professorId, String subjectId) {
-        List<Topic> topics = topicRepository.findByProfessor_IdAndSubject_Id(professorId, subjectId);
+        List<Topic> topics = topicRepository.findByProfessor_IdAndJoinedSubject_MainSubject_Id(professorId, subjectId);
         return DisplayTopicDTO.from(topics);
     }
 

@@ -57,7 +57,7 @@ const TopicAdd = (props) => {
             formData.professorId,
             formData.subjectId
         );
-        navigate(`/subject-allocations/professors/${formData.professorId}/topics`);
+        navigate(`/subject-allocations/professors/${formData.professorId}/subjects/${formData.subjectId}/topics`);
     };
 
     return (

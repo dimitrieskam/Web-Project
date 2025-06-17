@@ -19,6 +19,7 @@ import SubjectTopicPage from "../SubjectTopic/SubjectTopicPage";
 import CreateTeam from "../Team/CreateTeam";
 import StudentAdd from "../Student/StudentAdd/studentAdd";
 import TeamsByTopic from "../Team/TeamsByTopic";
+import ProfessorSubjectTopics from "../ProfessorSubjectTopics/ProfessorSubjectTopics"
 
 class App extends Component {
     constructor(props) {
@@ -54,6 +55,13 @@ class App extends Component {
             })
             .catch((error) => console.error("Error fetching professors:", error));
     };
+    searchProfessors = (name) => {
+        AppService.searchProfessorsByName(name)
+            .then((data) => {
+                this.setState({ professors: data.data });
+            })
+            .catch((error) => console.error("Error searching professors:", error));
+    };
 
     // ====== STUDENTS ======
     loadStudents = () => {
@@ -80,6 +88,13 @@ class App extends Component {
                 this.setState({subjects: data.data});
             })
             .catch((error) => console.error("Error fetching subjects:", error));
+    };
+    searchSubjects = (name, semesterType) => {
+        AppService.searchSubjects(name, semesterType)
+            .then((data) => {
+                this.setState({ subjects: data.data });
+            })
+            .catch((error) => console.error("Error searching subjects:", error));
     };
 
     // ====== TOPICS ======
@@ -139,6 +154,7 @@ class App extends Component {
                                 element={
                                     <Professors
                                         professors={this.state.professors}
+                                        onSearchProfessors={this.searchProfessors}
                                     />
                                 }
                             />
@@ -168,6 +184,7 @@ class App extends Component {
                                 element={
                                     <Subject
                                         subjects={this.state.subjects}
+                                        onSearchSubjects={this.searchSubjects}
                                     />
                                 }
                             />
@@ -187,20 +204,20 @@ class App extends Component {
                             <Route
                                 path="/subject-allocations/:professorId/subjects"
                                 element={<ProfessorSubjectsPage/>}/>
-                            <Route
+                            {/* <Route
                                 path="/subject-allocations/professors/:professorId/topics"
-                                element={<ProfessorTopics/>}/>
+                                element={<ProfessorTopics/>}/> */}
 
                             <Route path="/subject-allocations/subjects/:subjectId/topics"
                                    element={<SubjectTopicPage/>}/>
 
                             <Route
-                                path="/subject-allocations/:professorId/subjects/:subjectId/topics/add-topic"
+                                path="/subject-allocations/professors/:professorId/subjects/:subjectId/topics/add-topic"
                                 element={<TopicAdd
                                     onAddTopic={this.addTopic}/>}/>
 
                             <Route
-                                path="subject-allocations/topics/:id/professors/:professorId/subjects/:subjectId/edit-topic"
+                                path="/subject-allocations/topics/:id/professors/:professorId/subjects/:subjectId/edit-topic"
                                 element={<TopicEdit
                                     topics={this.state.topics}
                                     onEditTopic={this.updateTopic}/>}/>
@@ -212,6 +229,8 @@ class App extends Component {
                             <Route path="/teams/topic/:topicId"
                                    element={<TeamsByTopic/>}/>
 
+                            <Route path="/subject-allocations/professors/:professorId/subjects/:subjectId/topics" 
+                            element={<ProfessorSubjectTopics />} />
 
                             {/*PATHS*/}
                             <Route path="/" element={<Navigate to="/subjects"/>}/>

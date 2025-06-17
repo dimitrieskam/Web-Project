@@ -7,10 +7,36 @@ class Professor extends React.Component {
         super(props);
         this.state = {
             page: 0,
-            size: 12
+            size: 12,
+            searchText: ''
         };
     }
+    handlePageClick = (data) => {
+        this.setState({ page: data.selected });
+    };
 
+    getProfessorPage = (offset, nextPageOffset) => {
+        return this.props.professors
+            .map((term, index) => (
+                <ProfessorTerm term={term} key={index} />
+            ))
+            .filter((_, index) => index >= offset && index < nextPageOffset);
+    };
+
+    handleSearchChange = (e) => {
+        const newSearchText = e.target.value;
+        this.setState({ searchText: newSearchText, page: 0 }, () => {
+            if (this.props.onSearchProfessors) {
+                this.props.onSearchProfessors(this.state.searchText);
+            }
+        });
+    };
+
+    handleSearchSubmit = () => {
+        if (this.props.onSearchProfessors) {
+            this.props.onSearchProfessors(this.state.searchText);
+        }
+    };
     render() {
         const offset = this.state.size * this.state.page;
         const nextPageOffset = offset + this.state.size;
@@ -19,6 +45,16 @@ class Professor extends React.Component {
 
         return (
             <div className="container mt-5">
+                <div className="mb-4">
+                    <input
+                        type="text"
+                        className="form-control"
+                        placeholder="Search professors by name..."
+                        value={this.state.searchText}
+                        onChange={this.handleSearchChange}
+                    />
+                </div>
+
                 <div className="row">
                     {professors}
                 </div>
@@ -46,17 +82,7 @@ class Professor extends React.Component {
         );
     }
 
-    handlePageClick = (data) => {
-        this.setState({ page: data.selected });
-    };
-
-    getProfessorPage = (offset, nextPageOffset) => {
-        return this.props.professors
-            .map((term, index) => (
-                <ProfessorTerm term={term} key={index} />
-            ))
-            .filter((_, index) => index >= offset && index < nextPageOffset);
-    };
+   
 }
 
 export default Professor;

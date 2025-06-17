@@ -62,7 +62,7 @@ function TeamsByTopic() {
                         <strong>{team.name}</strong>
                     </div>
                     <div className="card-body">
-                        <p><strong>Team ID:</strong> {team.id}</p>
+                        {/* <p><strong>Team ID:</strong> {team.id}</p> */}
                         <p><strong>Members:</strong></p>
                         <ul>
                             {team.studentIndexes.map(index => (

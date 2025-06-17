@@ -63,11 +63,11 @@ function SubjectTopics({subjectId: propSubjectId}) {
                                     <strong>Groups:</strong> {topic.groupCount} |{" "}
                                     <strong>Members per Group:</strong> {topic.membersPerGroup}
                                 </p>
-                                <Link
-                                    to={`/subject-allocations/topics/${topic.id}/professors/${topic.professorId}/subjects/${subjectId}/edit-topic`}
-                                    className="btn btn-info mt-auto"
+                                 <Link
+                                    className="btn btn-primary"
+                                     to={`/teams/create-team/${topic.id}`}
                                 >
-                                    Edit Topic
+                                     Choose Topic
                                 </Link>
                             </div>
                         </div>

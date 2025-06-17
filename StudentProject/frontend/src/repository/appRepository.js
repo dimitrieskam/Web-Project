@@ -6,6 +6,13 @@ const AppRepository = {
     fetchProfessors: () => {
         return axios.get("/professors");
     },
+    searchProfessorsByName: (name) => {
+        return axios.get("/professors/search-professor", {
+            params: {
+                name: name
+            }
+        });
+    },
 
     // ====== STUDENTS ======
     fetchStudents: () => {
@@ -40,6 +47,13 @@ const AppRepository = {
     fetchSubjects: () => {
         return axios.get("/subjects");
     },
+    searchSubjects: (name, semesterType) => {
+        const params = new URLSearchParams();
+        if (name) params.append("name", name);
+        if (semesterType) params.append("semesterType", semesterType);
+
+        return axios.get(`/subjects/search-subject?${params.toString()}`);
+    },
 
     // ====== TOPICS ======
     fetchTopics: () => {
@@ -47,7 +61,7 @@ const AppRepository = {
     },
 
     addTopic: (name, description, fromDate, toDate, groupCount, membersPerGroup, professorId, subjectId) => {
-        return axios.post(`/subject-allocations/${professorId}/subjects/${subjectId}/topics/add-topic`, {
+        return axios.post(`/subject-allocations/professors/${professorId}/subjects/${subjectId}/topics/add-topic`, {
             "name": name,
             "description": description,
             "fromDate": fromDate,

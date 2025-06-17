@@ -30,4 +30,11 @@ public class ProfessorApplicationServiceImpl implements ProfessorApplicationServ
         return this.professorDomainService.findByID(id)
                 .map(DisplayProfessorDTO::from);
     }
+    @Override
+    public List<DisplayProfessorDTO> findByName(String name) {
+        return professorDomainService.findByNameContainingIgnoreCase(name)
+                .stream()
+                .map(prof -> new DisplayProfessorDTO(prof.getId(), prof.getName(), prof.getEmail()))
+                .toList();
+    }
 }

@@ -8,4 +8,5 @@ public interface ProfessorDomainService {
     List<Professor> findAll();
 
     Optional<Professor> findByID(String id);
+    List<Professor> findByNameContainingIgnoreCase(String name);
 }

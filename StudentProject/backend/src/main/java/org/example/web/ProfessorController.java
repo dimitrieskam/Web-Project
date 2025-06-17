@@ -21,4 +21,8 @@ public class ProfessorController {
     public ResponseEntity<List<DisplayProfessorDTO>> findAll() {
         return ResponseEntity.ok(this.professorApplicationService.findAll());
     }
+    @GetMapping("/search-professor")
+    public ResponseEntity<List<DisplayProfessorDTO>> searchByName(@RequestParam String name) {
+        return ResponseEntity.ok(professorApplicationService.findByName(name));
+    }
 }
