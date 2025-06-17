@@ -21,7 +21,7 @@ function SubjectTopics({subjectId: propSubjectId}) {
         setError(null);
 
         api
-            .get(`/allocations/subjects/${subjectId}/topics`)
+            .get(`/subject-allocations/subjects/${subjectId}/topics`)
             .then((res) => {
                 setTopics(res.data || []);
                 setLoading(false);
@@ -64,7 +64,7 @@ function SubjectTopics({subjectId: propSubjectId}) {
                                     <strong>Members per Group:</strong> {topic.membersPerGroup}
                                 </p>
                                 <Link
-                                    to={`/allocations/topics/${topic.id}/professors/${topic.professorId}/subjects/${subjectId}/edit-topic`}
+                                    to={`/subject-allocations/topics/${topic.id}/professors/${topic.professorId}/subjects/${subjectId}/edit-topic`}
                                     className="btn btn-info mt-auto"
                                 >
                                     Edit Topic

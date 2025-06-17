@@ -1,11 +1,9 @@
 package org.example.model;
 
 import jakarta.persistence.*;
-
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-
 
 @Entity
 @Table(name = "TOPICS")
@@ -52,7 +50,6 @@ public class Topic {
         this.professor = professor;
     }
 
-
     public Topic(String id, String name, String description, LocalDate fromDate, LocalDate toDate, int groupCount, int membersPerGroup, Professor professor) {
         this.id = id;
         this.name = name;
@@ -86,7 +83,6 @@ public class Topic {
         this.membersPerGroup = membersPerGroup;
         this.professor = professor;
         this.joinedSubject = joinedSubject;
-
     }
 
     public String getId() {

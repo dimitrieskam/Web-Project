@@ -5,7 +5,6 @@ import org.example.model.DTOs.studentDTO.DisplayStudentDTO;
 import org.example.service.application.StudentApplicationService;
 import org.example.service.domain.StudentDomainService;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -24,12 +23,6 @@ public class StudentApplicationServiceImpl implements StudentApplicationService 
         return this.studentDomainService.findAll().stream()
                 .map(DisplayStudentDTO::from)
                 .collect(Collectors.toList());
-    }
-
-    @Override
-    public Optional<DisplayStudentDTO> findByIndex(String index) {
-        return this.studentDomainService.findByIndex(index)
-                .map(DisplayStudentDTO::from);
     }
 
     @Override

@@ -5,8 +5,7 @@ const ProfessorTerm = ({ term }) => {
     const navigate = useNavigate();
 
     const handleDetailsClick = () => {
-        // TODO subjects by professor
-        navigate(`/allocations/${term.id}/subjects`);
+        navigate(`/subject-allocations/${term.id}/subjects`);
     };
 
     return (

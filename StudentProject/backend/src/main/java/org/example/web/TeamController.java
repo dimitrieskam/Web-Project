@@ -7,7 +7,6 @@ import org.example.model.DTOs.teamDTO.DisplayTeamDTO;
 import org.example.service.application.TopicApplicationService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RestController
@@ -16,12 +15,9 @@ import java.util.List;
 public class TeamController {
 
     private final TopicApplicationService topicApplicationService;
-    private final TeamApplicationService teamApplicationService;
 
-
-    public TeamController(TopicApplicationService topicApplicationService, TeamApplicationService teamApplicationService) {
+    public TeamController(TopicApplicationService topicApplicationService) {
         this.topicApplicationService = topicApplicationService;
-        this.teamApplicationService = teamApplicationService;
     }
 
     @PostMapping("/create-team/{topicId}")
@@ -33,7 +29,6 @@ public class TeamController {
             System.out.println("Creating team for topic: " + topicId);
             System.out.println("Team data: " + createTeamDTO);
 
-            // Use topicApplicationService instead of teamService
             DisplayTeamDTO createdTeam = topicApplicationService.createTeam(topicId, createTeamDTO, "anonymous");
             return ResponseEntity.status(HttpStatus.CREATED).body(createdTeam);
 
@@ -78,5 +73,4 @@ public class TeamController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
-
 }

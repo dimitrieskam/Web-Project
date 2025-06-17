@@ -4,7 +4,6 @@ import org.example.model.Student;
 import org.example.repository.StudentRepository;
 import org.example.service.domain.StudentDomainService;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.Optional;
 
@@ -20,16 +19,6 @@ public class StudentDomainServiceImpl implements StudentDomainService {
     @Override
     public List<Student> findAll() {
         return this.studentRepository.findAll();
-    }
-
-    @Override
-    public Optional<Student> findByIndex(String index) {
-        return this.studentRepository.findById(index);
-    }
-
-    @Override
-    public Optional<List<Student>> findAllByIndexes(List<String> indexes) {
-        return Optional.of(this.studentRepository.findAllById(indexes));
     }
 
     @Override
@@ -59,13 +48,12 @@ public class StudentDomainServiceImpl implements StudentDomainService {
     }
 
     @Override
-    public List<Student> searchStudentsByIndex(String query) {
-        return studentRepository.findByIndexContainingIgnoreCase(query);
-
+    public void delete(String index) {
+        this.studentRepository.deleteById(index);
     }
 
     @Override
-    public void delete(String index) {
-        this.studentRepository.deleteById(index);
+    public List<Student> searchStudentsByIndex(String query) {
+        return studentRepository.findByIndexContainingIgnoreCase(query);
     }
 }

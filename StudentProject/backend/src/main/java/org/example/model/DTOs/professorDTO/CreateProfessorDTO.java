@@ -1,7 +1,6 @@
 package org.example.model.DTOs.professorDTO;
 
 import org.example.model.Professor;
-
 import java.util.List;
 import java.util.stream.Collectors;
 

@@ -6,9 +6,7 @@ import org.example.model.Student;
 import org.example.service.application.StudentApplicationService;
 import org.example.service.domain.StudentDomainService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 import java.util.Optional;
 
@@ -19,7 +17,6 @@ public class StudentController {
 
     private final StudentApplicationService studentApplicationService;
     private final StudentDomainService studentDomainService;
-
 
     public StudentController(StudentApplicationService studentApplicationService, StudentDomainService studentDomainService) {
         this.studentApplicationService = studentApplicationService;
@@ -42,7 +39,7 @@ public class StudentController {
         return ResponseEntity.ok(this.studentApplicationService.update(index, createStudentDTO));
     }
 
-    @DeleteMapping("delete-student/{index}")
+    @DeleteMapping("/delete-student/{index}")
     public ResponseEntity<Void> deleteStudent(@PathVariable String index) {
         this.studentApplicationService.delete(index);
 

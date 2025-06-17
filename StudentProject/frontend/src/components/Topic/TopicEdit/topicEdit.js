@@ -73,7 +73,7 @@ const TopicEdit = (props) => {
                 formData.professorId,
                 formData.subjectId
             );
-            navigate(`/allocations/professors/${formData.professorId}/topics`);
+            navigate(`/subject-allocations/professors/${formData.professorId}/topics`);
         } catch (error) {
             console.error("Error updating topic:", error);
             alert("Failed to update topic. Please try again.");

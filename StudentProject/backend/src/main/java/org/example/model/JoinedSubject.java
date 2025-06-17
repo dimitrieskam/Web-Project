@@ -32,29 +32,6 @@ public class JoinedSubject {
     @JoinColumn(name = "main_subject_id")
     private Subject mainSubject;
 
-
-    public JoinedSubject(String abbreviation, String name, String codes, SemesterType semesterType, Subject mainSubject) {
-        this.abbreviation = abbreviation;
-        this.name = name;
-        this.codes = codes;
-        this.semesterType = semesterType;
-        this.mainSubject = mainSubject;
-    }
-
-
-
-    @Transient
-    public List<String> codesList() {
-        return codes != null ? List.of(codes.split(";")).stream().map(String::trim).toList() : List.of();
-    }
-
-    @Transient
-    public String displayName() {
-        return String.format("%s [%s]", name, abbreviation);
-    }
-
-
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -68,4 +45,3 @@ public class JoinedSubject {
         return getClass().hashCode();
     }
 }
-

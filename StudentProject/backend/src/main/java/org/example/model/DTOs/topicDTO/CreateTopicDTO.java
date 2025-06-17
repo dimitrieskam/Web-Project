@@ -1,10 +1,7 @@
 package org.example.model.DTOs.topicDTO;
 
-import org.example.model.JoinedSubject;
 import org.example.model.Professor;
-import org.example.model.Subject;
 import org.example.model.Topic;
-
 import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;

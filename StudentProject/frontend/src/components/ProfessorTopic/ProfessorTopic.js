@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {useParams, Link, useNavigate} from "react-router-dom";
 import api from "../../custom-axios/axios";
-import subject from "../Subject/SubjectList/subject";
 
 function ProfessorTopics({professorId: propProfessorId}) {
     const {professorId: urlProfessorId} = useParams();
@@ -24,7 +23,7 @@ function ProfessorTopics({professorId: propProfessorId}) {
         setError(null);
 
         api
-            .get(`/allocations/professors/${professorId}/topics`)
+            .get(`/subject-allocations/professors/${professorId}/topics`)
             .then((res) => {
                 setTopics(res.data || []);
                 setLoading(false);
@@ -38,7 +37,7 @@ function ProfessorTopics({professorId: propProfessorId}) {
     const handleDelete = (topicId) => {
         if (window.confirm("Are you sure you want to delete this topic?")) {
             api
-                .delete(`/allocations/topics/${topicId}`)
+                .delete(`/subject-allocations/topics/delete-topic/${topicId}`)
                 .then(() => {
                     setTopics((prev) => prev.filter((t) => t.id !== topicId));
                 })
@@ -84,7 +83,7 @@ function ProfessorTopics({professorId: propProfessorId}) {
                                     <strong>Members per Group:</strong> {topic.membersPerGroup}
                                 </p>
                                 <Link
-                                    to={`/allocations/topics/${topic.id}/professors/${professorId}/subjects/${topic.subjectId}/edit-topic`}
+                                    to={`/subject-allocations/topics/${topic.id}/professors/${professorId}/subjects/${topic.subjectId}/edit-topic`}
                                     className="btn btn-info mt-auto"
                                 >
                                     Edit Topic
@@ -101,8 +100,6 @@ function ProfessorTopics({professorId: propProfessorId}) {
                                 >
                                     Choose Topic
                                 </Link>
-
-
                             </div>
                         </div>
                     </div>

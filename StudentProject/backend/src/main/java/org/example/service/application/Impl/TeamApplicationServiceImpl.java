@@ -4,9 +4,7 @@ import org.example.model.DTOs.teamDTO.DisplayTeamDTO;
 import org.example.model.Team;
 import org.example.repository.TeamRepository;
 import org.example.service.application.TeamApplicationService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.stream.Collectors;
 

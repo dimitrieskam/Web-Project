@@ -1,7 +1,6 @@
 package org.example.model;
 
 import jakarta.persistence.*;
-
 import java.util.List;
 
 @Entity
@@ -86,8 +85,6 @@ public class Student {
     public List<Team> getTeams() {
         return teams;
     }
-
-
 
     public void setTeams(List<Team> teams) {
         this.teams = teams;

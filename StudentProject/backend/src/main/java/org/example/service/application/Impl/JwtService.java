@@ -27,7 +27,6 @@ public class JwtService {
 
     private final TokenRepository tokenRepository;
 
-
     public JwtService(TokenRepository tokenRepository) {
         this.tokenRepository = tokenRepository;
     }

@@ -19,14 +19,11 @@ function CreateTeam() {
 
     const [isClosed, setIsClosed] = useState(false);
 
-    // Fetch topic info to get topic name and membersPerGroup
-    // Update the useEffect in CreateTeam.js (line 19-33)
     useEffect(() => {
         setTopicLoading(true);
         setError(null);
 
-        // Fetch topic info
-        api.get(`/allocations/topics/${topicId}`)
+        api.get(`/subject-allocations/topics/${topicId}`)
             .then(res => {
                 setTopicName(res.data.name);
                 setMaxMembers(res.data.membersPerGroup);
@@ -44,17 +41,14 @@ function CreateTeam() {
                 setTopicLoading(false);
             });
 
-        // Fetch if topic is closed
         api.get(`/topics/${topicId}/is-closed`)
             .then(res => setIsClosed(res.data))
             .catch(err => {
                 console.error("Error fetching topic closed status:", err);
-                // Default to false if error
                 setIsClosed(false);
             });
     }, [topicId]);
 
-    // Student search - no min character limit
     useEffect(() => {
         if (studentQuery.trim() !== "") {
             api.get(`/students/search?q=${studentQuery}`)
@@ -107,7 +101,6 @@ function CreateTeam() {
                 setLoading(false);
                 console.error("Error creating team:", err);
 
-                // Better error handling
                 let errorMessage = "Failed to create team";
                 if (err.response?.data?.message) {
                     errorMessage = err.response.data.message;
@@ -123,7 +116,6 @@ function CreateTeam() {
             });
     };
 
-    // Show loading state while fetching topic
     if (topicLoading) {
         return (
             <div className="container mt-4">
@@ -137,7 +129,6 @@ function CreateTeam() {
         );
     }
 
-    // Show error if topic couldn't be loaded
     if (error && !topicName) {
         return (
             <div className="container mt-4">

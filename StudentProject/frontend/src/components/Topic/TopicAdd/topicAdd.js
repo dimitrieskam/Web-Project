@@ -7,13 +7,13 @@ const TopicAdd = (props) => {
 
     const [formData, updateFormData] = React.useState({
         name: "",
-        description: "",         // <-- new field
+        description: "",
         fromDate: "",
         toDate: "",
         groupCount: "",
         membersPerGroup: "",
         professorId: professorIdFromUrl || props.currentProfessorId || "",
-        subjectId: subjectIdFromUrl || props.currentSubjectId || "" // <-- new field
+        subjectId: subjectIdFromUrl || props.currentSubjectId || ""
     });
 
     useEffect(() => {
@@ -57,7 +57,7 @@ const TopicAdd = (props) => {
             formData.professorId,
             formData.subjectId
         );
-        navigate(`/allocations/professors/${formData.professorId}/topics`);
+        navigate(`/subject-allocations/professors/${formData.professorId}/topics`);
     };
 
     return (

@@ -1,7 +1,6 @@
 package org.example.model;
 
 import jakarta.persistence.*;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,7 +23,7 @@ public class Team {
     @JoinTable(
             name = "teams_members",
             joinColumns = @JoinColumn(name = "teams_id"),
-            inverseJoinColumns = @JoinColumn(name = "members_id") // ✅ must match Student PK
+            inverseJoinColumns = @JoinColumn(name = "members_id")
     )
     private List<Student> members = new ArrayList<>();
 

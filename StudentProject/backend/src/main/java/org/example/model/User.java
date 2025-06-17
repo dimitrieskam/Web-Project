@@ -13,7 +13,7 @@ import java.util.List;
 
 @Data
 @Entity
-@Table(name="users")
+@Table(name = "users")
 public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -60,23 +60,24 @@ public class User implements UserDetails {
     public List<Token> getTokens() {
         return tokens;
     }
-    @Override
-    public String getUsername() {
-        return username;
-    }
-
 
     public void setTokens(List<Token> tokens) {
         this.tokens = tokens;
     }
 
     @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority(role.name()));
-
-
+    public String getUsername() {
+        return username;
     }
 
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return List.of(new SimpleGrantedAuthority(role.name()));
+    }
 
     @Override
     public boolean isAccountNonExpired() {
@@ -97,5 +98,4 @@ public class User implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
-
 }

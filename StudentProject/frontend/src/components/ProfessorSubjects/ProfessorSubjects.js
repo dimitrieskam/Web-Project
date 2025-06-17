@@ -27,7 +27,7 @@ function ProfessorSubjects({ professorId: propProfessorId }) {
         console.log("Making API call for professorId:", professorId);
 
             api
-            .get(`/allocations/${professorId}/subjects`)
+            .get(`/subject-allocations/${professorId}/subjects`)
             .then((res) => {
                 console.log("API Response:", res.data);
                 setSubjects(res.data || []);
@@ -57,7 +57,6 @@ function ProfessorSubjects({ professorId: propProfessorId }) {
             <h2 className="mb-4">Professor's Subjects</h2>
             <div className="row">
                 {subjects.map((allocation, index) => {
-                    // Handle both possible response structures
                     const subject = allocation.subject || allocation.subjectName || 'Unknown Subject';
                     const abbreviation = allocation.abbreviation || allocation.subjectCode || 'N/A';
                     const semester = allocation.semester || 'N/A';
@@ -76,13 +75,13 @@ function ProfessorSubjects({ professorId: propProfessorId }) {
                                         <strong>Semester Code:</strong> {semesterCode}
                                     </p>
                                     <Link
-                                        to={`/allocations/professors/${professorId}/topics`}
+                                        to={`/subject-allocations/professors/${professorId}/topics`}
                                         className="btn btn-primary mt-auto"
                                     >
                                        Topics
                                     </Link>
                                     <Link
-                                        to={`/allocations/${professorId}/subjects/${semesterCode}/topics/add-topic`}
+                                        to={`/subject-allocations/${professorId}/subjects/${semesterCode}/topics/add-topic`}
                                         className="btn btn-primary mt-auto"
                                     >
                                        Add

@@ -6,29 +6,12 @@ const AppRepository = {
     fetchProfessors: () => {
         return axios.get("/professors");
     },
-    addProfessor: (name, surname, email) => {
-        return axios.post("/professors/add-professor", {
-            "name": name,
-            "surname": surname,
-            "email": email
-        });
-    },
-    updateProfessor: (id, name, surname, email) => {
-        return axios.put(`/professors/edit-professor/${id}`, {
-            "name": name,
-            "surname": surname,
-            "email": email
-        });
-    },
-    deleteProfessor: (id) => {
-        return axios.delete(`/professors/delete-professor/${id}`);
-    },
-
 
     // ====== STUDENTS ======
     fetchStudents: () => {
         return axios.get("/students");
     },
+
     addStudent: (index, name, lastname, username, email) => {
         return axios.post("/students/add-student", {
             "index": index,
@@ -38,6 +21,7 @@ const AppRepository = {
             "email": email
         });
     },
+    // TODO
     updateStudent: (id, index, name, lastname, username, email) => {
         return axios.put(`/students/edit-student/${id}`, {
             "index":index,
@@ -47,10 +31,10 @@ const AppRepository = {
             "email": email
         });
     },
+    // TODO
     deleteStudent: (id) => {
         return axios.delete(`/students/delete-student/${id}`);
     },
-
 
     // ====== SUBJECTS ======
     fetchSubjects: () => {
@@ -59,11 +43,11 @@ const AppRepository = {
 
     // ====== TOPICS ======
     fetchTopics: () => {
-        return axios.get("/allocations/topics");
+        return axios.get("/subject-allocations/topics");
     },
 
     addTopic: (name, description, fromDate, toDate, groupCount, membersPerGroup, professorId, subjectId) => {
-        return axios.post(`/allocations/${professorId}/subjects/${subjectId}/topics/add-topic`, {
+        return axios.post(`/subject-allocations/${professorId}/subjects/${subjectId}/topics/add-topic`, {
             "name": name,
             "description": description,
             "fromDate": fromDate,
@@ -76,7 +60,7 @@ const AppRepository = {
     },
 
     updateTopic: (id, name, description, fromDate, toDate, groupCount, membersPerGroup, professorId, subjectId) => {
-        return axios.put(`allocations/topics/${id}/professors/${professorId}/subjects/${subjectId}/edit-topic`, {
+        return axios.put(`subject-allocations/topics/${id}/professors/${professorId}/subjects/${subjectId}/edit-topic`, {
             "name": name,
             "description": description,
             "fromDate": fromDate,
@@ -89,7 +73,7 @@ const AppRepository = {
     },
 
     deleteTopic: (id) => {
-        return axios.delete(`allocations/topics/delete-topic/${id}`);
+        return axios.delete(`subject-allocations/topics/delete-topic/${id}`);
     },
 
     // ====== TEAMS ======

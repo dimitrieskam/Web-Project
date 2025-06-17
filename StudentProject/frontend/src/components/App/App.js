@@ -71,6 +71,7 @@ class App extends Component {
             })
             .catch((error) => console.error("Error adding student:", error));
     };
+    // TODO updateStudent & deleteStudent
 
     // ====== SUBJECTS ======
     loadSubjects = () => {
@@ -159,6 +160,7 @@ class App extends Component {
                                     />
                                 }
                             />
+                            // TODO edit-student & delete-student
 
                             {/*SUBJECTS*/}
                             <Route
@@ -181,46 +183,34 @@ class App extends Component {
                                     />
                                 }
                             />
-                            {/*<Route*/}
-                            {/*    path="/topics/add-topic"*/}
-                            {/*    element={*/}
-                            {/*        <TopicAdd*/}
-                            {/*            onAddTopic={this.addTopic}*/}
-                            {/*        />*/}
-                            {/*    }*/}
-                            {/*/>*/}
-                            {/*<Route*/}
-                            {/*    path="/topics/edit-topic/:id"*/}
-                            {/*    element={*/}
-                            {/*        <TopicEdit*/}
-                            {/*            topics={this.state.topics}*/}
-                            {/*            onEditTopic={this.updateTopic}*/}
-                            {/*        />*/}
-                            {/*    }*/}
-                            {/*/>*/}
+
                             <Route
-                                path="/allocations/:professorId/subjects"
+                                path="/subject-allocations/:professorId/subjects"
                                 element={<ProfessorSubjectsPage/>}/>
                             <Route
-                                path="/allocations/professors/:professorId/topics"
+                                path="/subject-allocations/professors/:professorId/topics"
                                 element={<ProfessorTopics/>}/>
 
-                            <Route path="/allocations/subjects/:subjectId/topics"
+                            <Route path="/subject-allocations/subjects/:subjectId/topics"
                                    element={<SubjectTopicPage/>}/>
 
                             <Route
-                                path="/allocations/:professorId/subjects/:subjectId/topics/add-topic"
-                                element={<TopicAdd onAddTopic={this.addTopic}/>}/>
+                                path="/subject-allocations/:professorId/subjects/:subjectId/topics/add-topic"
+                                element={<TopicAdd
+                                    onAddTopic={this.addTopic}/>}/>
 
                             <Route
-                                path="allocations/topics/:id/professors/:professorId/subjects/:subjectId/edit-topic"
-                                element={<TopicEdit topics={this.state.topics} onEditTopic={this.updateTopic}/>}/>
+                                path="subject-allocations/topics/:id/professors/:professorId/subjects/:subjectId/edit-topic"
+                                element={<TopicEdit
+                                    topics={this.state.topics}
+                                    onEditTopic={this.updateTopic}/>}/>
 
                             <Route
                                 path="/teams/create-team/:topicId"
                                 element={<CreateTeam/>}/>
 
-                            <Route path="/teams/topic/:topicId" element={<TeamsByTopic />} />
+                            <Route path="/teams/topic/:topicId"
+                                   element={<TeamsByTopic/>}/>
 
 
                             {/*PATHS*/}
@@ -236,21 +226,3 @@ class App extends Component {
 }
 
 export default App;
-
-// TODO ako ti treba, ako ne izbrishi go Angela,
-//  kaj kartichkata za profesor ima kopche, pa tamu da se listaat predmetite po profesor
-// import React from "react";
-// import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-// import ProfessorSubjectsPage from "../ProfessorSubjects/ProfessorSubjectsPage";
-//
-// function App() {
-//   return (
-//     <Router>
-//       <Routes>
-//         <Route path="/professors/:professorId/subjects" element={<ProfessorSubjectsPage />} />
-//       </Routes>
-//     </Router>
-//   );
-// }
-//
-// export default App;

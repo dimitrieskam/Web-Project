@@ -5,7 +5,6 @@ import org.example.model.DTOs.professorDTO.DisplayProfessorDTO;
 import org.example.service.application.ProfessorApplicationService;
 import org.example.service.domain.ProfessorDomainService;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -19,7 +18,6 @@ public class ProfessorApplicationServiceImpl implements ProfessorApplicationServ
         this.professorDomainService = professorDomainService;
     }
 
-
     @Override
     public List<DisplayProfessorDTO> findAll() {
         return this.professorDomainService.findAll().stream()
@@ -31,22 +29,5 @@ public class ProfessorApplicationServiceImpl implements ProfessorApplicationServ
     public Optional<DisplayProfessorDTO> findByID(String id) {
         return this.professorDomainService.findByID(id)
                 .map(DisplayProfessorDTO::from);
-    }
-
-    @Override
-    public Optional<DisplayProfessorDTO> create(CreateProfessorDTO createProfessorDTO) {
-        return this.professorDomainService.create(createProfessorDTO.toProfessor())
-                .map(DisplayProfessorDTO::from);
-    }
-
-    @Override
-    public Optional<DisplayProfessorDTO> update(String id, CreateProfessorDTO createProfessorDTO) {
-        return this.professorDomainService.update(id, createProfessorDTO.toProfessor())
-                .map(DisplayProfessorDTO::from);
-    }
-
-    @Override
-    public void delete(String id) {
-        this.professorDomainService.delete(id);
     }
 }

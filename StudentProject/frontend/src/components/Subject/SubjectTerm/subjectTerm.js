@@ -5,8 +5,7 @@ const SubjectTerm = ({ term }) => {
     const navigate = useNavigate();
 
     const handleDetailsClick = () => {
-        // TODO topics by subject
-        navigate(`/allocations/subjects/${term.id}/topics`);
+        navigate(`/subject-allocations/subjects/${term.id}/topics`);
     };
 
     return (

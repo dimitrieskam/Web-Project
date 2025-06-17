@@ -1,8 +1,7 @@
-package org.example.model.DTOs;
+package org.example.model.DTOs.TeacherSubjectAllocationDTO;
 import org.example.model.TeacherSubjectAllocation;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.ToString;
 
 @Data
 @AllArgsConstructor

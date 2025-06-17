@@ -12,9 +12,9 @@ function TeamsByTopic() {
 
     useEffect(() => {
         setLoading(true);
-        api.get(`/teams/topic/${topicId}`) // Adjust endpoint if needed
+        api.get(`/teams/topic/${topicId}`)
             .then(res => {
-                setTeams(res.data); // Expecting an array of DisplayTeamDTOs
+                setTeams(res.data);
                 setError(null);
             })
             .catch(err => {

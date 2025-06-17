@@ -3,7 +3,6 @@ package org.example.model;
 import jakarta.persistence.*;
 import org.example.model.enumerations.SemesterType;
 
-
 @Entity
 @Table(name = "semester")
 public class Semester {
@@ -16,13 +15,14 @@ public class Semester {
     @Enumerated(EnumType.STRING)
     private SemesterType semesterType;
 
+    public Semester() {
+
+    }
+
     public Semester(String code, String year, SemesterType semesterType) {
         this.code = code;
         this.year = year;
         this.semesterType = semesterType;
-    }
-
-    public Semester() {
     }
 
     public String getCode() {

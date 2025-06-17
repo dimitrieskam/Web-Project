@@ -1,23 +1,19 @@
 package org.example.web;
 
-import org.example.model.DTOs.TeacherSubjectAllocationDTO;
-
+import org.example.model.DTOs.TeacherSubjectAllocationDTO.TeacherSubjectAllocationDTO;
 import org.example.model.DTOs.topicDTO.CreateTopicDTO;
 import org.example.model.DTOs.topicDTO.DisplayTopicDTO;
-import org.example.model.TeacherSubjectAllocation;
 import org.example.service.application.Impl.SubjectAllocationServiceImpl;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
-
 import java.nio.file.AccessDeniedException;
 import java.util.List;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:3000")
-@RequestMapping("/api/allocations")
+@RequestMapping("/api/subject-allocations")
 public class SubjectAllocationController {
 
     private final SubjectAllocationServiceImpl subjectAllocationService;
@@ -48,7 +44,6 @@ public class SubjectAllocationController {
         return subjectAllocationService.getTopicsBySubject(subjectId);
     }
 
-    // GET /api/professors/{professorId}/subjects
     @GetMapping("/{professorId}/subjects")
     public ResponseEntity<List<TeacherSubjectAllocationDTO>> getSubjectsForProfessor(@PathVariable("professorId") String professorId) {
         System.out.println("Looking for allocations for professorId: " + professorId);
@@ -56,7 +51,7 @@ public class SubjectAllocationController {
             List<TeacherSubjectAllocationDTO> subjects = subjectAllocationService.getTeacherSubjectAllocationsByProfessorId(professorId);
             return ResponseEntity.ok(subjects);
         } catch (Exception e) {
-            e.printStackTrace();  // Logs stacktrace to console
+            e.printStackTrace();
             return ResponseEntity.status(500).body(null);
         }
     }
@@ -69,6 +64,8 @@ public class SubjectAllocationController {
         List<DisplayTopicDTO> topics = subjectAllocationService.getTopicsByProfessorAndSubject(professorId, subjectId);
         return ResponseEntity.ok(topics);
     }
+
+    //    ========== CRUD FOR TOPIC ==========
 
     @PostMapping("/{professorId}/subjects/{subjectId}/topics/add-topic")
     public ResponseEntity<DisplayTopicDTO> addTopicForProfessorAndSubject(
@@ -93,6 +90,8 @@ public class SubjectAllocationController {
         subjectAllocationService.deleteTopic(id);
         return ResponseEntity.noContent().build();
     }
+
+//    ========== CHOOSE TOPIC ==========
 
     @GetMapping("/topics/{topicId}/choose")
     public ResponseEntity<DisplayTopicDTO> chooseTopic(@PathVariable("topicId") String topicId) throws AccessDeniedException {

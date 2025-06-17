@@ -15,7 +15,7 @@ class Topic extends React.Component {
     }
 
     render() {
-        const topics = this.props.topics || [];  // default to empty array
+        const topics = this.props.topics || [];
         const pageCount = Math.ceil(topics.length / this.state.size);
         const offset = this.state.size * this.state.page;
         const nextPageOffset = offset + this.state.size;
@@ -77,12 +77,12 @@ class Topic extends React.Component {
     }
 
     getTopicPage = (offset, nextPageOffset, topics) => {
-    return topics
-      .map((term, index) => (
-          <TopicTerm key={term.id} term={term} onDelete={this.props.onDelete} onEdit={this.props.onEdit} />
-      ))
-      .filter((topic, index) => index >= offset && index < nextPageOffset);
-}
+        return topics
+            .map((term, index) => (
+                <TopicTerm key={term.id} term={term} onDelete={this.props.onDelete} onEdit={this.props.onEdit}/>
+            ))
+            .filter((topic, index) => index >= offset && index < nextPageOffset);
+    }
 
 }
 

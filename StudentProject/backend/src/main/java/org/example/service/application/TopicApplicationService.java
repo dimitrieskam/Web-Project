@@ -14,18 +14,15 @@ public interface TopicApplicationService {
 
     Optional<DisplayTopicDTO> findByID(String id);
 
-    Optional<DisplayTopicDTO> create(CreateTopicDTO createTopicDTO);
-
-    Optional<DisplayTopicDTO> update(String id, CreateTopicDTO createTopicDTO);
-
-    void delete(String id);
+    boolean isClosed(String topicId);
 
     Optional<DisplayTopicDTO> chooseTopic(String topicId, String username) throws AccessDeniedException;
 
-    boolean isClosed(String topicId);
-
     DisplayTeamDTO createTeam(String topicId, CreateTeamDTO createTeamDTO, String username);
+
     List<DisplayTeamDTO> getTeamsByTopic(String topicId);
+
     DisplayTeamDTO getTeamById(String teamId);
+
     void deleteTeam(String teamId, String username);
 }
