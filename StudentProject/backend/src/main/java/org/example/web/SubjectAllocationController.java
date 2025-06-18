@@ -5,6 +5,7 @@ import org.example.model.DTOs.topicDTO.CreateTopicDTO;
 import org.example.model.DTOs.topicDTO.DisplayTopicDTO;
 import org.example.service.application.Impl.SubjectAllocationServiceImpl;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
@@ -23,11 +24,13 @@ public class SubjectAllocationController {
     }
 
     @GetMapping("/topics")
+    @PreAuthorize("isAuthenticated()")
     public List<DisplayTopicDTO> getAllTopics() {
         return subjectAllocationService.getAllTopics();
     }
 
     @GetMapping("/topics/{topicId}")
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<DisplayTopicDTO> getTopicById(@PathVariable("topicId") String topicId) {
         return subjectAllocationService.getTopicById(topicId)
                 .map(ResponseEntity::ok)
@@ -40,11 +43,13 @@ public class SubjectAllocationController {
     }
 
     @GetMapping("/subjects/{subjectId}/topics")
+    @PreAuthorize("isAuthenticated()")
     public List<DisplayTopicDTO> getTopicsBySubject(@PathVariable("subjectId") String subjectId) {
         return subjectAllocationService.getTopicsBySubject(subjectId);
     }
 
     @GetMapping("/{professorId}/subjects")
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<List<TeacherSubjectAllocationDTO>> getSubjectsForProfessor(@PathVariable("professorId") String professorId) {
         System.out.println("Looking for allocations for professorId: " + professorId);
         try {
@@ -57,6 +62,7 @@ public class SubjectAllocationController {
     }
 
     @GetMapping("/professors/{professorId}/subjects/{subjectId}/topics")
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<List<DisplayTopicDTO>> getTopicsForProfessorAndSubject(
             @PathVariable("professorId") String professorId,
             @PathVariable("subjectId") String subjectId
@@ -68,6 +74,7 @@ public class SubjectAllocationController {
     //    ========== CRUD FOR TOPIC ==========
 
     @PostMapping("/professors/{professorId}/subjects/{subjectId}/topics/add-topic")
+    @PreAuthorize("hasRole('PROFESSOR')")
     public ResponseEntity<DisplayTopicDTO> addTopicForProfessorAndSubject(
             @PathVariable("professorId") String professorId,
             @PathVariable("subjectId") String subjectId,
@@ -77,6 +84,7 @@ public class SubjectAllocationController {
     }
 
     @PutMapping("/topics/{id}/professors/{professorId}/subjects/{subjectId}/edit-topic")
+    @PreAuthorize("hasRole('PROFESSOR')")
     public ResponseEntity<DisplayTopicDTO> updateTopic(@PathVariable("id") String id,
                                                        @PathVariable("professorId") String professorId,
                                                        @PathVariable("subjectId") String subjectId,
@@ -86,6 +94,7 @@ public class SubjectAllocationController {
     }
 
     @DeleteMapping("/topics/delete-topic/{id}")
+    @PreAuthorize("hasRole('PROFESSOR')")
     public ResponseEntity<Void> deleteTopic(@PathVariable("id") String id) {
         subjectAllocationService.deleteTopic(id);
         return ResponseEntity.noContent().build();
@@ -94,6 +103,7 @@ public class SubjectAllocationController {
 //    ========== CHOOSE TOPIC ==========
 
     @GetMapping("/topics/{topicId}/choose")
+    @PreAuthorize("hasAnyRole('STUDENT', 'PROFESSOR')")
     public ResponseEntity<DisplayTopicDTO> chooseTopic(@PathVariable("topicId") String topicId) throws AccessDeniedException {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String username = auth.getName();

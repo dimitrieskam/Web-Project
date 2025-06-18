@@ -5,19 +5,20 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.example.model.AuthenticationResponse;
 import org.example.model.User;
 import org.example.service.application.Impl.AuthenticationService;
+import org.example.service.application.Impl.JwtService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/auth")
+@CrossOrigin(origins = "http://localhost:3000")
 public class AuthenticationController {
     private final AuthenticationService authenticationService;
+    private final JwtService jwtService;
 
-    public AuthenticationController(AuthenticationService authenticationService) {
+    public AuthenticationController(AuthenticationService authenticationService, JwtService jwtService) {
         this.authenticationService = authenticationService;
+        this.jwtService = jwtService;
     }
 
     @PostMapping("/register")

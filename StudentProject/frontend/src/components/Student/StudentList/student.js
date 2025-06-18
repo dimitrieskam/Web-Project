@@ -2,6 +2,7 @@ import React from 'react';
 import ReactPaginate from 'react-paginate'
 import {Link} from 'react-router-dom';
 import StudentTerm from '../StudentTerm/studentTerm';
+import authService from "../../../repository/Authentication/auth_service";
 
 class Student extends React.Component {
 
@@ -19,6 +20,10 @@ class Student extends React.Component {
         const nextPageOffset = offset + this.state.size;
         const pageCount = Math.ceil(this.props.students.length / this.state.size);
         const students = this.getStudentPage(offset, nextPageOffset);
+
+        const role = authService.getCurrentUser()?.role;
+        console.log("User role:", role);
+
         console.log(students, pageCount)
 
         return (
@@ -33,6 +38,7 @@ class Student extends React.Component {
                                 <th scope={"col"}>Lastname</th>
                                 <th scope={"col"}>Username</th>
                                 <th scope={"col"}>Email</th>
+                                <th scope={"col"}>Actions</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -40,6 +46,7 @@ class Student extends React.Component {
                             </tbody>
                         </table>
                     </div>
+                    {role === "ROLE_ADMIN" && (
                     <div className="col mb-3">
                         <div className="row">
                             <div className="col-sm-12 col-md-12">
@@ -47,6 +54,7 @@ class Student extends React.Component {
                             </div>
                         </div>
                     </div>
+                        )}
                 </div>
                 <ReactPaginate previousLabel={"back"}
                                nextLabel={"next"}

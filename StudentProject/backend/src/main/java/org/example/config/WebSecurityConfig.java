@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.kafka.KafkaProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
@@ -55,27 +56,69 @@ public class WebSecurityConfig {
         source.registerCorsConfiguration("/**", configuration);
         return source;
     }
-
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        return http
+        http
                 .csrf(AbstractHttpConfigurer::disable)
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
-                .authorizeHttpRequests(auth -> auth
-                        .anyRequest().permitAll()
+                .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .exceptionHandling(ex -> ex
+                        .authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED))
+                        .accessDeniedHandler((req, res, e) -> res.setStatus(HttpStatus.FORBIDDEN.value()))
                 )
-                .sessionManagement(session -> session
-                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/api/auth/**").permitAll()
+                        .anyRequest().authenticated()
+                )
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
-                .exceptionHandling(e -> e
-                        .accessDeniedHandler((req, res, ex) -> res.setStatus(403))
-                        .authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED)))
-                .logout(l -> l
+
+                .logout(logout -> logout
                         .logoutUrl("/logout")
                         .addLogoutHandler(logoutHandler)
-                        .logoutSuccessHandler((req, res, auth) -> SecurityContextHolder.clearContext()))
-                .build();
+                        .logoutSuccessHandler((req, res, auth) -> SecurityContextHolder.clearContext())
+                );
+
+        return http.build();
     }
+//    @Bean
+//    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+//        return http
+//                .csrf(AbstractHttpConfigurer::disable)
+//                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
+//                .authorizeHttpRequests(auth -> auth
+//                                .requestMatchers("/api/auth/**").permitAll()
+//                                .anyRequest().authenticated()
+////                        .requestMatchers("/api/auth/**").permitAll()
+////                        .requestMatchers("/api/subject-allocations/professors/**/topics/**")
+////                        .hasRole("PROFESSOR")
+////
+////                        .requestMatchers(HttpMethod.GET,
+////                                "/api/subject-allocations/topics/{topicId}/choose")
+////                        .hasRole("STUDENT")
+////                        .requestMatchers(HttpMethod.POST,
+////                                "/api/teams/create-team/{topicId}")
+////                        .hasRole("STUDENT")
+////
+////                        .requestMatchers("/api/students/add-student",
+////                                "/api/students/edit-student/**",
+////                                "/api/students/delete-student/**")
+////                        .hasRole("ADMIN")
+//
+//                        .anyRequest().authenticated()
+//
+//                )
+//                .sessionManagement(session -> session
+//                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+//                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
+//                .exceptionHandling(e -> e
+//                        .accessDeniedHandler((req, res, ex) -> res.setStatus(403))
+//                        .authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED)))
+//                .logout(l -> l
+//                        .logoutUrl("/logout")
+//                        .addLogoutHandler(logoutHandler)
+//                        .logoutSuccessHandler((req, res, auth) -> SecurityContextHolder.clearContext()))
+//                .build();
+//    }
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();

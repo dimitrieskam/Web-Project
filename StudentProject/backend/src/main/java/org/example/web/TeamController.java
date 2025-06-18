@@ -6,6 +6,7 @@ import org.example.model.DTOs.teamDTO.CreateTeamDTO;
 import org.example.model.DTOs.teamDTO.DisplayTeamDTO;
 import org.example.service.application.TopicApplicationService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
@@ -21,6 +22,7 @@ public class TeamController {
     }
 
     @PostMapping("/create-team/{topicId}")
+    @PreAuthorize("hasAnyRole('PROFESSOR', 'STUDENT')")
     public ResponseEntity<DisplayTeamDTO> createTeam(
             @PathVariable("topicId") String topicId,
             @RequestBody CreateTeamDTO createTeamDTO) {
@@ -42,6 +44,7 @@ public class TeamController {
         }
     }
     @GetMapping("/topic/{topicId}")
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<List<DisplayTeamDTO>> getTeamsByTopic(@PathVariable("topicId") String topicId) {
         try {
             List<DisplayTeamDTO> teams = topicApplicationService.getTeamsByTopic(topicId);
@@ -53,6 +56,7 @@ public class TeamController {
     }
 
     @GetMapping("/{teamId}")
+    @PreAuthorize("hasAnyRole('PROFESSOR','ADMIN')")
     public ResponseEntity<DisplayTeamDTO> getTeamById(@PathVariable("teamId") String teamId) {
         try {
             DisplayTeamDTO team = topicApplicationService.getTeamById(teamId);
@@ -64,6 +68,7 @@ public class TeamController {
     }
 
     @DeleteMapping("/{teamId}")
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<Void> deleteTeam(@PathVariable("teamId") String teamId) {
         try {
             topicApplicationService.deleteTeam(teamId, "anonymous");

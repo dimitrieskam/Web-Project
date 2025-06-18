@@ -77,7 +77,15 @@ public class AuthenticationService {
             revokeAllTokenByUser(user);
             saveUserToken(accessToken, refreshToken, user);
 
-            return new AuthenticationResponse(accessToken, refreshToken, "User login was successful");
+            return new AuthenticationResponse(
+                    accessToken,
+                    refreshToken,
+                    "User login was successful",
+                    user.getRole().name(),
+                    user.getUsername(),
+                    user.getId()
+            );
+
         } catch (Exception e){
             System.err.println("Authentication failed: " + e.getMessage());
             return new AuthenticationResponse(null, null, "Invalid credentials");

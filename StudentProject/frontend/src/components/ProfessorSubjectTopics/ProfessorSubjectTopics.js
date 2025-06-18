@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import authService from "../../repository/Authentication/auth_service";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import api from "../../custom-axios/axios";
 import './ProfessorSubjectTopics.css';
@@ -9,6 +10,13 @@ function ProfessorSubjectTopics() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [subjectName, setSubjectName] = useState(null);
+
+    const getCurrentUser = () => {
+        return JSON.parse(localStorage.getItem("user"));
+    };
+    const role = authService.getCurrentUser()?.role;
+    console.log("User role:", role);
+
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -94,12 +102,14 @@ function ProfessorSubjectTopics() {
                 <h2 className="mb-0">
                     Subject:<span> {subjectName || subjectId}</span>
                 </h2>
+                {role === "ROLE_PROFESSOR" && (
                 <Link
                     to={`/subject-allocations/professors/${professorId}/subjects/${subjectId}/topics/add-topic`}
                     className="btn btn-success pst-add-button"
                 >
                     ➕ Add Topic
                 </Link>
+                    )}
             </div>
 
             <div className="row">
@@ -126,6 +136,8 @@ function ProfessorSubjectTopics() {
                                 </p>
 
                                 <div className="pst-button-group mt-auto d-flex flex-column align-items-center">
+                                    {role === "ROLE_PROFESSOR" && (
+                                        <>
                                     <Link
                                         to={`/subject-allocations/topics/${topic.id}/professors/${professorId}/subjects/${topic.subjectId}/edit-topic`}
                                         className="btn btn-outline-info btn-sm pst-edit-button"
@@ -138,12 +150,16 @@ function ProfessorSubjectTopics() {
                                     >
                                         🗑️ Delete!
                                     </button>
-                                    <Link
+                                    </>
+                                        )}
+                                    {(role === "ROLE_PROFESSOR" || role==="ROLE_STUDENT") && (
+                                        <Link
                                         className="btn btn-primary btn-sm pst-choose-topic-button"
                                         to={`/teams/create-team/${topic.id}`}
                                     >
                                         ➕ Choose Topic!
                                     </Link>
+                                            )}
                                     <button
                                         className="btn btn-secondary btn-sm mt-2 pst-view-teams-button"
                                         onClick={() => navigate(`/teams/topic/${topic.id}`)}

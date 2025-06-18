@@ -6,6 +6,7 @@ import org.example.model.projections.UserProjection;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import java.util.List;
 import java.util.Optional;
@@ -25,7 +26,7 @@ public interface UserRepository extends JpaRepository<User, String>{
     @Query("select u from User u")
     List<User> loadAll();
 
-    Optional<User> findByUsernameAndPassword(String username, String password);
+    Optional<User> findByUsernameAndPassword(@Param("username") String username, @Param("password") String password);
 
     Optional<User> findByUsername(String username);
 
@@ -34,5 +35,6 @@ public interface UserRepository extends JpaRepository<User, String>{
     @Query("select u.username, u.name, u.surname from User u")
     List<UserProjection> takeUsernameAndNameAndSurnameByProjection();
 
-    Optional<User> findByUsernameAndRoleContaining(String username, Role role);
+    Optional<User> findByUsernameAndRoleContaining(@Param("username") String username, @Param("role") Role role);
+
 }

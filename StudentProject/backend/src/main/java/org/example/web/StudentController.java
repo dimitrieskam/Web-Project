@@ -6,6 +6,7 @@ import org.example.model.Student;
 import org.example.service.application.StudentApplicationService;
 import org.example.service.domain.StudentDomainService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
@@ -24,22 +25,26 @@ public class StudentController {
     }
 
     @GetMapping
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<List<DisplayStudentDTO>> findAll() {
         return ResponseEntity.ok(this.studentApplicationService.findAll());
     }
 
     @PostMapping("/add-student")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Optional<DisplayStudentDTO>> addStudent(@RequestBody CreateStudentDTO createStudentDTO) {
         return ResponseEntity.ok(this.studentApplicationService.create(createStudentDTO));
     }
 
     @PutMapping("/edit-student/{index}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Optional<DisplayStudentDTO>> editStudent(@PathVariable String index,
                                                                    @RequestBody CreateStudentDTO createStudentDTO) {
         return ResponseEntity.ok(this.studentApplicationService.update(index, createStudentDTO));
     }
 
     @DeleteMapping("/delete-student/{index}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Void> deleteStudent(@PathVariable String index) {
         this.studentApplicationService.delete(index);
 
@@ -47,6 +52,7 @@ public class StudentController {
     }
 
     @GetMapping("/search")
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<List<DisplayStudentDTO>> searchStudentsByIndex(@RequestParam("q") String query) {
         List<Student> students = studentDomainService.searchStudentsByIndex(query);
         List<DisplayStudentDTO> result = students.stream()
