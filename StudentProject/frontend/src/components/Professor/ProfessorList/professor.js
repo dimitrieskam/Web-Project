@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactPaginate from 'react-paginate';
 import ProfessorTerm from '../ProfessorTerm/professorTerm';
+import './professor.css';
 
 class Professor extends React.Component {
     constructor(props) {
@@ -11,46 +12,67 @@ class Professor extends React.Component {
             searchText: ''
         };
     }
+
     handlePageClick = (data) => {
-        this.setState({ page: data.selected });
+        this.setState({page: data.selected});
     };
 
-    getProfessorPage = (offset, nextPageOffset) => {
-        return this.props.professors
+    getProfessorPage = (offset, nextPageOffset, filteredProfessors) => {
+        const count = filteredProfessors.length;
+
+        let gridClass = "col-sm-6 col-md-4 col-lg-3 mb-4 professor-card";
+
+        if (count === 1) {
+            gridClass = "col-12 mb-4 professor-card";
+        } else if (count === 2) {
+            gridClass = "col-md-6 mb-4 professor-card";
+        } else if (count === 3) {
+            gridClass = "col-md-4 mb-4 professor-card";
+        }
+
+        return filteredProfessors
+            .slice(offset, nextPageOffset)
             .map((term, index) => (
-                <ProfessorTerm term={term} key={index} />
-            ))
-            .filter((_, index) => index >= offset && index < nextPageOffset);
+                <div className={gridClass} key={index}>
+                    <ProfessorTerm term={term}/>
+                </div>
+            ));
     };
 
     handleSearchChange = (e) => {
         const newSearchText = e.target.value;
-        this.setState({ searchText: newSearchText, page: 0 }, () => {
+        this.setState({searchText: newSearchText, page: 0}, () => {
             if (this.props.onSearchProfessors) {
                 this.props.onSearchProfessors(this.state.searchText);
             }
         });
     };
 
-    handleSearchSubmit = () => {
-        if (this.props.onSearchProfessors) {
-            this.props.onSearchProfessors(this.state.searchText);
-        }
-    };
     render() {
-        const offset = this.state.size * this.state.page;
-        const nextPageOffset = offset + this.state.size;
-        const pageCount = Math.ceil(this.props.professors.length / this.state.size);
-        const professors = this.getProfessorPage(offset, nextPageOffset);
+        const { size, page, searchText } = this.state;
+
+        const filteredProfessors = this.props.professors.filter((prof) =>
+            prof.name.toLowerCase().includes(searchText.toLowerCase())
+        );
+
+        const offset = size * page;
+        const nextPageOffset = offset + size;
+        const pageCount = Math.ceil(filteredProfessors.length / size);
+
+        const professors = this.getProfessorPage(offset, nextPageOffset, filteredProfessors);
 
         return (
-            <div className="container mt-5">
+            <div className="container professor-container mt-5">
+                <div className="professors-title mb-4">
+                    <h2>Professors</h2>
+                </div>
+
                 <div className="mb-4">
                     <input
                         type="text"
                         className="form-control"
                         placeholder="Search professors by name..."
-                        value={this.state.searchText}
+                        value={searchText}
                         onChange={this.handleSearchChange}
                     />
                 </div>
@@ -81,8 +103,6 @@ class Professor extends React.Component {
             </div>
         );
     }
-
-   
 }
 
 export default Professor;

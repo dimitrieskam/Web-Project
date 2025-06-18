@@ -1,0 +1,48 @@
+.teams-by-topic-container .title h4 {
+    margin-top: 20px;
+}
+
+.teams-by-topic-container .card-header {
+    font-size: 1.25rem;
+    font-weight: 600;
+    background: linear-gradient(135deg, #000000, #003b8b);
+    color: white;
+    border-bottom: none;
+    border-radius: 0.5rem 0.5rem 0 0;
+}
+
+.teams-by-topic-container .card {
+    background: linear-gradient(135deg, #007bff, #b3d9ff);
+    border: none;
+    color: #fff;
+    transition: transform 0.2s ease-in-out;
+    border-radius: 0.5rem;
+}
+
+.teams-by-topic-container .card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.teams-by-topic-container .card-body {
+    color: #000;
+}
+
+.teams-by-topic-container .list-group-item {
+    background-color: transparent;
+    border: none;
+    padding-left: 0;
+    font-size: 15px;
+    color: #000;
+}
+
+.back-button {
+    background-color: black;
+    color: white;
+    margin: 30px;
+}
+
+.back-button:hover {
+    background-color: dimgray;
+    color: black;
+}

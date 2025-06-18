@@ -22,7 +22,7 @@ public class ProfessorController {
         return ResponseEntity.ok(this.professorApplicationService.findAll());
     }
     @GetMapping("/search-professor")
-    public ResponseEntity<List<DisplayProfessorDTO>> searchByName(@RequestParam String name) {
+    public ResponseEntity<List<DisplayProfessorDTO>> searchByName(@RequestParam("name") String name) {
         return ResponseEntity.ok(professorApplicationService.findByName(name));
     }
 }

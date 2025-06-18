@@ -1,0 +1,186 @@
+.pst-card {
+    background: linear-gradient(135deg, #007bff, #b3d9ff);
+    border: none;
+    color: #fff;
+    border-radius: 0.5rem;
+    transition: transform 0.2s ease-in-out;
+    width: 1000px;
+}
+
+.pst-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.pst-card-header {
+    font-size: 1.25rem;
+    font-weight: 600;
+    background: linear-gradient(135deg, #000000, #003b8b);
+    color: white;
+    border-bottom: none;
+    border-radius: 0.5rem 0.5rem 0 0;
+    padding: 0.75rem 1.25rem;
+    margin-bottom: 0.75rem;
+}
+
+.pst-card-body {
+    color: #000;
+    padding: 1rem 1.25rem;
+    display: flex;
+    flex-direction: column;
+    min-height: 300px;
+}
+
+.pst-card-text {
+    font-size: 0.95rem;
+    color: #000;
+    margin-bottom: 0.5rem;
+}
+
+.pst-button-group {
+    margin-top: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    width: 100%;
+    align-items: center;
+}
+
+.pst-button-group .btn {
+    width: 80%;
+    max-width: 200px;
+}
+
+.title-field {
+    color: antiquewhite;
+    font-size: 20px;
+    margin: 0;
+}
+
+.title-field:hover {
+    color: white;
+}
+
+.description-field {
+    font-style: italic;
+    font-size: 20px;
+    border: 1px solid black;
+    border-radius: 10px;
+}
+
+.description-field-text {
+    color: darkblue;
+    font-size: 20px;
+}
+
+.date-field .date {
+    color: darkblue;
+    font-size: 20px;
+}
+
+.date-field-text {
+    color: mediumblue;
+    font-size: 20px;
+}
+
+.grups-and-members-field {
+    color: darkblue;
+    font-size: 20px;
+}
+
+.grups-and-members-field-text {
+    color: darkblue;
+    font-size: 20px;
+}
+
+.pst-add-button {
+    background-color: mediumseagreen;
+    color: black;
+    font-size: 15px;
+}
+
+.pst-add-button:hover{
+    background-color: lightgreen;
+    color: black;
+}
+
+.pst-edit-button {
+    background-color: mediumseagreen;
+    color: black;
+    font-size: 15px;
+}
+
+.pst-edit-button:hover {
+    background-color: lightgreen;
+    color: black;
+}
+
+.pst-delete-button {
+    background-color: red;
+    color: black;
+    font-size: 15px;
+}
+
+.pst-deletet-button:hover {
+    background-color: lightgreen;
+    color: black;
+}
+
+.pst-choose-topic-button {
+    background-color: royalblue;
+    color: black;
+    font-size: 15px;
+}
+
+.pst-choose-topic-button:hover {
+    background-color: dodgerblue;
+    color: black;
+}
+
+.pst-view-teams-button {
+    background-color: rebeccapurple;
+    color: black;
+    font-size: 15px;
+}
+
+.pst-view-teams-button:hover {
+    background-color: mediumpurple;
+    color: black;
+}
+
+.title {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    width: 100%;
+    margin-bottom: 1rem;
+    gap: 1rem;
+    flex-direction: column;
+}
+
+.title h2 {
+    margin: 0;
+    font-size: 1.5rem;
+    flex-grow: 1;
+}
+
+.title a.btn.btn-success {
+    flex-shrink: 0;
+    white-space: nowrap;
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    justify-items: right;
+}
+
+.back-button-subjects-by-professor {
+    background-color: black;
+    color: white;
+    margin: 30px;
+    width: 250px;
+}
+
+.back-button-subjects-by-professor:hover {
+    background-color: dimgray;
+    color: black;
+}
+

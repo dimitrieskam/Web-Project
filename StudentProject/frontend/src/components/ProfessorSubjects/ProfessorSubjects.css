@@ -1,0 +1,97 @@
+.professor-subjects-container .title h4 {
+    margin-top: 20px;
+}
+
+.professor-subjects-container .card-header {
+    font-size: 1.25rem;
+    font-weight: 600;
+    background: linear-gradient(135deg, #000000, #003b8b);
+    color: white;
+    border-bottom: none;
+    border-radius: 0.5rem 0.5rem 0 0;
+}
+
+.professor-subjects-container .card {
+    background: linear-gradient(135deg, #007bff, #b3d9ff);
+    border: none;
+    color: #fff;
+    transition: transform 0.2s ease-in-out;
+    border-radius: 0.5rem;
+}
+
+.professor-subjects-container .card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.professor-subjects-container .card-body {
+    color: #000;
+    padding: 20px;
+}
+
+.professor-subjects-container .card-text {
+    color: #000;
+    font-size: 15px;
+}
+
+.professor-subjects-container .card-subtitle {
+    color: #333;
+    font-weight: 500;
+}
+
+.back-button {
+    background-color: black;
+    color: white;
+    margin: 30px;
+}
+
+.back-button:hover {
+    background-color: dimgray;
+    color: black;
+}
+
+.topics-button {
+    background-color: royalblue;
+    color: black;
+    margin: 20px;
+}
+
+.topics-button:hover {
+    background-color: dodgerblue;
+    color: black;
+}
+
+.card-subtitle span,
+.card-details span {
+    font-size: 20px;
+    color: mediumblue;
+}
+
+.card-text-text {
+    font-size: 20px;
+    color: darkblue
+}
+
+.abbreviation-text {
+    font-weight: bold;
+}
+
+.ps-title {
+    color: antiquewhite;
+    font-size: 40px;
+}
+
+.ps-title:hover {
+    color: white;
+}
+
+.back-button-professors {
+    background-color: black;
+    color: white;
+    margin: 30px;
+}
+
+.back-button-professors:hover {
+    background-color: dimgray;
+    color: black;
+}

@@ -25,8 +25,8 @@ public class SubjectController {
 
     @GetMapping("/search-subject")
     public ResponseEntity<List<DisplaySubjectDTO>> searchSubjects(
-            @RequestParam(required = false) String name,
-            @RequestParam(required = false) SemesterType semesterType) {
+            @RequestParam(name = "name", required = false) String name,
+            @RequestParam(name = "semesterType", required = false) SemesterType semesterType) {
         return ResponseEntity.ok(subjectApplicationService.findByNameAndSemester(name, semesterType));
     }
 }

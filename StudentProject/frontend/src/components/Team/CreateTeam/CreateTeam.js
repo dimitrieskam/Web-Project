@@ -1,22 +1,20 @@
-import React, { useState, useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom";
-import api from "../../custom-axios/axios";
+import React, {useState, useEffect} from "react";
+import {useParams, useNavigate} from "react-router-dom";
+import api from "../../../custom-axios/axios";
+import './CreateTeam.css';
 
 function CreateTeam() {
     const {topicId} = useParams();
     const navigate = useNavigate();
-
     const [teamName, setTeamName] = useState("");
     const [topicName, setTopicName] = useState("");
     const [studentQuery, setStudentQuery] = useState("");
     const [suggestedStudents, setSuggestedStudents] = useState([]);
     const [selectedStudents, setSelectedStudents] = useState([]);
     const [maxMembers, setMaxMembers] = useState(null);
-
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(false);
     const [topicLoading, setTopicLoading] = useState(true);
-
     const [isClosed, setIsClosed] = useState(false);
 
     useEffect(() => {
@@ -135,7 +133,7 @@ function CreateTeam() {
                 <div className="alert alert-danger">
                     <h4 className="alert-heading">Error Loading Topic</h4>
                     <p>{error}</p>
-                    <hr />
+                    <hr/>
                     <button
                         className="btn btn-secondary"
                         onClick={() => navigate("/")}
@@ -149,7 +147,11 @@ function CreateTeam() {
 
     return (
         <div className="container mt-4">
-            <h2>Create Team for Topic: {topicName || topicId}</h2>
+            <div className="title">
+                <h2>Create Team for Topic:
+                    <span> {topicName || topicId}</span>
+                </h2>
+            </div>
 
             {error && topicName && <div className="alert alert-danger">{error}</div>}
 
@@ -161,7 +163,7 @@ function CreateTeam() {
 
             <form onSubmit={handleSubmit}>
                 <div className="mb-3">
-                    <label htmlFor="teamName" className="form-label">Team Name</label>
+                    <label htmlFor="teamName" className="form-label title-field">Team Name:</label>
                     <input
                         type="text"
                         className="form-control"
@@ -174,7 +176,7 @@ function CreateTeam() {
                 </div>
 
                 <div className="mb-3 position-relative">
-                    <label htmlFor="search" className="form-label">Search Student by Index</label>
+                    <label htmlFor="search" className="form-label title-field">Search Student by Index:</label>
                     <input
                         type="text"
                         className="form-control"
@@ -185,13 +187,14 @@ function CreateTeam() {
                         disabled={isClosed}
                     />
                     {suggestedStudents.length > 0 && (
-                        <ul className="list-group position-absolute w-100" style={{ zIndex: 10, maxHeight: "150px", overflowY: "auto" }}>
+                        <ul className="list-group position-absolute w-100"
+                            style={{zIndex: 10, maxHeight: "150px", overflowY: "auto"}}>
                             {suggestedStudents.map(student => (
                                 <li
                                     key={student.index}
                                     className="list-group-item list-group-item-action"
                                     onClick={() => addStudent(student)}
-                                    style={{ cursor: "pointer" }}
+                                    style={{cursor: "pointer"}}
                                 >
                                     {student.index} - {student.name} {student.lastname}
                                 </li>
@@ -201,19 +204,21 @@ function CreateTeam() {
                 </div>
 
                 <div className="mb-3">
-                    <label className="form-label">Selected Students ({selectedStudents.length}/{maxMembers ?? "?"})</label>
-                    {selectedStudents.length === 0 && <p>No students selected</p>}
+                    <label className="form-label title-field">Selected Students:
+                        ({selectedStudents.length}/{maxMembers ?? "?"})</label>
+                    {selectedStudents.length === 0 && <p className="title-field">No students selected!</p>}
                     <ul className="list-group">
                         {selectedStudents.map(student => (
-                            <li key={student.index} className="list-group-item d-flex justify-content-between align-items-center">
+                            <li key={student.index}
+                                className="list-group-item d-flex justify-content-between align-items-center">
                                 {student.index} - {student.name} {student.lastname}
                                 <button
                                     type="button"
-                                    className="btn btn-danger btn-sm"
+                                    className="btn btn-danger btn-sm cancel-and-remove-create-team-button"
                                     onClick={() => removeStudent(student.index)}
                                     disabled={isClosed}
                                 >
-                                    Remove
+                                    Remove!
                                 </button>
                             </li>
                         ))}
@@ -221,22 +226,30 @@ function CreateTeam() {
                 </div>
 
                 {maxMembers !== null && selectedStudents.length >= maxMembers && (
-                    <div className="alert alert-info">Maximum number of team members reached.</div>
+                    <div className="alert alert-info">Maximum number of team members reached !!!</div>
                 )}
 
-                <button type="submit" className="btn btn-primary" disabled={loading || selectedStudents.length === 0 || !topicName}>
-                    {loading ? "Creating..." : "Create Team"}
-                </button>
+                <div className="create-and-cancel-buttons">
+                    <button type="submit" className="btn btn-primary create-team-button"
+                            disabled={loading || selectedStudents.length === 0 || !topicName}>
+                        {loading ? "Creating..." : "Create Team!"}
+                    </button>
 
-                <button
-                    type="button"
-                    className="btn btn-secondary ms-2"
-                    onClick={() => navigate("/")}
-                    disabled={loading}
-                >
-                    Cancel
-                </button>
+                    <button
+                        type="button"
+                        className="btn btn-secondary ms-2 cancel-and-remove-create-team-button"
+                        onClick={() => navigate("/")}
+                        disabled={loading}
+                    >
+                        Cancel!
+                    </button>
+                </div>
             </form>
+            <div className="d-flex justify-content-end mb-3 back-button text-center">
+                <button className="btn text-white" onClick={() => navigate("/subjects")}>
+                    ⬅ Back to Subjects!
+                </button>
+            </div>
         </div>
     );
 }

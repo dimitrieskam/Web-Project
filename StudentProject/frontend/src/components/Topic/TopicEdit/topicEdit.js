@@ -87,17 +87,19 @@ const TopicEdit = (props) => {
     }
 
     return (
-        <div className="row mt-5">
-            <div className="col-md-5">
+        <div className="topic-edit-wrapper d-flex justify-content-center align-items-center">
+            <div className="topic-edit-form p-4 rounded shadow align-items-center">
+                <h2 className="mb-4 text-center text-white">Edit Topic</h2>
                 <form onSubmit={onFormSubmit}>
                     <div className="form-group mb-3">
-                        <label htmlFor="name">Topic name</label>
+                        <label htmlFor="name">Topic Name</label>
                         <input
                             type="text"
                             className="form-control"
                             id="name"
                             name="name"
                             required
+                            placeholder="Enter topic name"
                             value={formData.name}
                             onChange={handleChange}
                         />
@@ -111,6 +113,7 @@ const TopicEdit = (props) => {
                             name="description"
                             rows={3}
                             required
+                            placeholder="Enter description"
                             value={formData.description}
                             onChange={handleChange}
                         />
@@ -150,6 +153,7 @@ const TopicEdit = (props) => {
                             id="groupCount"
                             name="groupCount"
                             required
+                            placeholder="Enter number of groups"
                             value={formData.groupCount}
                             onChange={handleChange}
                             min="1"
@@ -164,6 +168,7 @@ const TopicEdit = (props) => {
                             id="membersPerGroup"
                             name="membersPerGroup"
                             required
+                            placeholder="Enter number of members"
                             value={formData.membersPerGroup}
                             onChange={handleChange}
                             min="1"
@@ -182,7 +187,7 @@ const TopicEdit = (props) => {
                         />
                     </div>
 
-                    <div className="form-group mb-3">
+                    <div className="form-group mb-4">
                         <label htmlFor="subjectId">Subject ID</label>
                         <input
                             type="text"
@@ -194,8 +199,16 @@ const TopicEdit = (props) => {
                         />
                     </div>
 
-                    <button id="submit" type="submit" className="btn btn-primary" disabled={submitting}>
+                    <button id="submit" type="submit" className="btn btn-primary w-100" disabled={submitting}>
                         {submitting ? "Saving..." : "Submit"}
+                    </button>
+
+                    <button
+                        type="button"
+                        className="btn text-white back-button mt-3"
+                        onClick={() => navigate(`/subject-allocations/professors/${formData.professorId}/subjects/${formData.subjectId}/topics`)}
+                    >
+                        ⬅ Back to Topics!
                     </button>
                 </form>
             </div>

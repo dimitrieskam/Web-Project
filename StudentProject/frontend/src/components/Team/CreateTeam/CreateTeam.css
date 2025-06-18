@@ -1,0 +1,70 @@
+.title {
+    font-family: "Cascadia Code", serif;
+    color: antiquewhite;
+}
+
+.title span {
+    font-weight: bold;
+    color: antiquewhite;
+    font-size: 35px;
+    font-style: italic;
+}
+
+.title span:hover {
+    color: white;
+}
+
+.create-team-button {
+    background-color: #0ef;
+    color: #2c5364;
+    font-weight: bold;
+}
+
+.create-team-button:hover {
+    background-color: #2c5364;
+    color: #0ef;
+}
+
+.cancel-and-remove-create-team-button {
+    background-color: darkred;
+    color: white;
+    font-weight: bold;
+}
+
+.cancel-and-remove-create-team-button:hover {
+    background-color: white;
+    color: darkred;
+}
+
+.title-field {
+    color: antiquewhite;
+    font-size: 20px;
+    margin-top: 20px
+}
+
+.title-field:hover {
+    color: white;
+}
+
+.list-group-item {
+    color: black;
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.create-and-cancel-buttons {
+    margin-top: 50px;
+    justify-items: center;
+}
+
+.back-button {
+    background-color: black;
+    color: white;
+    margin: 30px;
+    width: 160px;
+}
+
+.back-button:hover {
+    background-color: dimgray;
+    color: black;
+}

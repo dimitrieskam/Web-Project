@@ -1,0 +1,21 @@
+.topic-add-wrapper {
+    height: 100vh;
+    background: #f5f7fa;
+    padding: 1rem;
+}
+
+.topic-add-form {
+    width: 100%;
+    max-width: 480px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+}
+
+.back-button {
+    background-color: black;
+    color: white;
+}
+
+.back-button:hover {
+    background-color: dimgray;
+    color: black;
+}

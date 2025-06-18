@@ -1,106 +1,111 @@
-import React from 'react';
+import React, { useState } from 'react';
 import ReactPaginate from 'react-paginate';
 import SubjectTerm from '../SubjectTerm/subjectTerm';
+import './subject.css';
 
-class Subject extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            page: 0,
-            size: 12,
-            name: "",
-            semesterType: ""
-        };
-    }
+const Subject = ({ subjects, onSearchSubjects }) => {
+    const [page, setPage] = useState(0);
+    const [name, setName] = useState("");
+    const [semesterType, setSemesterType] = useState("");
 
-    handlePageClick = (data) => {
-        this.setState({ page: data.selected });
+    const size = 12;
+
+    const handlePageClick = (data) => {
+        setPage(data.selected);
     };
 
-    getSubjectPage = (offset, nextPageOffset) => {
-        return this.props.subjects
+    const getSubjectPage = (offset, nextPageOffset) => {
+        return subjects
             .slice(offset, nextPageOffset)
             .map((term, index) => <SubjectTerm key={term.id || index} term={term} />);
     };
-    handleInputChange = (e) => {
-        this.setState({ [e.target.name]: e.target.value });
+
+    const handleInputChange = (e) => {
+        const { name: fieldName, value } = e.target;
+        if (fieldName === 'name') {
+            setName(value);
+        } else if (fieldName === 'semesterType') {
+            setSemesterType(value);
+        }
     };
 
-    handleSearchSubmit = (e) => {
+    const handleSearchSubmit = (e) => {
         e.preventDefault();
-        this.props.onSearchSubjects(this.state.name, this.state.semesterType);
-        this.setState({ page: 0 });
+        onSearchSubjects(name, semesterType);
+        setPage(0);
     };
 
-    render() {
-        const offset = this.state.size * this.state.page;
-        const nextPageOffset = offset + this.state.size;
-        const pageCount = Math.ceil(this.props.subjects.length / this.state.size);
-        const subjects = this.getSubjectPage(offset, nextPageOffset);
+    const offset = size * page;
+    const nextPageOffset = offset + size;
+    const pageCount = Math.ceil(subjects.length / size);
+    const subjectElements = getSubjectPage(offset, nextPageOffset);
 
-        return (
-            <div className="container mt-5">
-                <form className="mb-4" onSubmit={this.handleSearchSubmit}>
-                    <div className="row g-2 align-items-end">
-                        <div className="col-md-5">
-                            <label className="form-label">Subject Name</label>
-                            <input
-                                type="text"
-                                className="form-control"
-                                name="name"
-                                value={this.state.name}
-                                onChange={this.handleInputChange}
-                            />
-                        </div>
-
-                        <div className="col-md-4">
-                            <label className="form-label">Semester Type</label>
-                            <select
-                                className="form-select"
-                                name="semesterType"
-                                value={this.state.semesterType}
-                                onChange={this.handleInputChange}
-                            >
-                                <option value="">All</option>
-                                <option value="SUMMER">SUMMER</option>
-                                <option value="WINTER">WINTER</option>
-                            </select>
-                        </div>
-
-                        <div className="col-md-3">
-                            <button type="submit" className="btn btn-primary w-100">
-                                Search
-                            </button>
-                        </div>
-                    </div>
-                </form>
-
-                <div className="row">
-                    {subjects}
-                </div>
-
-                <div className="d-flex justify-content-center mt-4">
-                    <ReactPaginate
-                        previousLabel={"←"}
-                        nextLabel={"→"}
-                        breakLabel={<span className="mx-2">...</span>}
-                        pageCount={pageCount}
-                        onPageChange={this.handlePageClick}
-                        containerClassName={"pagination"}
-                        pageClassName={"page-item"}
-                        pageLinkClassName={"page-link"}
-                        previousClassName={"page-item"}
-                        previousLinkClassName={"page-link"}
-                        nextClassName={"page-item"}
-                        nextLinkClassName={"page-link"}
-                        breakClassName={"page-item"}
-                        breakLinkClassName={"page-link"}
-                        activeClassName={"active"}
-                    />
-                </div>
+    return (
+        <div className="container mt-5">
+            <div className="subjects-title mb-4">
+                <h2>Subjects</h2>
             </div>
-        );
-    }
-}
+
+            <form className="mb-4" onSubmit={handleSearchSubmit}>
+                <div className="row g-2 align-items-end">
+                    <div className="col-md-5">
+                        <label className="form-label">Subject Name</label>
+                        <input
+                            type="text"
+                            className="form-control"
+                            name="name"
+                            value={name}
+                            onChange={handleInputChange}
+                        />
+                    </div>
+
+                    <div className="col-md-4">
+                        <label className="form-label">Semester Type</label>
+                        <select
+                            className="form-select"
+                            name="semesterType"
+                            value={semesterType}
+                            onChange={handleInputChange}
+                        >
+                            <option value="">All</option>
+                            <option value="SUMMER">SUMMER</option>
+                            <option value="WINTER">WINTER</option>
+                        </select>
+                    </div>
+
+                    <div className="col-md-3">
+                        <button type="submit" className="btn btn-primary w-100">
+                            Search
+                        </button>
+                    </div>
+                </div>
+            </form>
+
+            <div className="row">
+                {subjectElements}
+            </div>
+
+            <div className="d-flex justify-content-center mt-4">
+                <ReactPaginate
+                    previousLabel={"←"}
+                    nextLabel={"→"}
+                    breakLabel={<span className="mx-2">...</span>}
+                    pageCount={pageCount}
+                    onPageChange={handlePageClick}
+                    containerClassName={"pagination"}
+                    pageClassName={"page-item"}
+                    pageLinkClassName={"page-link"}
+                    previousClassName={"page-item"}
+                    previousLinkClassName={"page-link"}
+                    nextClassName={"page-item"}
+                    nextLinkClassName={"page-link"}
+                    breakClassName={"page-item"}
+                    breakLinkClassName={"page-link"}
+                    activeClassName={"active"}
+                />
+            </div>
+        </div>
+    );
+};
 
 export default Subject;

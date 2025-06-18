@@ -9,15 +9,15 @@ const ProfessorTerm = ({ term }) => {
     };
 
     return (
-        <div className="col-sm-6 col-md-4 col-lg-3 mb-4">
-            <div className="card shadow-sm rounded-3 h-100">
-                <div className="card-body d-flex flex-column">
+        <div className="card shadow-sm rounded-3 h-100">
+            <div className="card-body d-flex flex-column">
+                <div className="card-body-text">
                     <h5 className="card-title">{term.name}</h5>
-                    <p className="card-text text-muted">{term.email}</p>
-                    <button onClick={handleDetailsClick} className="btn btn-primary mt-auto">
-                        View Subjects!
-                    </button>
+                    <p className="card-text">{term.email}</p>
                 </div>
+                <button onClick={handleDetailsClick} className="btn btn-primary mt-auto">
+                    View Subjects!
+                </button>
             </div>
         </div>
     );

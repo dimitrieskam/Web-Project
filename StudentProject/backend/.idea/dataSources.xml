@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="finki-services-db@localhost" uuid="8d3e0d64-81cf-4954-8e04-38d68f128206">
+    <data-source source="LOCAL" name="finki-services-db@localhost" uuid="a7d7ce09-57f8-468d-ac81-f13a5d294fcc">
       <driver-ref>postgresql</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>org.postgresql.Driver</jdbc-driver>

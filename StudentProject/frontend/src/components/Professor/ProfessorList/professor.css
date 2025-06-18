@@ -1,0 +1,113 @@
+.professor-container {
+    margin-top: 40px;
+}
+
+.professor-search input {
+    padding: 10px;
+    font-size: 16px;
+    border: 2px solid #007bff;
+    border-radius: 0.5rem;
+    margin-bottom: 30px;
+    transition: border-color 0.3s ease-in-out;
+}
+
+.professor-search input:focus {
+    border-color: #0056b3;
+    outline: none;
+}
+
+.professor-card .card {
+    background: linear-gradient(135deg, #000000, #003b8b);
+    border: none;
+    color: #fff;
+    transition: transform 0.2s ease-in-out;
+    border-radius: 0.5rem;
+    height: 100%;
+}
+
+.professor-card .card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+}
+
+.professor-card .card-body {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    color: #000;
+}
+
+.professor-card .card-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: white;
+}
+
+.professor-card .card-text {
+    color: #f0f0f0;
+    font-size: 0.95rem;
+    margin-bottom: auto;
+}
+
+.professor-card button {
+    background-color: royalblue;
+    border: none;
+    color: white;
+    padding: 10px;
+    margin-top: 20px;
+    border-radius: 0.5rem;
+    font-weight: bold;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.professor-card button:hover {
+    background-color: dodgerblue;
+    color: white;
+}
+
+.pagination {
+    margin-top: 30px;
+    display: flex;
+    justify-content: center;
+    list-style: none;
+    padding: 0;
+}
+
+.pagination .page-item {
+    margin: 0 5px;
+}
+
+.pagination .page-link {
+    color: #007bff;
+    background-color: white;
+    border: 1px solid #dee2e6;
+    border-radius: 0.3rem;
+    padding: 8px 12px;
+    font-weight: 500;
+    transition: all 0.2s;
+}
+
+.pagination .page-link:hover {
+    background-color: #007bff;
+    color: white;
+}
+
+.pagination .active .page-link {
+    background-color: #003b8b;
+    color: white;
+    border-color: #003b8b;
+}
+
+.card-body-text {
+    margin: 10px;
+}
+
+.professors-title {
+    color: antiquewhite;
+    font-size: 40px;
+    margin-bottom: 20px;
+}
+
+.professors-title:hover {
+    color: white;
+}

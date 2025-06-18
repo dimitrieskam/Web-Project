@@ -1,0 +1,25 @@
+.topic-edit-wrapper {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+}
+
+.topic-edit-form {
+    width: 100%;
+    max-width: 480px;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+}
+
+.back-button {
+    background-color: black;
+    color: white;
+}
+
+.back-button:hover {
+    background-color: dimgray;
+    color: black;
+}

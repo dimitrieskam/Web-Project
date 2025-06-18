@@ -16,9 +16,9 @@ import TopicEdit from "../Topic/TopicEdit/topicEdit";
 import ProfessorSubjectsPage from "../ProfessorSubjects/ProfessorSubjectsPage";
 import ProfessorTopics from "../ProfessorTopic/ProfessorTopic";
 import SubjectTopicPage from "../SubjectTopic/SubjectTopicPage";
-import CreateTeam from "../Team/CreateTeam";
+import CreateTeam from "../Team/CreateTeam/CreateTeam";
 import StudentAdd from "../Student/StudentAdd/studentAdd";
-import TeamsByTopic from "../Team/TeamsByTopic";
+import TeamsByTopic from "../Team/TeamsByTopic/TeamsByTopic";
 import ProfessorSubjectTopics from "../ProfessorSubjectTopics/ProfessorSubjectTopics"
 
 class App extends Component {

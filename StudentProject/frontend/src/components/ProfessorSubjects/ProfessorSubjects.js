@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import api from "../../custom-axios/axios";
-import {useParams, Link} from "react-router-dom";
+import {useParams, Link, useNavigate} from "react-router-dom";
+import './ProfessorSubjects.css';
 
 function ProfessorSubjects({ professorId: propProfessorId }) {
     const { professorId: urlProfessorId } = useParams();
@@ -13,6 +14,7 @@ function ProfessorSubjects({ professorId: propProfessorId }) {
     const [subjects, setSubjects] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const navigate = useNavigate();
 
     useEffect(() => {
         if (!professorId) {
@@ -26,7 +28,7 @@ function ProfessorSubjects({ professorId: propProfessorId }) {
 
         console.log("Making API call for professorId:", professorId);
 
-            api
+        api
             .get(`/subject-allocations/${professorId}/subjects`)
             .then((res) => {
                 console.log("API Response:", res.data);
@@ -53,8 +55,10 @@ function ProfessorSubjects({ professorId: propProfessorId }) {
     }
 
     return (
-        <div className="container mt-4">
-            <h2 className="mb-4">Professor's Subjects</h2>
+        <div className="professor-subjects-container container mt-4">
+            <div className="title">
+                <h4 className="ps-title">Professor's Subjects</h4>
+            </div>
             <div className="row">
                 {subjects.map((allocation, index) => {
                     const subject = allocation.subject || allocation.subjectName || 'Unknown Subject';
@@ -65,27 +69,39 @@ function ProfessorSubjects({ professorId: propProfessorId }) {
                     return (
                         <div key={allocation.id || index} className="col-md-4 mb-4">
                             <div className="card h-100 shadow-sm">
+                                <div className="card-header">
+                                    {subject}
+                                </div>
                                 <div className="card-body d-flex flex-column">
-                                    <h5 className="card-title">{subject}</h5>
-                                    <h6 className="card-subtitle mb-2 text-muted">{abbreviation}</h6>
-                                    <p className="card-text mb-1">
-                                        <strong>Semester:</strong> {semester}
-                                    </p>
-                                    <p className="card-text">
-                                        <strong>Semester Code:</strong> {semesterCode}
-                                    </p>
+                                    <div>
+                                        <h6 className="card-subtitle mb-2"><span className="abbreviation-text">{abbreviation}</span></h6>
+                                        <div className="card-details">
+                                            <p className="card-text mb-1">
+                                                <strong className="card-text-text">Semester:</strong> <span>{semester}</span>
+                                            </p>
+                                            <p className="card-text">
+                                                <strong className="card-text-text">Subject Code:</strong> <span>{semesterCode}</span>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div>
                                     <Link
-                                         to={`/subject-allocations/professors/${professorId}/subjects/${semesterCode}/topics`}
-                                        className="btn btn-primary mt-auto"
+                                        to={`/subject-allocations/professors/${professorId}/subjects/${semesterCode}/topics`}
+                                        className="btn btn-primary mt-auto topics-button"
                                     >
-                                       Topics
+                                        View Topics!
                                     </Link>
-                                    
                                 </div>
                             </div>
                         </div>
                     );
                 })}
+            </div>
+            <div className="d-flex justify-content-end mb-3 back-button-professors text-center">
+                <button className="btn text-white" onClick={() => navigate(`/professors`)}>
+                    ⬅ Back to Professors!
+                </button>
             </div>
         </div>
     );

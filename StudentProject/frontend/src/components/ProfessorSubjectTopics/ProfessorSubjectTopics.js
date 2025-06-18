@@ -1,68 +1,60 @@
 import React, { useEffect, useState } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import api from "../../custom-axios/axios";
-import Subject from "../Subject/SubjectList/subject";
-import SubjectTerm from "../Subject/SubjectTerm/subjectTerm";
+import './ProfessorSubjectTopics.css';
 
 function ProfessorSubjectTopics() {
-  const { professorId, subjectId } = useParams();
+    const { professorId, subjectId } = useParams();
+    const [topics, setTopics] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+    const [subjectName, setSubjectName] = useState(null);
+    const navigate = useNavigate();
 
-  const [topics, setTopics] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const [subjectName, setSubjectName] = useState(null);
-
-
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    if (!professorId || !subjectId) {
-      setError("Professor ID or Subject ID missing");
-      setLoading(false);
-      return;
-    }
-
-    setLoading(true);
-    setError(null);
-
-
-     // First, fetch all subjects for the professor to find the subject name
-    api
-      .get(`/subject-allocations/${professorId}/subjects`)
-      .then((res) => {
-        const subjects = res.data || [];
-        // Try to find the matching subject by abbreviation or semesterCode (whichever your subjectId refers to)
-        const matchedSubject = subjects.find(
-          (sub) =>
-            sub.abbreviation === subjectId ||
-            sub.subjectCode === subjectId ||
-            sub.semesterCode === subjectId
-        );
-
-        if (matchedSubject) {
-          setSubjectName(matchedSubject.subject || matchedSubject.subjectName || "Unknown Subject");
-        } else {
-          setSubjectName(null);
+    useEffect(() => {
+        if (!professorId || !subjectId) {
+            setError("Professor ID or Subject ID missing");
+            setLoading(false);
+            return;
         }
-      })
-      .catch(() => {
-        // Ignore failure to fetch subject name, just show subjectId
-        setSubjectName(null);
-      });
 
-    api
-      .get(`/subject-allocations/professors/${professorId}/subjects/${subjectId}/topics`)
-      .then((res) => {
-        setTopics(res.data || []);
-        setLoading(false);
-      })
-      .catch((err) => {
-        setError(`Failed to load topics: ${err.message || "Unknown error"}`);
-        setLoading(false);
-      });
-  }, [professorId, subjectId]);
+        setLoading(true);
+        setError(null);
 
-  const handleDelete = (topicId) => {
+        api
+            .get(`/subject-allocations/${professorId}/subjects`)
+            .then((res) => {
+                const subjects = res.data || [];
+                const matchedSubject = subjects.find(
+                    (sub) =>
+                        sub.abbreviation === subjectId ||
+                        sub.subjectCode === subjectId ||
+                        sub.semesterCode === subjectId
+                );
+
+                if (matchedSubject) {
+                    setSubjectName(matchedSubject.subject || matchedSubject.subjectName || "Unknown Subject");
+                } else {
+                    setSubjectName(null);
+                }
+            })
+            .catch(() => {
+                setSubjectName(null);
+            });
+
+        api
+            .get(`/subject-allocations/professors/${professorId}/subjects/${subjectId}/topics`)
+            .then((res) => {
+                setTopics(res.data || []);
+                setLoading(false);
+            })
+            .catch((err) => {
+                setError(`Failed to load topics: ${err.message || "Unknown error"}`);
+                setLoading(false);
+            });
+    }, [professorId, subjectId]);
+
+    const handleDelete = (topicId) => {
         if (window.confirm("Are you sure you want to delete this topic?")) {
             api
                 .delete(`/subject-allocations/topics/delete-topic/${topicId}`)
@@ -75,80 +67,102 @@ function ProfessorSubjectTopics() {
         }
     };
 
-    const handleChooseTopic = (topicId) => {
-        navigate(`/teams/create-team/${topicId}`);
-    };
+    if (loading) return <div className="text-center mt-4">Loading topics...</div>;
+    if (error) return <div className="alert alert-danger mt-4">{error}</div>;
 
-  if (loading) return <div className="text-center mt-4">Loading topics...</div>;
-  if (error) return <div className="alert alert-danger mt-4">{error}</div>;
-  if (!topics.length)
+    if (!topics.length)
+        return (
+            <div className="container mt-4">
+                <div className="alert alert-info">No topics found for this subject.</div>
+                <Link
+                    to={`/subject-allocations/professors/${professorId}/subjects/${subjectId}/topics/add-topic`}
+                    className="btn btn-primary pst-add-button"
+                >
+                    ➕ Add Topic!
+                </Link>
+                <div className="d-flex justify-content-end mb-3 back-button-subjects-by-professor text-center">
+                    <button className="btn text-white" onClick={() => navigate(`/subject-allocations/${professorId}/subjects`)}>
+                        ⬅ Back to Subjects by Professor!
+                    </button>
+                </div>
+            </div>
+        );
+
     return (
-      <div className="container mt-4">
-        <div className="alert alert-info">No topics found for this subject.</div>
-        <Link
-          to={`/subject-allocations/professors/${professorId}/subjects/${subjectId}/topics/add-topic`}
-          className="btn btn-primary"
-        >
-          Add Topic
-        </Link>
-      </div>
-    );
+        <div className="container mt-4">
+            <div className="d-flex justify-content-between align-items-center mb-4 title">
+                <h2 className="mb-0">
+                    Subject:<span> {subjectName || subjectId}</span>
+                </h2>
+                <Link
+                    to={`/subject-allocations/professors/${professorId}/subjects/${subjectId}/topics/add-topic`}
+                    className="btn btn-success pst-add-button"
+                >
+                    ➕ Add Topic
+                </Link>
+            </div>
 
-  return (
-    <div className="container mt-4">
-      <h2 className="mb-4">Topics for Subject  {subjectName || subjectId}</h2>
-      <Link
-        to={`/subject-allocations/professors/${professorId}/subjects/${subjectId}/topics/add-topic`}
-        className="btn btn-primary mb-3"
-      >
-        Add Topic
-      </Link>
-      <div className="container mt-4">
-                  <div className="row">
-                      {topics.map((topic) => (
-                          <div key={topic.id} className="col-md-4 mb-4">
-                              <div className="card h-100 shadow-sm">
-                                  <div className="card-body d-flex flex-column">
-                                      <h5 className="card-title">{topic.name}</h5>
-                                      <p className="card-text">{topic.description}</p>
-                                      <p className="card-text mb-1">
-                                          <strong>From:</strong>{" "}
-                                          {topic.fromDate ? new Date(topic.fromDate).toLocaleDateString() : "N/A"}
-                                      </p>
-                                      <p className="card-text mb-1">
-                                          <strong>To:</strong>{" "}
-                                          {topic.toDate ? new Date(topic.toDate).toLocaleDateString() : "N/A"}
-                                      </p>
-                                      <p className="card-text">
-                                          <strong>Groups:</strong> {topic.groupCount} |{" "}
-                                          <strong>Members per Group:</strong> {topic.membersPerGroup}
-                                      </p>
-                                      <Link
-                                          to={`/subject-allocations/topics/${topic.id}/professors/${professorId}/subjects/${topic.subjectId}/edit-topic`}
-                                          className="btn btn-info mt-auto"
-                                      >
-                                          Edit Topic
-                                      </Link>
-                                      <Link
-                                          className="btn btn-info mt-auto"
-                                          onClick={() => handleDelete(topic.id)}
-                                      >
-                                          Delete Topic
-                                      </Link>
-                                      <Link
-                                          className="btn btn-primary"
-                                          to={`/teams/create-team/${topic.id}`}
-                                      >
-                                          Choose Topic
-                                      </Link>
-                                  </div>
-                              </div>
-                          </div>
-                      ))}
-                  </div>
-              </div>
-    </div>
-  );
+            <div className="row">
+                {topics.map((topic) => (
+                    <div key={topic.id} className="col-md-4 mb-4 d-flex justify-content-center">
+                        <div className="pst-card card h-100 shadow-sm">
+                            <div className="pst-card-header title-field">
+                                {topic.name}
+                            </div>
+                            <div className="pst-card-body card-body d-flex flex-column">
+                                <p className="pst-card-text card-text description-field"><span className="description-field-text"> {topic.description}</span></p>
+                                <p className="pst-card-text card-text mb-1 date-field">
+                                    <strong className="date">From:</strong>{" "}
+                                    <span className="date-field-text"> {topic.fromDate ? new Date(topic.fromDate).toLocaleDateString() : "N/A"}</span>
+                                </p>
+                                <p className="pst-card-text card-text mb-1 date-field">
+                                    <strong className="date">To:</strong>{" "}
+                                    <span className="date-field-text"> {topic.toDate ? new Date(topic.toDate).toLocaleDateString() : "N/A"}</span>
+                                </p>
+                                <p className="pst-card-text card-text grups-and-members-field">
+                                    <strong>Groups:</strong> <span className="grups-and-members-field-text"> {topic.groupCount} {" "}</span>
+                                    <br/>
+                                    <strong>Members per Group:</strong> <span className="grups-and-members-field-text"> {topic.membersPerGroup}</span>
+                                </p>
+
+                                <div className="pst-button-group mt-auto d-flex flex-column align-items-center">
+                                    <Link
+                                        to={`/subject-allocations/topics/${topic.id}/professors/${professorId}/subjects/${topic.subjectId}/edit-topic`}
+                                        className="btn btn-outline-info btn-sm pst-edit-button"
+                                    >
+                                        ✏️ Edit!
+                                    </Link>
+                                    <button
+                                        className="btn btn-outline-danger btn-sm pst-delete-button"
+                                        onClick={() => handleDelete(topic.id)}
+                                    >
+                                        🗑️ Delete!
+                                    </button>
+                                    <Link
+                                        className="btn btn-primary btn-sm pst-choose-topic-button"
+                                        to={`/teams/create-team/${topic.id}`}
+                                    >
+                                        ➕ Choose Topic!
+                                    </Link>
+                                    <button
+                                        className="btn btn-secondary btn-sm mt-2 pst-view-teams-button"
+                                        onClick={() => navigate(`/teams/topic/${topic.id}`)}
+                                    >
+                                        👥 View Teams!
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                ))}
+            </div>
+            <div className="d-flex justify-content-end mb-3 back-button-subjects-by-professor text-center">
+                <button className="btn text-white" onClick={() => navigate(`/subject-allocations/${professorId}/subjects`)}>
+                    ⬅ Back to Subjects by Professor!
+                </button>
+            </div>
+        </div>
+    );
 }
 
 export default ProfessorSubjectTopics;

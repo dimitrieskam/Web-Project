@@ -61,11 +61,13 @@ const TopicAdd = (props) => {
     };
 
     return (
-        <div className="row mt-5">
-            <div className="col-md-5">
+        <div className="topic-add-wrapper d-flex justify-content-center align-items-center">
+            <div className="topic-add-form p-4 rounded shadow align-items-center">
+                <h2 className="mb-4 text-center text-white">Add New Topic</h2>
                 <form onSubmit={onFormSubmit}>
-                    <div className="form-group">
-                        <label htmlFor="name">Topic name</label>
+
+                    <div className="form-group mb-3">
+                        <label htmlFor="name">Topic Name</label>
                         <input
                             type="text"
                             className="form-control"
@@ -77,7 +79,7 @@ const TopicAdd = (props) => {
                         />
                     </div>
 
-                    <div className="form-group">
+                    <div className="form-group mb-3">
                         <label htmlFor="description">Description</label>
                         <textarea
                             className="form-control"
@@ -90,8 +92,7 @@ const TopicAdd = (props) => {
                         />
                     </div>
 
-
-                    <div className="form-group">
+                    <div className="form-group mb-3">
                         <label htmlFor="fromDate">From Date</label>
                         <input
                             type="date"
@@ -103,7 +104,7 @@ const TopicAdd = (props) => {
                         />
                     </div>
 
-                    <div className="form-group">
+                    <div className="form-group mb-3">
                         <label htmlFor="toDate">To Date</label>
                         <input
                             type="date"
@@ -115,7 +116,7 @@ const TopicAdd = (props) => {
                         />
                     </div>
 
-                    <div className="form-group">
+                    <div className="form-group mb-3">
                         <label htmlFor="groupCount">Group Count</label>
                         <input
                             type="number"
@@ -128,7 +129,7 @@ const TopicAdd = (props) => {
                         />
                     </div>
 
-                    <div className="form-group">
+                    <div className="form-group mb-3">
                         <label htmlFor="membersPerGroup">Members per Group</label>
                         <input
                             type="number"
@@ -141,7 +142,7 @@ const TopicAdd = (props) => {
                         />
                     </div>
 
-                    <div className="form-group">
+                    <div className="form-group mb-3">
                         <label htmlFor="professorId">Professor ID</label>
                         <input
                             type="text"
@@ -152,7 +153,8 @@ const TopicAdd = (props) => {
                             readOnly
                         />
                     </div>
-                    <div className="form-group">
+
+                    <div className="form-group mb-4">
                         <label htmlFor="subjectId">Subject ID</label>
                         <input
                             type="text"
@@ -164,7 +166,11 @@ const TopicAdd = (props) => {
                         />
                     </div>
 
-                    <button id="submit" type="submit" className="btn btn-primary">Submit</button>
+                    <button id="submit" type="submit" className="btn btn-primary w-100">Submit</button>
+
+                    <button className="btn text-white back-button" onClick={() => navigate(`/subject-allocations/professors/${formData.professorId}/subjects/${formData.subjectId}/topics`)}>
+                        ⬅ Back to Topics!
+                    </button>
                 </form>
             </div>
         </div>

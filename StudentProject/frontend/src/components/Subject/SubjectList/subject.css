@@ -1,0 +1,161 @@
+.subject-container {
+    margin-top: 40px;
+}
+
+.subjects-title {
+    color: antiquewhite;
+    font-size: 40px;
+    margin-bottom: 20px;
+}
+
+.subjects-title:hover {
+    color: white;
+}
+
+input.form-control, select.form-select {
+    padding: 10px;
+    font-size: 16px;
+    border: 2px solid #007bff;
+    border-radius: 0.5rem;
+    transition: border-color 0.3s ease-in-out;
+}
+
+input.form-control:focus, select.form-select:focus {
+    border-color: #0056b3;
+    outline: none;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+.form-label {
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 8px;
+}
+
+.row > div[class*="col-"] {
+    margin-bottom: 1.5rem;
+}
+
+.row > div[class*="col-"] > div {
+    height: 100%;
+}
+
+.card {
+    background: linear-gradient(135deg, #000000, #003b8b);
+    border: none;
+    color: #fff;
+    border-radius: 0.5rem;
+    height: 100%;
+    width: 280px;
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+    display: flex;
+    flex-direction: column;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+}
+
+.card-body {
+    padding: 20px;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.card-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: white;
+    margin-bottom: 10px;
+}
+
+.card-text {
+    font-size: 1rem;
+    color: #f0f0f0;
+    margin-bottom: 10px;
+}
+
+.btn-primary {
+    background-color: royalblue;
+    border: none;
+    padding: 10px;
+    border-radius: 0.5rem;
+    font-weight: bold;
+    color: white;
+    transition: background-color 0.2s ease-in-out;
+    cursor: pointer;
+}
+
+.btn-primary:hover {
+    background-color: dodgerblue;
+    color: white;
+    transform: translateY(-1px);
+}
+
+.btn-primary:active {
+    transform: translateY(0);
+}
+
+.search-form {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 20px;
+    border-radius: 0.75rem;
+    margin-bottom: 30px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.pagination {
+    margin-top: 30px;
+    display: flex;
+    justify-content: center;
+    list-style: none;
+    padding: 0;
+}
+
+.pagination .page-item {
+    margin: 0 5px;
+}
+
+.pagination .page-link {
+    color: #007bff;
+    background-color: white;
+    border: 1px solid #dee2e6;
+    border-radius: 0.3rem;
+    padding: 8px 12px;
+    font-weight: 500;
+    transition: all 0.2s;
+    text-decoration: none;
+}
+
+.pagination .page-link:hover {
+    background-color: #007bff;
+    color: white;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(0, 123, 255, 0.3);
+}
+
+.pagination .active .page-link {
+    background-color: #003b8b;
+    color: white;
+    border-color: #003b8b;
+}
+
+.pagination .disabled .page-link {
+    color: #6c757d;
+    background-color: #e9ecef;
+    border-color: #dee2e6;
+    cursor: not-allowed;
+}
+
+.subjects-title {
+    color: antiquewhite;
+    font-size: 40px;
+    margin-bottom: 20px;
+}
+
+.subjects-title:hover {
+    color: white;
+}
