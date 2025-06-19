@@ -38,14 +38,14 @@ public class StudentController {
 
     @PutMapping("/edit-student/{index}")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<Optional<DisplayStudentDTO>> editStudent(@PathVariable String index,
+    public ResponseEntity<Optional<DisplayStudentDTO>> editStudent(@PathVariable("index") String index,
                                                                    @RequestBody CreateStudentDTO createStudentDTO) {
         return ResponseEntity.ok(this.studentApplicationService.update(index, createStudentDTO));
     }
 
     @DeleteMapping("/delete-student/{index}")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<Void> deleteStudent(@PathVariable String index) {
+    public ResponseEntity<Void> deleteStudent(@PathVariable("index") String index) {
         this.studentApplicationService.delete(index);
 
         return ResponseEntity.noContent().build();
