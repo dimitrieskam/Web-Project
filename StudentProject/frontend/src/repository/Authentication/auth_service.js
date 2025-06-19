@@ -43,7 +43,9 @@ const login = (username, password) => {
             const userData = {
                 access_token: response.data.access_token,
                 username: response.data.user?.username || username,
+
                 role: response.data.role || null,
+
             };
             localStorage.setItem("user", JSON.stringify(userData));
             notifySubscribers();
