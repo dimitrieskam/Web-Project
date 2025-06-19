@@ -11,12 +11,10 @@ const register = (name, surname, username, password, role) => {
         role,
     }).then((response) => {
         if (response.data.access_token) {
-            // Extract user info and role safely
             const userData = {
                 access_token: response.data.access_token,
                 username: response.data.user?.username || username,
                 role: response.data.user?.role || role || null,
-                // add any other user fields you need here
             };
             localStorage.setItem("user", JSON.stringify(userData));
         }
@@ -34,7 +32,6 @@ const login = (username, password) => {
                 access_token: response.data.access_token,
                 username: response.data.user?.username || username,
                 role: response.data.user?.role || null,
-                // add other fields if needed
             };
             localStorage.setItem("user", JSON.stringify(userData));
             window.location.reload();
