@@ -3,8 +3,10 @@ package org.example.service.application.Impl;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.example.model.AuthenticationResponse;
+import org.example.model.DTOs.userDTO.RegisterUserDTO;
 import org.example.model.Token;
 import org.example.model.User;
+import org.example.model.enumerations.Role;
 import org.example.repository.TokenRepository;
 import org.example.repository.UserRepository;
 import org.springframework.http.HttpHeaders;
@@ -37,7 +39,7 @@ public class AuthenticationService {
         this.authenticationManager = authenticationManager;
     }
 
-    public AuthenticationResponse register(User request){
+    public AuthenticationResponse register(RegisterUserDTO request){
         if(repository.findByUsername(request.getUsername()).isPresent()){
             return new AuthenticationResponse(null, null, "User already exist");
         }
@@ -49,7 +51,13 @@ public class AuthenticationService {
         user.setEmail(request.getEmail());
         user.setPassword(passwordEncoder.encode(request.getPassword()));
 
-        user.setRole(request.getRole());
+        String roleStr = request.getRole();
+        if (roleStr != null && roleStr.startsWith("ROLE_")) {
+            roleStr = roleStr.substring(5);
+        }
+        Role roleEnum = Role.valueOf(roleStr); // assuming Role is your enum class
+
+        user.setRole(roleEnum);
 
         user=repository.save(user);
 
@@ -81,7 +89,7 @@ public class AuthenticationService {
                     accessToken,
                     refreshToken,
                     "User login was successful",
-                    user.getRole().name(),
+                    user.getRole().roleName(),
                     user.getUsername(),
                     user.getId()
             );

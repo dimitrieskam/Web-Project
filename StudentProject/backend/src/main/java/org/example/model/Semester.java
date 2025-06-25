@@ -1,6 +1,7 @@
 package org.example.model;
 
 import jakarta.persistence.*;
+import org.example.model.enumerations.SemesterState;
 import org.example.model.enumerations.SemesterType;
 
 @Entity
@@ -14,6 +15,10 @@ public class Semester {
 
     @Enumerated(EnumType.STRING)
     private SemesterType semesterType;
+
+    @Enumerated(EnumType.STRING)
+    private SemesterState state;
+
 
     public Semester() {
 

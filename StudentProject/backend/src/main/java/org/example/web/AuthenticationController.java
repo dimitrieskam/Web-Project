@@ -3,6 +3,7 @@ package org.example.web;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.example.model.AuthenticationResponse;
+import org.example.model.DTOs.userDTO.RegisterUserDTO;
 import org.example.model.User;
 import org.example.service.application.Impl.AuthenticationService;
 import org.example.service.application.Impl.JwtService;
@@ -22,7 +23,7 @@ public class AuthenticationController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<AuthenticationResponse> register(@RequestBody User request) {
+    public ResponseEntity<?> register(@RequestBody RegisterUserDTO request) {
         return ResponseEntity.ok(authenticationService.register(request));
     }
 

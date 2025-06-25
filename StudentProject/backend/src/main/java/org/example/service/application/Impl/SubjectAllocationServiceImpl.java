@@ -50,7 +50,7 @@ public class SubjectAllocationServiceImpl implements SubjectAllocationService {
 
     @Override
     public List<DisplayTopicDTO> getTopicsByProfessor(String professorId) {
-        List<Topic> topics = topicRepository.findByProfessorId(professorId);
+        List<Topic> topics = topicRepository.findByProfessor_Id(professorId);
         return DisplayTopicDTO.from(topics);
     }
 

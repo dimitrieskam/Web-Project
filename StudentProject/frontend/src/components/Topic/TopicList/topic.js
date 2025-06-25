@@ -2,10 +2,12 @@ import React from 'react';
 import ReactPaginate from 'react-paginate';
 import { Link } from 'react-router-dom';
 import TopicTerm from '../TopicTerm/topicTerm';
-import './topic.css';
+import TopicWrapper from "../TopicWrapper/topicWrapper";
 import authService from "../../../repository/Authentication/auth_service";
+import './topic.css';
 
 class Topic extends React.Component {
+
     constructor(props) {
         super(props);
         this.state = {
@@ -45,13 +47,22 @@ class Topic extends React.Component {
     };
 
     render() {
-        const { size, page, searchText, role } = this.state;
+        const { size, page, searchText} = this.state;
         const topics = this.props.topics || [];
+        const { professorId, subjectId } = this.props;
+        const { userId, role } = this.props; // or from state if passed
 
-        const filteredTopics = topics.filter(topic =>
-            topic.name.toLowerCase().includes(searchText.toLowerCase()) ||
-            (topic.description && topic.description.toLowerCase().includes(searchText.toLowerCase()))
-        );
+        const filteredTopics = topics.filter(topic => {
+            // Only show topics where topic.professorId matches logged-in professor's id
+            if (role === "ROLE_PROFESSOR" && userId) {
+                return topic.professorId === userId &&
+                    (topic.name.toLowerCase().includes(searchText.toLowerCase()) ||
+                        (topic.description && topic.description.toLowerCase().includes(searchText.toLowerCase())));
+            }
+            // For other roles, show all or apply other logic
+            return topic.name.toLowerCase().includes(searchText.toLowerCase()) ||
+                (topic.description && topic.description.toLowerCase().includes(searchText.toLowerCase()));
+        });
 
         const offset = size * page;
         const nextPageOffset = offset + size;
@@ -97,7 +108,7 @@ class Topic extends React.Component {
                     <div className="mb-3 text-center">
                         <Link
                             className="btn btn-dark"
-                            to="/subject-allocations/professors/${professorId}/subjects/${subjectId}/topics/add-topic"
+                            to={`/subject-allocations/professors/${professorId}/subjects/${subjectId}/topics/add-topic`}
                         >
                             Add new Topic
                         </Link>

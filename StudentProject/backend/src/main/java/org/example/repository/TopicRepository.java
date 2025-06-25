@@ -10,7 +10,7 @@ public interface TopicRepository extends JpaRepository<Topic, String> {
 
     List<Topic> findByProfessor_IdAndJoinedSubject_MainSubject_Id(String professorId, String subjectId);
 
-    List<Topic> findByProfessorId(String professorId);
+    List<Topic> findByProfessor_Id(String professorId);
 
     List<Topic> findByJoinedSubject_MainSubject_Id(String subjectId);
 }

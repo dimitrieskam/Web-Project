@@ -56,6 +56,9 @@ const AppRepository = {
 
         return axios.get(`/subjects/search-subject?${params.toString()}`);
     },
+    fetchSubjectsByProfessor: (professorId) => {
+        return axios.get(`/subject-allocations/professors/${professorId}/subjects`);
+    },
 
     // ====== TOPICS ======
     fetchTopics: () => {
@@ -68,16 +71,15 @@ const AppRepository = {
 
     addTopic: (name, description, fromDate, toDate, groupCount, membersPerGroup, professorId, subjectId) => {
         return axios.post(`/subject-allocations/professors/${professorId}/subjects/${subjectId}/topics/add-topic`, {
-            "name": name,
-            "description": description,
-            "fromDate": fromDate,
-            "toDate": toDate,
-            "groupCount": groupCount,
-            "membersPerGroup": membersPerGroup,
-            "professorId": professorId,
-            "subjectId": subjectId
+            name,
+            description,
+            fromDate,
+            toDate,
+            groupCount,
+            membersPerGroup
         });
     },
+
 
     updateTopic: (id, name, description, fromDate, toDate, groupCount, membersPerGroup, professorId, subjectId) => {
         return axios.put(`subject-allocations/topics/${id}/professors/${professorId}/subjects/${subjectId}/edit-topic`, {
@@ -91,6 +93,9 @@ const AppRepository = {
             "subjectId": subjectId
         });
     },
+    fetchTopicsByProfessor: (professorId) => {
+        return axios.get(`/subject-allocations/professors/${professorId}/topics`);
+    },
 
     deleteTopic: (id) => {
         return axios.delete(`subject-allocations/topics/delete-topic/${id}`);
@@ -98,7 +103,7 @@ const AppRepository = {
 
     // ====== TEAMS ======
     fetchTeams: () => {
-        return axios.get("/teams/topic/{topicId}");
+        return axios.get("/teams/topic/${topicId}");
     },
     createTeam: (topicId, name, studentIds) => {
         return axios.post(`/teams/create-team/${topicId}`, {

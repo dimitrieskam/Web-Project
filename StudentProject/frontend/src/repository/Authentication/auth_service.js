@@ -16,6 +16,13 @@ const subscribe = (callback) => {
         subscribers = subscribers.filter(cb => cb !== callback);
     };
 };
+// const userData = {
+//     access_token: response.data.access_token,
+//     refresh_token: response.data.refresh_token,
+//     username: response.data.username || username,
+//     role: response.data.role || null,
+//     user_id: response.data.user_id || null,
+// };
 
 const register = (name, surname, username, password, role) => {
     return axios.post(API_URL + "register", {
@@ -42,8 +49,10 @@ const login = (username, password) => {
         if (response.data.access_token) {
             const userData = {
                 access_token: response.data.access_token,
-                username: response.data.user?.username || username,
+                refresh_token: response.data.refresh_token,
+                username: response.data.username || username,
                 role: response.data.role || null,
+                user_id: response.data.user_id || null,
             };
             localStorage.setItem("user", JSON.stringify(userData));
             notifySubscribers();
@@ -51,7 +60,6 @@ const login = (username, password) => {
         return response.data;
     });
 };
-
 const logout = () => {
     localStorage.removeItem("user");
     notifySubscribers();
@@ -60,6 +68,8 @@ const logout = () => {
 const getCurrentUser = () => {
     return localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")) : null;
 };
+
+
 
 const authService = {
     register,

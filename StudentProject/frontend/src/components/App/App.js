@@ -13,6 +13,9 @@ import Student from "../Student/StudentList/student"
 
 import TopicAdd from "../Topic/TopicAdd/topicAdd";
 import TopicEdit from "../Topic/TopicEdit/topicEdit";
+
+
+
 import ProfessorSubjectsPage from "../ProfessorSubjects/ProfessorSubjectsPage";
 import SubjectTopicPage from "../SubjectTopic/SubjectTopicPage";
 import CreateTeam from "../Team/CreateTeam/CreateTeam";
@@ -20,6 +23,8 @@ import StudentAdd from "../Student/StudentAdd/studentAdd";
 import TeamsByTopic from "../Team/TeamsByTopic/TeamsByTopic";
 import ProfessorSubjectTopics from "../ProfessorSubjectTopics/ProfessorSubjectTopics"
 import StudentEdit from "../Student/StudentEdit/studentEdit";
+import TopicsByProfessor from "../TopicsByProfessor/TopicsByProfessor";
+
 
 class App extends Component {
     constructor(props) {
@@ -33,6 +38,9 @@ class App extends Component {
             selectedStudent: null,
             selectedSubject: null,
             selectedTopic: null,
+            userId: null,
+            role: null,
+            isLoggedIn: false,
         };
     }
 
@@ -121,6 +129,22 @@ class App extends Component {
             .catch((error) => console.error("Error searching subjects:", error));
     };
 
+    // ====== SUBJECTS BY PROFESSOR ======
+    loadSubjectsByProfessor = (professorId)=>{
+        AppService.fetchSubjectsByProfessor(professorId)
+            .then((data) => this.setState({ subjects: data.data}))
+            .catch((error) => console.error("Error fetching professor's subjects:", error));
+
+    }
+
+    loadTopicsByProfessor = (professorId) => {
+        AppService.fetchTopicsByProfessor(professorId)
+            .then((data) => {
+                this.setState({ topics: data.data });
+            })
+            .catch((error) => console.error("Error fetching topics by professor:", error));
+    }
+
     // ====== TOPICS ======
     loadTopics = () => {
         AppService.fetchTopics()
@@ -145,7 +169,12 @@ class App extends Component {
             .then(() => {
                 this.loadTopics();
             })
-            .catch((error) => console.error("Error adding topic:", error));
+            .catch((error) => {
+                console.error("Error adding topic:", error);
+                if (error.response) {
+                    console.error("Backend says:", error.response.data);
+                }
+            });
     };
 
 
@@ -180,6 +209,20 @@ class App extends Component {
             })
             .catch((error) => console.error("Error deleting team:", error));
     };
+
+    // ====== Login ======
+
+    setLoginData = (userId, role) => {
+        this.setState({ userId, role, isLoggedIn: true }, () => {
+            if (role === "ROLE_PROFESSOR") {
+                this.loadSubjectsByProfessor(userId);
+                this.loadTopicsByProfessor(userId);
+            } else {
+                this.loadSubjects();
+                this.loadTopics();
+            }
+        });
+    }
     render() {
         return (
             <Router>
@@ -247,9 +290,12 @@ class App extends Component {
                                         topics={this.state.topics}
                                         onEdit={this.getTopic}
                                         onDelete={this.deleteTopic}
+                                        userId={this.state.userId}
+                                        role={this.state.role}
                                     />
                                 }
                             />
+
                             {/*TEAMS*/}
                             <Route
                                 path="/teams/topic/{topicId}"
@@ -286,6 +332,11 @@ class App extends Component {
                                     onEditTopic={this.updateTopic}/>
                                 }
                             />
+                            <Route
+                                path="/subject-allocations/professors/:professorId/topics"
+                                element={<TopicsByProfessor />}
+                            />
+
 
                             <Route
                                 path="/teams/create-team/:topicId"
@@ -312,9 +363,9 @@ class App extends Component {
 
                             <Route
                                 path="/login"
-                                element={<Login/>
-                                }
+                                element={<Login onLoginSuccess={this.setLoginData} />}
                             />
+
 
                             <Route
                                 path="/register"

@@ -27,10 +27,14 @@ const Header = () => {
         <header>
             <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
                 <div className="container-fluid">
-                    <a className="navbar-brand" href="/">
-                        <img src={finkilogo} alt="Finki Logo" style={{ width: '40px', height: '40px', marginRight: '10px' }} />
+                    <Link className="navbar-brand" to="/">
+                        <img
+                            src={finkilogo}
+                            alt="Finki Logo"
+                            style={{ width: '40px', height: '40px', marginRight: '10px' }}
+                        />
                         <strong>Projects Management System</strong>
-                    </a>
+                    </Link>
 
                     <button
                         className="navbar-toggler"
@@ -46,16 +50,61 @@ const Header = () => {
 
                     <div className="collapse navbar-collapse" id="navbarNav">
                         <ul className="navbar-nav me-auto mb-2 mb-lg-0 nav-tabs">
-                            <li className="nav-item"><Link className="nav-link" to="/subjects"><strong>Subjects</strong></Link></li>
-                            <li className="nav-item"><Link className="nav-link" to="/professors"><strong>Professors</strong></Link></li>
-                            <li className="nav-item"><Link className="nav-link" to="/students"><strong>Students</strong></Link></li>
-                            <li className="nav-item"><Link className="nav-link" to="/topics"><strong>Topics</strong></Link></li>
+                            {currentUser && currentUser.role === "ROLE_PROFESSOR" ? (
+                                <>
+                                    <li className="nav-item">
+                                        <Link
+                                            className="nav-link"
+                                            to={`/subject-allocations/${currentUser.username}/subjects`}
+                                        >
+                                            <strong>Subjects</strong>
+                                        </Link>
+                                    </li>
+                                    <li className="nav-item">
+                                        <Link to={`/subject-allocations/professors/${currentUser.username}/topics`}>
+                                            <strong>Topics</strong>
+                                        </Link>
+
+                                    </li>
+                                </>
+                            ) : (
+                                <>
+                                    <li className="nav-item">
+                                        <Link className="nav-link" to="/subjects">
+                                            <strong>Subjects</strong>
+                                        </Link>
+                                    </li>
+                                    <li className="nav-item">
+                                        <Link className="nav-link" to="/topics">
+                                            <strong>Topics</strong>
+                                        </Link>
+                                    </li>
+                                </>
+                            )}
+                            <li className="nav-item">
+                                <Link className="nav-link" to="/professors">
+                                    <strong>Professors</strong>
+                                </Link>
+                            </li>
+                            <li className="nav-item">
+                                <Link className="nav-link" to="/students">
+                                    <strong>Students</strong>
+                                </Link>
+                            </li>
                         </ul>
                         <ul className="navbar-nav ms-auto me-3 nav-tabs">
                             {!currentUser ? (
                                 <>
-                                    <li className="nav-item"><Link className="nav-link" to="/register"><strong>Register</strong></Link></li>
-                                    <li className="nav-item"><Link className="nav-link" to="/login"><strong>Login</strong></Link></li>
+                                    <li className="nav-item">
+                                        <Link className="nav-link" to="/register">
+                                            <strong>Register</strong>
+                                        </Link>
+                                    </li>
+                                    <li className="nav-item">
+                                        <Link className="nav-link" to="/login">
+                                            <strong>Login</strong>
+                                        </Link>
+                                    </li>
                                 </>
                             ) : (
                                 <>
@@ -67,7 +116,8 @@ const Header = () => {
                                             <strong>Logout</strong>
                                         </button>
                                     </li>
-                                </>                            )}
+                                </>
+                            )}
                         </ul>
                     </div>
                 </div>

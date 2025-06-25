@@ -47,6 +47,8 @@ const TopicAdd = (props) => {
     const onFormSubmit = (e) => {
         e.preventDefault();
 
+        console.log("Submitting topic with data:", formData);
+
         props.onAddTopic(
             formData.name,
             formData.description,
@@ -57,6 +59,7 @@ const TopicAdd = (props) => {
             formData.professorId,
             formData.subjectId
         );
+
         navigate(`/subject-allocations/professors/${formData.professorId}/subjects/${formData.subjectId}/topics`);
     };
 
