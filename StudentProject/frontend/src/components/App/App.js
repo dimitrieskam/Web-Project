@@ -25,6 +25,7 @@ import ProfessorSubjectTopics from "../ProfessorSubjectTopics/ProfessorSubjectTo
 import StudentEdit from "../Student/StudentEdit/studentEdit";
 import TopicsByProfessor from "../TopicsByProfessor/TopicsByProfessor";
 
+import StudentSubjectPage from "../StudentSubjects/StudentSubjectsPage";
 
 class App extends Component {
     constructor(props) {
@@ -281,6 +282,10 @@ class App extends Component {
                                     />
                                 }
                             />
+                            <Route
+                                path="/student/:studentId/subjects"
+                                element={<StudentSubjectPage />}
+                            />
 
                             {/*TOPICS*/}
                             <Route
@@ -373,6 +378,7 @@ class App extends Component {
                                 }
                             />
                         </Routes>
+
                     </div>
                 </main>
             </Router>

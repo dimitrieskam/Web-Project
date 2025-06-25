@@ -70,7 +70,7 @@ const Header = () => {
                             ) : (
                                 <>
                                     <li className="nav-item">
-                                        <Link className="nav-link" to="/subjects">
+                                        <Link className="nav-link" to={`/student/${currentUser?.username}/subjects`}>
                                             <strong>Subjects</strong>
                                         </Link>
                                     </li>
