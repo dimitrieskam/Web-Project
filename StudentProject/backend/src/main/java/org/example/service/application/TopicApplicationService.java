@@ -27,4 +27,7 @@ public interface TopicApplicationService {
     DisplayTeamDTO getTeamById(String teamId);
 
     void deleteTeam(String teamId, String username);
+
+    List<DisplayTopicDTO> getTopicsByStudentIndex(String studentIndex);
+
 }

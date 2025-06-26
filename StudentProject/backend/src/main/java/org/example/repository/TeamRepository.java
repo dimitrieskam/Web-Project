@@ -16,4 +16,6 @@ public interface TeamRepository extends JpaRepository<Team, String> {
     @Query("DELETE FROM Team t WHERE t.id = :id")
     void deleteTeamById(@Param("id") String id);
     List<Team> findByTopicId(String topicId);
+    @Query("SELECT t FROM Team t JOIN t.members m WHERE m.index = :studentIndex")
+    List<Team> findByMemberIndex(@Param("studentIndex") String studentIndex);
 }

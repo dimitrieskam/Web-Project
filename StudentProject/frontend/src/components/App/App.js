@@ -26,6 +26,7 @@ import StudentEdit from "../Student/StudentEdit/studentEdit";
 import TopicsByProfessor from "../TopicsByProfessor/TopicsByProfessor";
 
 import StudentSubjectPage from "../StudentSubjects/StudentSubjectsPage";
+import TopicsByStudent from "../TopicsByStudent/TopicByStudent";
 
 class App extends Component {
     constructor(props) {
@@ -140,6 +141,15 @@ class App extends Component {
 
     loadTopicsByProfessor = (professorId) => {
         AppService.fetchTopicsByProfessor(professorId)
+            .then((data) => {
+                this.setState({ topics: data.data });
+            })
+            .catch((error) => console.error("Error fetching topics by professor:", error));
+    }
+
+    // ====== TOPICS BY STUDENT ====== 
+    loadTopicsByStudent = (studentId) => {
+        AppService.fetchTopicsByStudent(studentId)
             .then((data) => {
                 this.setState({ topics: data.data });
             })
@@ -300,6 +310,11 @@ class App extends Component {
                                     />
                                 }
                             />
+                            <Route 
+                                path="/student/:studentId/subjects/topics" 
+                                element={<TopicsByStudent />} 
+                            />
+
 
                             {/*TEAMS*/}
                             <Route

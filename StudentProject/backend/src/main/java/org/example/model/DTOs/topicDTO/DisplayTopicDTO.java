@@ -15,8 +15,10 @@ public record DisplayTopicDTO(
         int groupCount,
         int membersPerGroup,
         String professorId,
-        String subjectId
-) {
+        String subjectId,
+        String professorName,
+        String subjectName
+        ) {
     public static DisplayTopicDTO from(Topic topic) {
         String subjectId = null;
 
@@ -35,7 +37,10 @@ public record DisplayTopicDTO(
                 topic.getGroupCount(),
                 topic.getMembersPerGroup(),
                 topic.getProfessor() != null ? topic.getProfessor().getId() : null,
-                subjectId
+                subjectId,
+                topic.getProfessor() != null ? topic.getProfessor().getName() : null,
+                topic.getJoinedSubject().getMainSubject().getName()
+
         );
     }
 

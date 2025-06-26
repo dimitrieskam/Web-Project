@@ -1,18 +1,25 @@
 import React, {useEffect, useState} from "react";
-import {useParams, Link, useNavigate} from "react-router-dom";
+import {useParams, Link, useNavigate, useLocation} from "react-router-dom";
 import api from "../../custom-axios/axios";
 import './SubjectTopic.css';
 import subject from "../Subject/SubjectList/subject";
 
 function SubjectTopics({subjectId: propSubjectId, professorId}) {
     const {subjectId: urlSubjectId} = useParams();
+    const location =useLocation();
     const subjectId = propSubjectId || urlSubjectId;
+    
+    const loggedUser = JSON.parse(localStorage.getItem("user"));
+    const studentId = loggedUser?.username;
+
 
     const navigate = useNavigate();
+    const subjectNameFromState = location.state?.subjectName || "";
 
     const [topics, setTopics] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [subjectName, setSubjectName] = useState(subjectNameFromState);
 
     useEffect(() => {
         if (!subjectId) {
@@ -49,7 +56,7 @@ function SubjectTopics({subjectId: propSubjectId, professorId}) {
                 <div className="d-flex justify-content-center mb-3 back-button-topics-by-subject text-center">
                     <button
                         className="btn text-white"
-                        onClick={() => navigate(`/subjects`)}
+                        onClick={() => navigate(`/student/${studentId}/subjects`)}
                     >
                         ⬅ Back to Subjects!
                     </button>
@@ -60,7 +67,7 @@ function SubjectTopics({subjectId: propSubjectId, professorId}) {
     return (
         <div className="subject-topics-container mt-4">
             <div className="subject-topics-title mb-4">
-                <h2 className="mb-4">Topics <small>by Subject <strong>{subjectId}</strong></small></h2>
+                <h2 className="mb-4">Topics <small>by Subject <strong>{subjectName}</strong></small></h2>
             </div>
             <div className="row justify-content-center">
                 {topics.map((topic) => (
@@ -99,7 +106,7 @@ function SubjectTopics({subjectId: propSubjectId, professorId}) {
             <div className="d-flex justify-content-center mb-3 back-button-topics-by-subject text-center">
                 <button
                     className="btn text-white"
-                    onClick={() => navigate(`/subjects`)}
+                    onClick={() => navigate(`/student/${studentId}/subjects`)}
                 >
                     ⬅ Back to Subjects!
                 </button>

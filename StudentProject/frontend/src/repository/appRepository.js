@@ -96,6 +96,10 @@ const AppRepository = {
     fetchTopicsByProfessor: (professorId) => {
         return axios.get(`/subject-allocations/professors/${professorId}/topics`);
     },
+    fetchTopicsByStudent: (studentId) => {
+       return axios.get(`/student/${studentId}/topics`);
+
+    },
 
     deleteTopic: (id) => {
         return axios.delete(`subject-allocations/topics/delete-topic/${id}`);

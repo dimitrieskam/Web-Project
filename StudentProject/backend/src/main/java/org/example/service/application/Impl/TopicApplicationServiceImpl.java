@@ -108,4 +108,18 @@ public class TopicApplicationServiceImpl implements TopicApplicationService {
         return topicDomainService.chooseTopic(topicId, username)
                 .map(DisplayTopicDTO::from);
     }
+
+    @Override
+    public List<DisplayTopicDTO> getTopicsByStudentIndex(String studentIndex) {
+        // Find all teams where the student is a member
+        List<Team> teams = teamRepository.findByMemberIndex(studentIndex);
+
+        // Extract distinct topics from these teams
+        return teams.stream()
+                .map(Team::getTopic)
+                .distinct()
+                .map(DisplayTopicDTO::from)
+                .collect(Collectors.toList());
+    }
+
 }

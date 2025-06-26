@@ -52,7 +52,9 @@ function StudentSubjects({studentId: propStudentId}) {
                 {message && <p className="text-danger">{message}</p>}
                 <button
                   className="btn btn-primary mt-auto"
-                  onClick={() => navigate(`/subject-allocations/subjects/${subjectCode}/topics`)}
+                  onClick={() => navigate(`/subject-allocations/subjects/${subjectCode}/topics`,
+                    {state: {subjectName}}
+                  )}
                 >
                   View Topics
                 </button>
