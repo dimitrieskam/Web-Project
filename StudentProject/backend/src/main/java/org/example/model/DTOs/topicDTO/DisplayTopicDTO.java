@@ -17,15 +17,32 @@ public record DisplayTopicDTO(
         String professorId,
         String subjectId,
         String professorName,
-        String subjectName
-        ) {
+        String subjectName,
+        String creatorProfessorUsername
+) {
+
     public static DisplayTopicDTO from(Topic topic) {
+        // Get subjectId and subjectName using JoinedSubject, if available
         String subjectId = null;
+        String subjectName = "Unknown Subject";
 
         if (topic.getJoinedSubject() != null && topic.getJoinedSubject().getMainSubject() != null) {
             subjectId = topic.getJoinedSubject().getMainSubject().getId();
+            subjectName = topic.getJoinedSubject().getMainSubject().getName();
         } else {
             System.err.println("[WARNING] Topic with ID " + topic.getId() + " has null JoinedSubject or MainSubject.");
+        }
+
+        // Get professor details if available
+        String professorId = null;
+        String professorName = "Unknown Professor";
+        String creatorProfessorUsername = null;
+        if (topic.getProfessor() != null) {
+            professorId = topic.getProfessor().getId();
+            professorName = topic.getProfessor().getName();
+            creatorProfessorUsername = topic.getProfessor().getId();
+        } else {
+            System.err.println("[WARNING] Topic with ID " + topic.getId() + " has null Professor.");
         }
 
         return new DisplayTopicDTO(
@@ -36,11 +53,11 @@ public record DisplayTopicDTO(
                 topic.getToDate(),
                 topic.getGroupCount(),
                 topic.getMembersPerGroup(),
-                topic.getProfessor() != null ? topic.getProfessor().getId() : null,
+                professorId,
                 subjectId,
-                topic.getProfessor() != null ? topic.getProfessor().getName() : null,
-                topic.getJoinedSubject().getMainSubject().getName()
-
+                professorName,
+                subjectName,
+                creatorProfessorUsername
         );
     }
 

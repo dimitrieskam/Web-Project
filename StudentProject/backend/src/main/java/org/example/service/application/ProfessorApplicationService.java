@@ -10,4 +10,6 @@ public interface ProfessorApplicationService {
     Optional<DisplayProfessorDTO> findByID(String id);
 
     List<DisplayProfessorDTO> findByName(String name);
+    Optional<DisplayProfessorDTO> getProfessorByUsername(String username);
+
 }

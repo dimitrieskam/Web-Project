@@ -28,4 +28,12 @@ public class ProfessorController {
     public ResponseEntity<List<DisplayProfessorDTO>> searchByName(@RequestParam("name") String name) {
         return ResponseEntity.ok(professorApplicationService.findByName(name));
     }
+    @GetMapping("/{username}")
+    @PreAuthorize("hasAnyRole('STUDENT', 'PROFESSOR', 'ADMIN')")
+    public ResponseEntity<DisplayProfessorDTO> getProfessorByUsername(@PathVariable String username) {
+        return professorApplicationService.getProfessorByUsername(username)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    }
+
 }

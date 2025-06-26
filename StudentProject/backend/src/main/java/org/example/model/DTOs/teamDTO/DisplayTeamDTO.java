@@ -1,6 +1,6 @@
 package org.example.model.DTOs.teamDTO;
 
-import org.example.model.Student;
+import org.example.model.DTOs.studentDTO.DisplayStudentDTO;
 import org.example.model.Team;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -10,7 +10,9 @@ public record DisplayTeamDTO(
         String name,
         String topicName,
         String subjectName,
-        List<String> studentIndexes) {
+        List<DisplayStudentDTO> students
+
+        ) {
 
     public static DisplayTeamDTO from(Team team) {
         return new DisplayTeamDTO(
@@ -19,7 +21,7 @@ public record DisplayTeamDTO(
                 team.getTopic().getName(),
                 team.getTopic().getJoinedSubject().getMainSubject().getName(),
                 team.getMembers().stream()
-                        .map(Student::getIndex)
+                        .map(DisplayStudentDTO::from)
                         .collect(Collectors.toList())
         );
     }

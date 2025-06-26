@@ -66,6 +66,11 @@ const Header = () => {
                                         </Link>
 
                                     </li>
+                                    <li className="nav-item">
+                                        <Link className="nav-link" to="/students">
+                                            <strong>Students</strong>
+                                        </Link>
+                                    </li>
                                 </>
                             ) : (
                                 <>
@@ -79,16 +84,13 @@ const Header = () => {
                                             <strong>Topics</strong>
                                         </Link>
                                     </li>
+                                    
                                 </>
+                                
                             )}
                             <li className="nav-item">
                                 <Link className="nav-link" to="/professors">
                                     <strong>Professors</strong>
-                                </Link>
-                            </li>
-                            <li className="nav-item">
-                                <Link className="nav-link" to="/students">
-                                    <strong>Students</strong>
                                 </Link>
                             </li>
                         </ul>

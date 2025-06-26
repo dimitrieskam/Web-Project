@@ -6,6 +6,15 @@ const AppRepository = {
     fetchProfessors: () => {
         return axios.get("/professors");
     },
+    fetchProfessorById: (professorId) => {
+        const token = localStorage.getItem("token");
+        return axios.get(`/api/professors/${professorId}`, {
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+        });
+    },
+
     searchProfessorsByName: (name) => {
         return axios.get("/professors/search-professor", {
             params: {

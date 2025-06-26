@@ -1,6 +1,7 @@
 package org.example.service.application.Impl;
 
 import org.example.model.DTOs.professorDTO.DisplayProfessorDTO;
+import org.example.repository.ProfessorRepository;
 import org.example.service.application.ProfessorApplicationService;
 import org.example.service.domain.ProfessorDomainService;
 import org.springframework.stereotype.Service;
@@ -12,9 +13,10 @@ import java.util.stream.Collectors;
 public class ProfessorApplicationServiceImpl implements ProfessorApplicationService {
 
     private final ProfessorDomainService professorDomainService;
-
-    public ProfessorApplicationServiceImpl(ProfessorDomainService professorDomainService) {
+    private final ProfessorRepository professorRepository;
+    public ProfessorApplicationServiceImpl(ProfessorDomainService professorDomainService, ProfessorRepository professorRepository) {
         this.professorDomainService = professorDomainService;
+        this.professorRepository = professorRepository;
     }
 
     @Override
@@ -36,4 +38,10 @@ public class ProfessorApplicationServiceImpl implements ProfessorApplicationServ
                 .map(prof -> new DisplayProfessorDTO(prof.getId(), prof.getName(), prof.getEmail()))
                 .toList();
     }
+    @Override
+    public Optional<DisplayProfessorDTO> getProfessorByUsername(String username) {
+        return professorRepository.findByUsername(username)
+                .map(DisplayProfessorDTO::from);
+    }
+
 }

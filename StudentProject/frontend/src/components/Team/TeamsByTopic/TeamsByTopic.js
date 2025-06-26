@@ -37,6 +37,7 @@ function TeamsByTopic() {
         setLoading(true);
         api.get(`/teams/topic/${topicId}`)
             .then(res => {
+                console.log("Teams response:", res.data); 
                 setTeams(res.data);
                 setError(null);
             })
@@ -70,9 +71,22 @@ function TeamsByTopic() {
             <div className="container mt-4">
                 <h3 className="alert alert-info">No teams found for this topic.</h3>
                 <div className="d-flex justify-content-center mb-3 back-button-teams text-center">
-                    <button className="btn text-white" onClick={() => navigate(`/subjects`)}>
+                    <button
+                        className="btn text-white"
+                        onClick={() => {
+                            const user = JSON.parse(localStorage.getItem("user"));
+                            if (user?.role === "ROLE_PROFESSOR") {
+                                navigate(`/subject-allocations/${user.username}/subjects`);
+                            } else if (user?.role === "ROLE_STUDENT") {
+                                navigate(`/student/${user.username}/subjects`);
+                            } else {
+                                navigate("/subjects"); // fallback
+                            }
+                        }}
+                    >
                         ⬅ Back to Subjects!
                     </button>
+
                 </div>
             </div>
         );
@@ -98,9 +112,10 @@ function TeamsByTopic() {
                             <div className="card-body">
                                 <p className="fw-semibold mb-2">Members:</p>
                                 <ul className="list-group list-group-flush">
-                                    {team.studentIndexes.map(index => (
-                                        <li key={index} className="list-group-item px-0">
-                                            <i className="bi bi-person-fill text-secondary me-2" /> {index}
+                                    {team.students.map(student => (
+                                        <li key={student.index} className="list-group-item px-0">
+                                            <i className="bi bi-person-fill text-secondary me-2" />
+                                            {student.index} — {student.name} {student.lastname}
                                         </li>
                                     ))}
                                 </ul>
@@ -118,8 +133,20 @@ function TeamsByTopic() {
                 ))}
             </div>
             <div className="d-flex justify-content-center mb-3 back-button-teams text-center">
-                <button className="btn text-white" onClick={() => navigate(`/subjects`)}>
-                    ⬅ Back to Subjects!
+                <button
+                        className="btn text-white"
+                        onClick={() => {
+                            const user = JSON.parse(localStorage.getItem("user"));
+                            if (user?.role === "ROLE_PROFESSOR") {
+                                navigate(`/subject-allocations/${user.username}/subjects`);
+                            } else if (user?.role === "ROLE_STUDENT") {
+                                navigate(`/student/${user.username}/subjects`);
+                            } else {
+                                navigate("/subjects"); 
+                            }
+                        }}
+                    >
+                        ⬅ Back to Subjects!
                 </button>
             </div>
         </div>

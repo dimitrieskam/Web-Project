@@ -23,9 +23,9 @@ function Login() {
                 const userId = data.user_id;
 
                 if (role === "ROLE_PROFESSOR") {
-                    navigate(`/subject-allocations/professors/${userId}/subjects`);
+                    navigate(`/subject-allocations/${username}/subjects`);
                 } else if (role === "ROLE_STUDENT") {
-                    navigate(`/students`);
+                    navigate(`/student/${username}/subjects`);
                 } else {
                     navigate("/");
                 }

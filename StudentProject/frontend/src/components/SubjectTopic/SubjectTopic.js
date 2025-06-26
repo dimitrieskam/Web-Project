@@ -11,6 +11,7 @@ function SubjectTopics({subjectId: propSubjectId, professorId}) {
     
     const loggedUser = JSON.parse(localStorage.getItem("user"));
     const studentId = loggedUser?.username;
+    console.log("Logged user:", loggedUser);
 
 
     const navigate = useNavigate();
@@ -56,7 +57,13 @@ function SubjectTopics({subjectId: propSubjectId, professorId}) {
                 <div className="d-flex justify-content-center mb-3 back-button-topics-by-subject text-center">
                     <button
                         className="btn text-white"
-                        onClick={() => navigate(`/student/${studentId}/subjects`)}
+                        onClick={() => {
+                            if (loggedUser?.role === "ROLE_STUDENT") {
+                                navigate(`/student/${loggedUser.username}/subjects`);
+                            } else if (loggedUser?.role === "ROLE_PROFESSOR") {
+                                navigate(`/subject-allocations/${loggedUser.username}/subjects`);
+                            }
+                        }}
                     >
                         ⬅ Back to Subjects!
                     </button>
@@ -77,6 +84,9 @@ function SubjectTopics({subjectId: propSubjectId, professorId}) {
                                 <h5 className="topic-card-title">{topic.name}</h5>
                                 <p className="topic-card-text">{topic.description}</p>
                                 <p className="topic-card-text mb-1">
+                                    <strong>Professor:</strong> {topic.professorName || "N/A"}
+                                </p>
+                                <p className="topic-card-text mb-1">
                                     <strong>From:</strong>{" "}
                                     {topic.fromDate
                                         ? new Date(topic.fromDate).toLocaleDateString()
@@ -92,12 +102,15 @@ function SubjectTopics({subjectId: propSubjectId, professorId}) {
                                     <strong>Groups:</strong> {topic.groupCount} |{" "}
                                     <strong>Members per Group:</strong> {topic.membersPerGroup}
                                 </p>
-                                <Link
-                                    className="btn-topic-primary mt-auto"
-                                    to={`/teams/create-team/${topic.id}`}
-                                >
-                                    Choose Topic
-                                </Link>
+                                {(loggedUser?.role === "ROLE_STUDENT" ||
+                                    (loggedUser?.role === "ROLE_PROFESSOR" && topic.creatorProfessorUsername === loggedUser.username)) && (
+                                        <Link
+                                            className="btn-topic-primary mt-auto"
+                                            to={`/teams/create-team/${topic.id}`}
+                                        >
+                                            Choose Topic
+                                        </Link>
+                                )}
                             </div>
                         </div>
                     </div>
@@ -105,11 +118,17 @@ function SubjectTopics({subjectId: propSubjectId, professorId}) {
             </div>
             <div className="d-flex justify-content-center mb-3 back-button-topics-by-subject text-center">
                 <button
-                    className="btn text-white"
-                    onClick={() => navigate(`/student/${studentId}/subjects`)}
-                >
-                    ⬅ Back to Subjects!
-                </button>
+                        className="btn text-white"
+                        onClick={() => {
+                            if (loggedUser?.role === "ROLE_STUDENT") {
+                                navigate(`/student/${loggedUser.username}/subjects`);
+                            } else if (loggedUser?.role === "ROLE_PROFESSOR") {
+                                navigate(`/subject-allocations/${loggedUser.username}/subjects`);
+                            }
+                        }}
+                    >
+                        ⬅ Back to Subjects!
+                    </button>
             </div>
         </div>
     );
