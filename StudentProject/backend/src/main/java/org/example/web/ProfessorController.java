@@ -29,7 +29,7 @@ public class ProfessorController {
         return ResponseEntity.ok(professorApplicationService.findByName(name));
     }
     @GetMapping("/{username}")
-    @PreAuthorize("hasAnyRole('STUDENT', 'PROFESSOR', 'ADMIN')")
+    @PreAuthorize("hasAnyRole('STUDENT', 'ROLE_PROFESSOR', 'ADMIN')")
     public ResponseEntity<DisplayProfessorDTO> getProfessorByUsername(@PathVariable String username) {
         return professorApplicationService.getProfessorByUsername(username)
                 .map(ResponseEntity::ok)

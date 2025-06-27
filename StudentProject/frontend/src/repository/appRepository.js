@@ -7,8 +7,9 @@ const AppRepository = {
         return axios.get("/professors");
     },
     fetchProfessorById: (professorId) => {
-        const token = localStorage.getItem("token");
-        return axios.get(`/api/professors/${professorId}`, {
+        const user = JSON.parse(localStorage.getItem("user"));
+        const token = user?.access_token || "";
+        return axios.get(`/professors/${professorId}`, {
         headers: {
             Authorization: `Bearer ${token}`,
         },
@@ -128,6 +129,23 @@ const AppRepository = {
     deleteTeam: (id) => {
         return axios.delete(`/teams/delete-team/${id}`);
     },
+    updateTeamStatus: (teamId, status, followUpComment) => {
+        const user = JSON.parse(localStorage.getItem("user"));
+        const token = user?.access_token;
+
+        return axios.patch(
+            `/teams/${teamId}/status`,
+            null, // no body, you pass params in URL
+            {
+            params: { status, followUpComment },
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+            }
+        );
+    },
+
+
 };
 
 export default AppRepository;

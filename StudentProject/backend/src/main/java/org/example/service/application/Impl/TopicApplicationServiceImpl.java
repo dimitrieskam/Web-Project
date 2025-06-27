@@ -115,10 +115,13 @@ public class TopicApplicationServiceImpl implements TopicApplicationService {
         List<Team> teams = teamRepository.findByMemberIndex(studentIndex);
 
         // Extract distinct topics from these teams
+//        return teams.stream()
+//                .map(Team::getTopic)
+//                .distinct()
+//                .map(DisplayTopicDTO::from)
+//                .collect(Collectors.toList());
         return teams.stream()
-                .map(Team::getTopic)
-                .distinct()
-                .map(DisplayTopicDTO::from)
+                .map(team -> DisplayTopicDTO.from(team.getTopic(), team))
                 .collect(Collectors.toList());
     }
 

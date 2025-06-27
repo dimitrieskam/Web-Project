@@ -4,6 +4,7 @@ import jakarta.transaction.Transactional;
 import org.example.model.DTOs.studentDTO.DisplayStudentDTO;
 import org.example.model.DTOs.teamDTO.DisplayTeamDTO;
 import org.example.model.Team;
+import org.example.model.enumerations.TeamStatus;
 import org.example.repository.TeamRepository;
 import org.example.service.application.TeamApplicationService;
 import org.example.service.domain.TeamDomainService;
@@ -42,4 +43,14 @@ public class TeamApplicationServiceImpl implements TeamApplicationService {
     public void delete(String id) {
         this.teamDomainService.delete(id);
     }
+
+    @Override
+    @Transactional
+    public void updateTeamStatus(String teamId, TeamStatus status, String followUpComment) {
+        Team team = teamDomainService.findById(teamId);
+        team.setStatus(status);
+        team.setFollowUpComment(followUpComment);
+        teamRepository.save(team);
+    }
+
 }

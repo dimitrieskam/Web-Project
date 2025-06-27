@@ -1,6 +1,7 @@
 package org.example.model.DTOs.topicDTO;
 
 import org.example.model.Professor;
+import org.example.model.Team;
 import org.example.model.Topic;
 import java.time.LocalDate;
 import java.util.List;
@@ -18,13 +19,32 @@ public record DisplayTopicDTO(
         String subjectId,
         String professorName,
         String subjectName,
-        String creatorProfessorUsername
+        String creatorProfessorUsername,
+        TeamInfo studentTeamInfo
 ) {
+    public record TeamInfo(
+            String teamId,
+            String teamName,
+            String status,
+            String followUpComment
+    ) {}
 
-    public static DisplayTopicDTO from(Topic topic) {
+    public static DisplayTopicDTO from(Topic topic, Team studentTeam) {
         // Get subjectId and subjectName using JoinedSubject, if available
         String subjectId = null;
         String subjectName = "Unknown Subject";
+        TeamInfo teamInfo=null;
+
+        if (studentTeam != null) {
+            String status = studentTeam.getStatus() != null ? studentTeam.getStatus().name() : "UNKNOWN";
+            teamInfo = new TeamInfo(
+                    studentTeam.getId(),
+                    studentTeam.getName(),
+                    status,
+                    studentTeam.getFollowUpComment()
+            );
+        }
+
 
         if (topic.getJoinedSubject() != null && topic.getJoinedSubject().getMainSubject() != null) {
             subjectId = topic.getJoinedSubject().getMainSubject().getId();
@@ -57,15 +77,21 @@ public record DisplayTopicDTO(
                 subjectId,
                 professorName,
                 subjectName,
-                creatorProfessorUsername
+                creatorProfessorUsername,
+                teamInfo
         );
+    }
+
+    public static DisplayTopicDTO from(Topic topic) {
+        return from(topic, null);
     }
 
     public static List<DisplayTopicDTO> from(List<Topic> topics) {
         return topics.stream()
-                .map(DisplayTopicDTO::from)
+                .map(DisplayTopicDTO::from) // calls from(Topic)
                 .collect(Collectors.toList());
     }
+
 
     public Topic toTopic(Professor professor) {
         return new Topic(id, name, description, fromDate, toDate, groupCount, membersPerGroup, professor);

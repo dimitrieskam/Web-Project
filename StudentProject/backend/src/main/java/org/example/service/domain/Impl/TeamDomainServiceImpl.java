@@ -27,4 +27,11 @@ public class TeamDomainServiceImpl implements TeamDomainService {
     public void delete(String id) {
         this.teamRepository.deleteTeamById(id);
     }
+
+    @Override
+    public Team findById(String id) {
+        return teamRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Team not found with ID: " + id));
+    }
+
 }

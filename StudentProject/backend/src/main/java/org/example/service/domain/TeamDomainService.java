@@ -8,4 +8,6 @@ import java.util.List;
 public interface TeamDomainService {
     List<Team> findAll();
     void delete(String id);
+    Team findById(String id);
+
 }

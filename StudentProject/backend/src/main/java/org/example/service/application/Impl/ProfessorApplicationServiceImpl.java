@@ -1,7 +1,11 @@
 package org.example.service.application.Impl;
 
+import org.example.model.DTOs.TeacherSubjectAllocationDTO.TeacherSubjectAllocationDTO;
 import org.example.model.DTOs.professorDTO.DisplayProfessorDTO;
+import org.example.model.Professor;
+import org.example.model.TeacherSubjectAllocation;
 import org.example.repository.ProfessorRepository;
+import org.example.repository.TeacherSubjectAllocationRepository;
 import org.example.service.application.ProfessorApplicationService;
 import org.example.service.domain.ProfessorDomainService;
 import org.springframework.stereotype.Service;
@@ -14,9 +18,11 @@ public class ProfessorApplicationServiceImpl implements ProfessorApplicationServ
 
     private final ProfessorDomainService professorDomainService;
     private final ProfessorRepository professorRepository;
-    public ProfessorApplicationServiceImpl(ProfessorDomainService professorDomainService, ProfessorRepository professorRepository) {
+    private final TeacherSubjectAllocationRepository teacherSubjectAllocationRepository;
+    public ProfessorApplicationServiceImpl(ProfessorDomainService professorDomainService, ProfessorRepository professorRepository, TeacherSubjectAllocationRepository teacherSubjectAllocationRepository) {
         this.professorDomainService = professorDomainService;
         this.professorRepository = professorRepository;
+        this.teacherSubjectAllocationRepository = teacherSubjectAllocationRepository;
     }
 
     @Override
@@ -39,8 +45,8 @@ public class ProfessorApplicationServiceImpl implements ProfessorApplicationServ
                 .toList();
     }
     @Override
-    public Optional<DisplayProfessorDTO> getProfessorByUsername(String username) {
-        return professorRepository.findByUsername(username)
+    public Optional<DisplayProfessorDTO> getProfessorByUsername(String id) {
+        return professorDomainService.findByID(id)
                 .map(DisplayProfessorDTO::from);
     }
 

@@ -6,6 +6,7 @@ import './ProfessorSubjects.css';
 function ProfessorSubjects({professorId: propProfessorId}) {
     const {professorId: urlProfessorId} = useParams();
     const professorId = propProfessorId || urlProfessorId;
+    const [professorName, setProfessorName] = useState("");
 
     const [subjects, setSubjects] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -32,6 +33,15 @@ function ProfessorSubjects({professorId: propProfessorId}) {
                 setError(`Failed to load subjects: ${err.message || 'Unknown error'}`);
                 setLoading(false);
             });
+
+        api.get(`/professors/${professorId}`)
+            .then((res) => {
+                setProfessorName(res.data.name);  // fallback to ID if name is missing
+            })
+            .catch(() => {
+                setProfessorName(professorId); // fallback if not found
+            });
+
     }, [professorId]);
 
     if (loading) return <div className="text-center mt-4">Loading subjects...</div>;
@@ -54,7 +64,7 @@ function ProfessorSubjects({professorId: propProfessorId}) {
     return (
         <div className="professor-subjects-container mt-4">
             <div className="professor-subjects-title mb-4">
-                <h4 className="mb-4">Subjects <small>by Professor <strong>{professorId}</strong></small></h4>
+                <h4 className="mb-4">Subjects <small>by Professor <strong>{professorName}</strong></small></h4>
             </div>
             <div className="row justify-content-center">
                 {subjects.map((allocation, index) => {

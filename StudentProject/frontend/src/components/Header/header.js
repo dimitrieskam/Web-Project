@@ -72,7 +72,20 @@ const Header = () => {
                                         </Link>
                                     </li>
                                 </>
-                            ) : (
+                            ) : currentUser && currentUser.role === "ROLE_ADMIN" ? (
+                                <>
+                                    <li className="nav-item">
+                                        <Link className="nav-link" to="/subjects">
+                                            <strong>Subjects</strong>
+                                        </Link>
+                                    </li>
+                                    <li className="nav-item">
+                                        <Link className="nav-link" to="/students">
+                                            <strong>Students</strong>
+                                        </Link>
+                                    </li>
+                                </>
+                            ): (
                                 <>
                                     <li className="nav-item">
                                         <Link className="nav-link" to={`/student/${currentUser?.username}/subjects`}>

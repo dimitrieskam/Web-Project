@@ -62,6 +62,8 @@ function SubjectTopics({subjectId: propSubjectId, professorId}) {
                                 navigate(`/student/${loggedUser.username}/subjects`);
                             } else if (loggedUser?.role === "ROLE_PROFESSOR") {
                                 navigate(`/subject-allocations/${loggedUser.username}/subjects`);
+                            } else if (loggedUser?.role === "ROLE_ADMIN"){
+                                navigate(`/subjects`)
                             }
                         }}
                     >

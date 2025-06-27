@@ -8,7 +8,7 @@ function TopicsByProfessor() {
   const [topics, setTopics] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [professorName, setProfessorName] = useState(null);
+  const [professorName, setProfessorName] = useState("");  // <-- state for name
 
   const navigate = useNavigate();
 
@@ -25,11 +25,10 @@ function TopicsByProfessor() {
     // Fetch professor details
     AppService.fetchProfessorById(professorId)
       .then((res) => {
-        // Assuming the professor DTO has a "name" field; adjust if it's called differently
-        setProfessorName(res.data.name || "Unknown Professor");
+        setProfessorName(res.data.name);  // set name or fallback to ID
       })
       .catch(() => {
-        setProfessorName("Unknown Professor");
+        setProfessorName(professorId); // fallback if error fetching
       });
 
     // Fetch topics by professor
@@ -56,10 +55,6 @@ function TopicsByProfessor() {
     }
   };
 
-  const handleChooseTopic = (topicId) => {
-    navigate(`/teams/create-team/${topicId}`);
-  };
-
   if (loading) return <div className="text-center mt-4">Loading topics...</div>;
   if (error) return <div className="alert alert-danger mt-4">{error}</div>;
   if (!topics.length)
@@ -71,8 +66,8 @@ function TopicsByProfessor() {
 
   return (
     <div className="container mt-4">
-      {/* Render professorName here, NOT professorId */}
-      <h2 className="mb-4">All Topics for Professor {professorId}</h2>
+      {/* Use professorName here */}
+      <h2 className="mb-4">All Topics for Professor <strong>{professorName}</strong></h2>
       <div className="row">
         {topics.map((topic) => (
           <div key={topic.id} className="col-md-4 mb-4">

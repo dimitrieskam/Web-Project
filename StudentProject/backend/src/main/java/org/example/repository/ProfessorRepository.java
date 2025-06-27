@@ -10,6 +10,7 @@ import java.util.Optional;
 @Repository
 public interface ProfessorRepository extends JpaRepository<Professor, String> {
     List<Professor> findByNameContainingIgnoreCase(String name);
-    Optional<Professor> findByUsername(String username);
+    Optional<Professor> findById(String id);
+
 
 }

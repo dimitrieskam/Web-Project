@@ -2,6 +2,7 @@ package org.example.web;
 
 import jakarta.transaction.Transactional;
 import org.example.model.DTOs.studentDTO.DisplayStudentDTO;
+import org.example.model.enumerations.TeamStatus;
 import org.example.service.application.TeamApplicationService;
 import org.springframework.http.HttpStatus;
 import org.example.model.DTOs.teamDTO.CreateTeamDTO;
@@ -86,5 +87,16 @@ public class TeamController {
 
         return ResponseEntity.noContent().build();
     }
+
+    @PatchMapping("/{teamId}/status")
+    @PreAuthorize("hasRole('PROFESSOR')")
+    public ResponseEntity<Void> updateTeamStatus(
+            @PathVariable String teamId,
+            @RequestParam TeamStatus status,
+            @RequestParam(required = false) String followUpComment) {
+        teamApplicationService.updateTeamStatus(teamId, status, followUpComment);
+        return ResponseEntity.ok().build();
+    }
+
 
 }

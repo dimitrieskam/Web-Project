@@ -1,9 +1,10 @@
-import React, {useEffect, useState} from 'react';
-import {useNavigate, useParams} from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import api from '../../../custom-axios/axios';
 
 const TopicEdit = (props) => {
     const navigate = useNavigate();
-    const {id: topicId, professorId: professorIdFromUrl, subjectId: subjectIdFromUrl} = useParams();
+    const { id: topicId, professorId: professorIdFromUrl, subjectId: subjectIdFromUrl } = useParams();
 
     const [formData, updateFormData] = useState({
         name: "",
@@ -16,6 +17,7 @@ const TopicEdit = (props) => {
         subjectId: subjectIdFromUrl || ""
     });
 
+    const [subjectName, setSubjectName] = useState("");
     const [submitting, setSubmitting] = useState(false);
 
     useEffect(() => {
@@ -36,8 +38,24 @@ const TopicEdit = (props) => {
         }
     }, [props.topics, topicId, professorIdFromUrl, subjectIdFromUrl]);
 
+    useEffect(() => {
+        if (formData.professorId && formData.subjectId) {
+            api.get(`/subject-allocations/${formData.professorId}/subjects`)
+                .then(res => {
+                    const subjects = res.data || [];
+                    const matched = subjects.find(
+                        s => s.abbreviation === formData.subjectId || s.subjectCode === formData.subjectId || s.semesterCode === formData.subjectId
+                    );
+                    if (matched) {
+                        setSubjectName(matched.subjectName || matched.subject || "Unknown Subject");
+                    }
+                })
+                .catch(() => setSubjectName(""));
+        }
+    }, [formData.professorId, formData.subjectId]);
+
     const handleChange = (e) => {
-        const {name, value} = e.target;
+        const { name, value } = e.target;
         updateFormData({
             ...formData,
             [name]: value
@@ -90,6 +108,16 @@ const TopicEdit = (props) => {
         <div className="topic-edit-wrapper d-flex justify-content-center align-items-center">
             <div className="topic-edit-form p-4 rounded shadow align-items-center">
                 <h2 className="mb-4 text-center text-white">Edit Topic</h2>
+
+                {/* Display professor and subject info */}
+                <div className="form-group mb-4 text-white">
+                    <p><strong>Subject:</strong> {subjectName || formData.subjectId}</p>
+                </div>
+
+                {/* Hidden fields to include in submission */}
+                <input type="hidden" name="professorId" value={formData.professorId} />
+                <input type="hidden" name="subjectId" value={formData.subjectId} />
+
                 <form onSubmit={onFormSubmit}>
                     <div className="form-group mb-3">
                         <label htmlFor="name">Topic Name</label>
@@ -175,30 +203,6 @@ const TopicEdit = (props) => {
                         />
                     </div>
 
-                    <div className="form-group mb-3">
-                        <label htmlFor="professorId">Professor ID</label>
-                        <input
-                            type="text"
-                            className="form-control"
-                            id="professorId"
-                            name="professorId"
-                            value={formData.professorId}
-                            readOnly
-                        />
-                    </div>
-
-                    <div className="form-group mb-4">
-                        <label htmlFor="subjectId">Subject ID</label>
-                        <input
-                            type="text"
-                            className="form-control"
-                            id="subjectId"
-                            name="subjectId"
-                            value={formData.subjectId}
-                            readOnly
-                        />
-                    </div>
-
                     <button id="submit" type="submit" className="btn btn-primary w-100" disabled={submitting}>
                         {submitting ? "Saving..." : "Submit"}
                     </button>
@@ -206,7 +210,9 @@ const TopicEdit = (props) => {
                     <button
                         type="button"
                         className="btn text-white back-button mt-3"
-                        onClick={() => navigate(`/subject-allocations/professors/${formData.professorId}/subjects/${formData.subjectId}/topics`)}
+                        onClick={() =>
+                            navigate(`/subject-allocations/professors/${formData.professorId}/subjects/${formData.subjectId}/topics`)
+                        }
                     >
                         ⬅ Back to Topics!
                     </button>

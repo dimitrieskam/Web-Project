@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams, Link, useNavigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import AppService from "../../repository/appRepository"; // Your API service
 
 function TopicsByStudent() {
@@ -66,7 +66,14 @@ function TopicsByStudent() {
                                 <p className="card-text mb-1">
                                     <strong>Subject:</strong> {topic.subjectName || "N/A"}
                                 </p>
-
+                                
+                                {/* New fields for status and comment */}
+                                <p className="card-text mb-1">
+                                    <strong>Status:</strong> {topic.studentTeamInfo.status || "N/A"}
+                                </p>
+                                <p className="card-text">
+                                    <strong>Follow-up Comment:</strong> {topic.studentTeamInfo.followUpComment || "None"}
+                                </p>
                             </div>
                         </div>
                     </div>

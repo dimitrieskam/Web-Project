@@ -7,6 +7,8 @@ public enum Role {
 
     PROFESSOR(true, false, AppRole.PROFESSOR),
 
+    ADMIN (true, false, AppRole.ADMIN),
+
     ACADEMIC_AFFAIR_VICE_DEAN(true, false, AppRole.ADMIN),
     SCIENCE_AND_COOPERATION_VICE_DEAN(true, false, AppRole.ADMIN),
     FINANCES_VICE_DEAN(true, false, AppRole.ADMIN),
