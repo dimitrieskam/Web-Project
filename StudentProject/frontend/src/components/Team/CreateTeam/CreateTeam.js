@@ -192,7 +192,7 @@ function CreateTeam() {
                             {suggestedStudents.map(student => (
                                 <li
                                     key={student.index}
-                                    className="list-group-item list-group-item-action"
+                                    className="dropdown-item"
                                     onClick={() => addStudent(student)}
                                     style={{cursor: "pointer"}}
                                 >

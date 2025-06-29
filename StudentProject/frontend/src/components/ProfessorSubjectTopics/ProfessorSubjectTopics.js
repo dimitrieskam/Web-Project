@@ -101,7 +101,7 @@ function ProfessorSubjectTopics() {
               className="btn btn-outline-secondary me-2"
               onClick={() => setShowOwnOnly(!showOwnOnly)}
             >
-              {showOwnOnly ? "👀 View Other Topics" : "🔙 View My Topics"}
+              {showOwnOnly ? "View Other Topics" : "View My Topics"}
             </button>
             {professorId === user?.username && showOwnOnly && (
               <Link

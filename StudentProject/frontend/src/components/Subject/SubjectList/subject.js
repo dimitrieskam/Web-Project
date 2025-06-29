@@ -47,9 +47,9 @@ const Subject = ({ subjects, onSearchSubjects }) => {
             </div>
 
             <form className="search-form mb-4" onSubmit={handleSearchSubmit}>
-                <div className="row align-items-center g-2">
-                    <div className="col-md-5">
-                        <label className="form-label mb-1">Subject Name</label>
+                <div className="row align-items-center">
+                    <div className="col-md-6">
+                        <label className="form-label">Subject Name</label>
                         <input
                             type="text"
                             className="form-control"

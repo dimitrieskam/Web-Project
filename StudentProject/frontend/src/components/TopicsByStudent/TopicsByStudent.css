@@ -1,0 +1,55 @@
+.topics-student-container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+}
+
+.topics-student-title {
+    color: antiquewhite;
+    font-size: 38px;
+    text-align: center;
+    transition: color 0.3s ease, text-shadow 0.3s ease;
+}
+
+.topics-student-title:hover {
+    color: #ffffff;
+    text-shadow: 0 0 10px rgba(109, 213, 250, 0.6);
+}
+
+.topic-card {
+    background: linear-gradient(135deg, #0d1b2a, #1b263b);
+    color: white;
+    border-radius: 1rem;
+    box-shadow: 0 12px 20px rgba(0, 0, 0, 0.3);
+    padding: 1.25rem 1.5rem;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: none;
+    width: 100%;
+    max-width: 350px;
+}
+
+.topic-card:hover {
+    transform: translateY(-6px) scale(1.03);
+    box-shadow: 0 16px 30px rgba(0, 0, 0, 0.4), 0 0 20px rgba(109, 213, 250, 0.3);
+}
+
+.topic-card .card-header {
+    font-size: 1.5rem;
+    font-weight: 700;
+    background: transparent;
+    color: #7ec8e3;
+    border-bottom: none;
+    padding: 0;
+    margin-bottom: 1rem;
+    text-shadow: 1px 1px 4px #000;
+}
+
+.topic-card .card-text {
+    color: #ddd;
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+.topic-card .card-text strong {
+    color: #7ec8e3;
+}

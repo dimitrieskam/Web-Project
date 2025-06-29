@@ -67,11 +67,11 @@ class Professor extends React.Component {
                     <h2>Professors</h2>
                 </div>
 
-                <div className="mb-4">
+                <div className="justify-content-center mb-4">
                     <input
                         type="text"
-                        className="form-control"
-                        placeholder="Search professors by name..."
+                        className="professor-search-input"
+                        placeholder="Search professors by name"
                         value={searchText}
                         onChange={this.handleSearchChange}
                     />

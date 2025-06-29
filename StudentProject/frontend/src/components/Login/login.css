@@ -1,64 +1,90 @@
 body {
-    text-align: center;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    margin: 0;
+  margin: 0;
+
+  
 }
 
-.container {
-    justify-items: center;
-}
-
-form {
-    align-items: center;
+.login-container {
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 3rem 2rem;
+  background-color: rgba(0, 0, 0, 0.4);
+  border-radius: 15px;
+  margin-top: 8vh;
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.4);
+  text-align: left;
 }
 
 .login-title {
-    color: #6dd5fa;
-    font-size: 40px;
-    margin-bottom: 20px;
-    letter-spacing: 5px;
+  color: #6dd5fa;
+  font-size: 32px;
+  margin-bottom: 30px;
+  text-align: center;
+  font-weight: bold;
+  letter-spacing: 2px;
 }
 
 .login-title:hover {
-    color: white;
+  color: white;
 }
 
 .form-group {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    width: 100%;
+  margin-bottom: 20px;
+  width: 100%;
 }
 
 .form-group label {
-    color: #6dd5fa;
-    font-size: 16px;
-    margin-bottom: 5px;
-    margin-left: 5px;
-    letter-spacing: 5px;
-    word-spacing: 5px;
+  display: block;
+  
+  margin-bottom: 8px;
+  color: #6dd5fa;
+  font-size: 14px;
+  letter-spacing: 2px;
 }
 
-.form-group label:hover{
-    color: white;
+.form-group label:hover {
+  color: white;
 }
 
 .form-control {
-    width: 300px;
+    width: 100%;
     padding: 10px;
     border-radius: 5px;
     border: none;
+    font-size: 16px;
+    color: aliceblue;
 }
 
 .login-btn {
-    width: 300px;
+    width: 100%;
     padding: 10px;
-    font-size: 20px;
+    font-size: 18px;
     margin-top: 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
 }
 
 .login-btn:hover {
     background: darkblue;
+}
+
+
+.form-control:focus {
+  outline: none;
+  box-shadow: 0 0 8px rgba(109, 213, 250, 0.8);
+  background-color: aliceblue;
+}
+
+
+.login-btn:hover {
+  background-color: #0056b3;
+  transform: translateY(-2px);
+}
+
+.login-form-wrapper {
+    width: 300px;
+    margin: 0 auto;
 }

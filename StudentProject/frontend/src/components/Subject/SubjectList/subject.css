@@ -38,6 +38,7 @@ input.form-control, select.form-select {
 
 input.form-control:focus, select.form-select:focus {
     box-shadow: 0 0 0 3px rgba(109, 213, 250, 0.5);
+    padding: 8px 12px;
     outline: none;
 }
 
@@ -115,3 +116,14 @@ input::placeholder {
         transform: translateY(0);
     }
 }
+
+input.form-control,
+select.form-select {
+    height: 48px;           /* Match the taller one */
+    min-height: 48px;
+    width: 100%;
+    font-size: 14px;
+    padding: 8px 8px;
+    box-sizing: border-box;
+}
+

@@ -76,7 +76,7 @@ class Student extends React.Component {
                             <th>Lastname</th>
                             <th>Username</th>
                             <th>Email</th>
-                            <th>Actions</th>
+                            {role !== "ROLE_PROFESSOR" && <th>Actions</th>}
                         </tr>
                         </thead>
                         <tbody>{students}</tbody>

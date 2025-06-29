@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import authService from "../../repository/Authentication/auth_service"; // Adjust path
+import "./login.css"
 
 function Login() {
     const [username, setUsername] = useState("");
@@ -39,8 +40,9 @@ function Login() {
 
     return (
         <div className="login-container">
-            <h2>Login</h2>
+            <h2 className="login-title">Login</h2>
             {error && <div className="alert alert-danger">{error}</div>}
+            <div className="login-form-wrapper">
             <form onSubmit={handleSubmit}>
                 <div className="form-group">
                     <label>Username:</label>
@@ -64,10 +66,11 @@ function Login() {
                     />
                 </div>
 
-                <button type="submit" className="btn btn-primary mt-3">
+                <button type="submit" className="btn login-btn">
                     Login
                 </button>
             </form>
+            </div>
         </div>
     );
 }

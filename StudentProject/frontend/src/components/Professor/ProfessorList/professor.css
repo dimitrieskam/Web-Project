@@ -147,3 +147,28 @@ input.form-control:focus {
         transform: translateY(0);
     }
 }
+input.professor-search-input {
+  all: unset;
+  max-width: 600px;
+  width: 100%;
+  padding: 12px 18px;
+  font-size: 16px;
+  border: none;
+  border-radius: 0.75rem;
+  background: rgba(255, 255, 255, 0.05);
+  color: #fff;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 0 0 2px rgba(109, 213, 250, 0.4);
+  transition: all 0.3s ease-in-out;
+  margin: 0 auto;
+  display: block;
+}
+
+input.professor-search-input::placeholder {
+  color: #ccc;
+}
+
+input.professor-search-input:focus {
+  box-shadow: 0 0 0 3px rgba(109, 213, 250, 0.6);
+  outline: none;
+}

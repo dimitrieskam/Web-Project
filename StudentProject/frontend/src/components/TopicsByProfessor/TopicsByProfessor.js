@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import AppService from "../../repository/appRepository";
+import "./TopicsByProfessor.css";
 
 function TopicsByProfessor() {
   const { professorId } = useParams();
@@ -8,7 +9,7 @@ function TopicsByProfessor() {
   const [topics, setTopics] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [professorName, setProfessorName] = useState("");  // <-- state for name
+  const [professorName, setProfessorName] = useState("");
 
   const navigate = useNavigate();
 
@@ -22,16 +23,14 @@ function TopicsByProfessor() {
     setLoading(true);
     setError(null);
 
-    // Fetch professor details
     AppService.fetchProfessorById(professorId)
       .then((res) => {
-        setProfessorName(res.data.name);  // set name or fallback to ID
+        setProfessorName(res.data.name);
       })
       .catch(() => {
-        setProfessorName(professorId); // fallback if error fetching
+        setProfessorName(professorId);
       });
 
-    // Fetch topics by professor
     AppService.fetchTopicsByProfessor(professorId)
       .then((res) => {
         setTopics(res.data || []);
@@ -65,42 +64,33 @@ function TopicsByProfessor() {
     );
 
   return (
-    <div className="container mt-4">
-      {/* Use professorName here */}
-      <h2 className="mb-4">All Topics for Professor <strong>{professorName}</strong></h2>
-      <div className="row">
+    <div className="professor-subjects-container mt-4">
+      <div className="professor-subjects-title mb-4">
+        <h4>All Topics by <strong>{professorName}</strong></h4>
+      </div>
+      <div className="row justify-content-center">
         {topics.map((topic) => (
-          <div key={topic.id} className="col-md-4 mb-4">
-            <div className="card h-100 shadow-sm">
+          <div key={topic.id} className="col-12 col-md-6 col-lg-4 mb-4 d-flex justify-content-center">
+            <div className="card">
+              <div className="card-header">{topic.name}</div>
               <div className="card-body d-flex flex-column">
-                <h5 className="card-title">{topic.name}</h5>
                 <p className="card-text">{topic.description}</p>
-                <p className="card-text mb-1">
-                  <strong>From:</strong>{" "}
-                  {topic.fromDate ? new Date(topic.fromDate).toLocaleDateString() : "N/A"}
-                </p>
-                <p className="card-text mb-1">
-                  <strong>To:</strong>{" "}
-                  {topic.toDate ? new Date(topic.toDate).toLocaleDateString() : "N/A"}
-                </p>
+                <p className="card-text"><strong>From:</strong> {topic.fromDate ? new Date(topic.fromDate).toLocaleDateString() : "N/A"}</p>
+                <p className="card-text"><strong>To:</strong> {topic.toDate ? new Date(topic.toDate).toLocaleDateString() : "N/A"}</p>
                 <p className="card-text">
-                  <strong>Groups:</strong> {topic.groupCount} |{" "}
-                  <strong>Members per Group:</strong> {topic.membersPerGroup}
+                  <strong>Groups:</strong> {topic.groupCount} | <strong>Members per Group:</strong> {topic.membersPerGroup}
                 </p>
-
-                <Link
-                  to={`/subject-allocations/topics/${topic.id}/professors/${professorId}/subjects/${topic.subjectId}/edit-topic`}
-                  className="btn btn-info mt-auto"
-                >
+                <Link to={`/subject-allocations/topics/${topic.id}/professors/${professorId}/subjects/${topic.subjectId}/edit-topic`} className="btn btn-success mt-2">
                   Edit Topic
                 </Link>
-
-                <button className="btn btn-info mt-auto" onClick={() => handleDelete(topic.id)}>
+                <button className="btn btn-danger mt-2" onClick={() => handleDelete(topic.id)}>
                   Delete Topic
                 </button>
-
-                <Link className="btn btn-primary" to={`/teams/create-team/${topic.id}`}>
+                <Link className="topics-button mt-2" to={`/teams/create-team/${topic.id}`}>
                   Choose Topic
+                </Link>
+                <Link className="btn btn-purple mt-2" to={`/teams/topic/${topic.id}`}>
+                  View Teams
                 </Link>
               </div>
             </div>

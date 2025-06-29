@@ -49,6 +49,7 @@ const Header = () => {
                     </button>
 
                     <div className="collapse navbar-collapse" id="navbarNav">
+                        {currentUser && (
                         <ul className="navbar-nav me-auto mb-2 mb-lg-0 nav-tabs">
                             {currentUser && currentUser.role === "ROLE_PROFESSOR" ? (
                                 <>
@@ -61,7 +62,7 @@ const Header = () => {
                                         </Link>
                                     </li>
                                     <li className="nav-item">
-                                        <Link to={`/subject-allocations/professors/${currentUser.username}/topics`}>
+                                        <Link className="nav-link" to={`/subject-allocations/professors/${currentUser.username}/topics`}>
                                             <strong>Topics</strong>
                                         </Link>
 
@@ -107,6 +108,7 @@ const Header = () => {
                                 </Link>
                             </li>
                         </ul>
+                        )}
                         <ul className="navbar-nav ms-auto me-3 nav-tabs">
                             {!currentUser ? (
                                 <>

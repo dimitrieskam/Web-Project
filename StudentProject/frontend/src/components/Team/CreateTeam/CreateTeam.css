@@ -70,3 +70,14 @@
     background-color: dimgray;
     color: black;
 }
+.dropdown-item {
+  background-color: white;
+  color: black;
+  padding: 0.5rem;
+  border-bottom: 1px solid #ddd;
+  cursor: pointer;
+}
+
+.dropdown-item:hover {
+  background-color: #f0f0f0;
+}
