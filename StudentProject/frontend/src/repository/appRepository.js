@@ -130,20 +130,15 @@ const AppRepository = {
         return axios.delete(`/teams/delete-team/${id}`);
     },
     updateTeamStatus: (teamId, status, followUpComment) => {
-        const user = JSON.parse(localStorage.getItem("user"));
-        const token = user?.access_token;
-
         return axios.patch(
             `/teams/${teamId}/status`,
-            null, // no body, you pass params in URL
+            null,
             {
-            params: { status, followUpComment },
-            headers: {
-                Authorization: `Bearer ${token}`,
-            },
+                params: { status, followUpComment }
             }
         );
-    },
+    }
+
 
 
 };

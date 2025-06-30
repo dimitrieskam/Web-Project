@@ -91,9 +91,9 @@ public class TeamController {
     @PatchMapping("/{teamId}/status")
     @PreAuthorize("hasRole('PROFESSOR')")
     public ResponseEntity<Void> updateTeamStatus(
-            @PathVariable String teamId,
-            @RequestParam TeamStatus status,
-            @RequestParam(required = false) String followUpComment) {
+            @PathVariable("teamId") String teamId,
+            @RequestParam("status") TeamStatus status,
+            @RequestParam(name = "followUpComment", required = false) String followUpComment) {
         teamApplicationService.updateTeamStatus(teamId, status, followUpComment);
         return ResponseEntity.ok().build();
     }

@@ -70,7 +70,7 @@ function TopicsByProfessor() {
       </div>
       <div className="row justify-content-center">
         {topics.map((topic) => (
-          <div key={topic.id} className="col-12 col-md-6 col-lg-4 mb-4 d-flex justify-content-center">
+          <div key={topic.id} className="d-flex justify-content-center">
             <div className="card">
               <div className="card-header">{topic.name}</div>
               <div className="card-body d-flex flex-column">

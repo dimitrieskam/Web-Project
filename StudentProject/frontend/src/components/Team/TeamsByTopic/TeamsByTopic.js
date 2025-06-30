@@ -109,7 +109,7 @@ function TeamsByTopic() {
       {/* Responsive grid using Bootstrap utilities */}
       <div className="row">
         {teams.map((team) => (
-          <div key={team.id} className="col-6 col-md-4">
+          <div key={team.id} className="">
             <div className="card border-0 shadow-sm w-100">
               <div className="card-header team-name">
                 <h5 className="mb-0">{team.name}</h5>
